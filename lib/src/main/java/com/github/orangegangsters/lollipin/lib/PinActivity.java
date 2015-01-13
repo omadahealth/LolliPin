@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by stoyan and olivier on 1/12/15.
  */
-public class LockActivity extends Activity {
+public class PinActivity extends Activity {
     private static List<LifeCycleInterface> mLifeCycleListeners;
 
     @Override
