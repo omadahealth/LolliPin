@@ -50,6 +50,10 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
             mType = extras.getInt(AppLock.TYPE, AppLock.UNLOCK_PIN);
         }
 
+        initText();
+    }
+
+    private void initText() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
                 mStepTextView.setText("Disable Passcode");
@@ -120,6 +124,8 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     mStepTextView.setText("Enter passcode");
                     mType = AppLock.ENABLE_PINLOCK;
+                    setPinCode("");
+                    initText();
                 } else {
                     onPasscodeError();
                 }
