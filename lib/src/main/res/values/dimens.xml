@@ -3,4 +3,6 @@
     <dimen name="keyboard_button_text_size">30sp</dimen>
     <dimen name="keyboard_button_padding">15dp</dimen>
     <dimen name="keyboard_button_ripple_padding">30dp</dimen>
+    <dimen name="pin_code_round_size">20dp</dimen>
+    <dimen name="pin_code_round_margin">7dp</dimen>
 </resources>

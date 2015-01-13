@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/pin_code_round1"
+        android:layout_width="@dimen/pin_code_round_size"
+        android:layout_height="@dimen/pin_code_round_size"
+        android:background="@drawable/pin_code_round_empty"
+        android:layout_margin="@dimen/pin_code_round_margin" />
+
+    <ImageView
+        android:id="@+id/pin_code_round2"
+        android:layout_width="@dimen/pin_code_round_size"
+        android:layout_height="@dimen/pin_code_round_size"
+        android:background="@drawable/pin_code_round_empty"
+        android:layout_margin="@dimen/pin_code_round_margin" />
+
+    <ImageView
+        android:id="@+id/pin_code_round3"
+        android:layout_width="@dimen/pin_code_round_size"
+        android:layout_height="@dimen/pin_code_round_size"
+        android:background="@drawable/pin_code_round_empty"
+        android:layout_margin="@dimen/pin_code_round_margin" />
+
+    <ImageView
+        android:id="@+id/pin_code_round4"
+        android:layout_width="@dimen/pin_code_round_size"
+        android:layout_height="@dimen/pin_code_round_size"
+        android:background="@drawable/pin_code_round_empty"
+        android:layout_margin="@dimen/pin_code_round_margin" />
+
+</LinearLayout>

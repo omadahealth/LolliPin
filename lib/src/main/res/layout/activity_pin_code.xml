@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
+        android:id="@+id/pin_code_round_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <com.github.orangegangsters.lollipin.lib.views.KeyboardView
+        android:id="@+id/pin_code_keyboard_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pin_code_round_view"/>
 
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>
