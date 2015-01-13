@@ -8,30 +8,30 @@ public abstract class AppLock {
     public static final int CHANGE_PIN = 2;
     public static final int UNLOCK_PIN = 3;
 
-    public static final String TYPE = "type";
+    public static final String EXTRA_TYPE = "type";
 
-    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
+    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 3minutes
 
-    protected int lockTimeOut;
-    protected HashSet<String> ignoredActivities;
+    protected int mLockTimeoutMillis;
+    protected HashSet<String> mIgnoredActivities;
 
     public void setTimeout(int timeout) {
-        this.lockTimeOut = timeout;
+        this.mLockTimeoutMillis = timeout;
     }
 
     public AppLock() {
-        ignoredActivities = new HashSet<String>();
-        lockTimeOut = DEFAULT_TIMEOUT;
+        mIgnoredActivities = new HashSet<String>();
+        mLockTimeoutMillis = DEFAULT_TIMEOUT;
     }
 
     public void addIgnoredActivity(Class<?> clazz) {
         String clazzName = clazz.getName();
-        this.ignoredActivities.add(clazzName);
+        this.mIgnoredActivities.add(clazzName);
     }
 
     public void removeIgnoredActivity(Class<?> clazz) {
         String clazzName = clazz.getName();
-        this.ignoredActivities.remove(clazzName);
+        this.mIgnoredActivities.remove(clazzName);
     }
 
     public abstract void enable();

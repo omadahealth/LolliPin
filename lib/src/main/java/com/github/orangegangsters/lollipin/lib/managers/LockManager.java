@@ -4,42 +4,48 @@ import android.content.Context;
 
 public class LockManager {
 
-	private volatile static LockManager instance;
-	private static AppLock curAppLocker;
+    private volatile static LockManager mInstance;
+    private static AppLock mAppLocker;
 
-	public static LockManager getInstance(Context context) {
-		synchronized (LockManager.class) {
-			if (instance == null) {
-				instance = new LockManager();
-                curAppLocker = new AppLockImpl(context);
-			}
-		}
-		return instance;
-	}
+    public static LockManager getInstance(Context context) {
+        synchronized (LockManager.class) {
+            if (mInstance == null) {
+                mInstance = new LockManager();
+                mAppLocker = new AppLockImpl(context);
+            }
+        }
+        return mInstance;
+    }
 
-	public void enableAppLock(Context context) {
-		if (curAppLocker == null) {
-			curAppLocker = new AppLockImpl(context);
-		}
-		curAppLocker.enable();
-	}
+    public void enableAppLock(Context context) {
+        if (mAppLocker == null) {
+            mAppLocker = new AppLockImpl(context);
+        }
+        mAppLocker.enable();
+    }
 
-	public boolean isAppLockEnabled() {
-		if (curAppLocker == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+    public boolean isAppLockEnabled() {
+        if (mAppLocker == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-	public void setAppLock(AppLock appLocker) {
-		if (curAppLocker != null) {
-			curAppLocker.disable();
-		}
-		curAppLocker = appLocker;
-	}
+    public void disableAppLock() {
+        if (mAppLocker != null) {
+            mAppLocker.disable();
+        }
+    }
 
-	public AppLock getAppLock() {
-		return curAppLocker;
-	}
+    public void setAppLock(AppLock appLocker) {
+        if (mAppLocker != null) {
+            mAppLocker.disable();
+        }
+        mAppLocker = appLocker;
+    }
+
+    public AppLock getAppLock() {
+        return mAppLocker;
+    }
 }

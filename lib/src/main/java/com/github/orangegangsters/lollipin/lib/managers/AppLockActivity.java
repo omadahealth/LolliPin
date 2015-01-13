@@ -47,7 +47,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mType = extras.getInt(AppLock.TYPE, AppLock.UNLOCK_PIN);
+            mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
         initText();

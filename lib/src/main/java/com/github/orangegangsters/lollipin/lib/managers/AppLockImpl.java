@@ -18,18 +18,18 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	private static final String PASSWORD_PREFERENCE_KEY = "passcode";
 	private static final String PASSWORD_SALT = "7xn7@c$";
 
-	private SharedPreferences settings;
+	private SharedPreferences mSharedPreferences;
 
-	private int liveCount;
-	private int visibleCount;
+	private int mLiveActivitiesCount;
+	private int mVisibleActivitiesCount;
 
-	private long lastActive;
+	private long mLastActiveMillis;
 
 	public AppLockImpl(Context context) {
 		super();
-		this.settings = PreferenceManager.getDefaultSharedPreferences(context);
-		this.liveCount = 0;
-		this.visibleCount = 0;
+		this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		this.mLiveActivitiesCount = 0;
+		this.mVisibleActivitiesCount = 0;
 	}
 
 	public void enable() {
@@ -45,8 +45,8 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		passcode = Encryptor.getSHA1(passcode);
 		String storedPasscode = "";
 
-		if (settings.contains(PASSWORD_PREFERENCE_KEY)) {
-			storedPasscode = settings.getString(PASSWORD_PREFERENCE_KEY, "");
+		if (mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
+			storedPasscode = mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, "");
 		}
 
 		if (passcode.equalsIgnoreCase(storedPasscode)) {
@@ -57,7 +57,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	}
 
 	public boolean setPasscode(String passcode) {
-		SharedPreferences.Editor editor = settings.edit();
+		SharedPreferences.Editor editor = mSharedPreferences.edit();
 
 		if (passcode == null) {
 			editor.remove(PASSWORD_PREFERENCE_KEY);
@@ -76,7 +76,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	// Check if we need to show the lock screen at startup
 	public boolean isPasscodeSet() {
-		if (settings.contains(PASSWORD_PREFERENCE_KEY)) {
+		if (mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
 			return true;
 		}
 
@@ -87,7 +87,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		String clazzName = activity.getClass().getName();
 
 		// ignored activities
-		if (ignoredActivities.contains(clazzName)) {
+		if (mIgnoredActivities.contains(clazzName)) {
 			Log.d(TAG, "ignore activity " + clazzName);
 			return true;
 		}
@@ -112,15 +112,15 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		}
 
 		// no enough timeout
-		long passedTime = System.currentTimeMillis() - lastActive;
-		if (lastActive > 0 && passedTime <= lockTimeOut) {
+		long passedTime = System.currentTimeMillis() - mLastActiveMillis;
+		if (mLastActiveMillis > 0 && passedTime <= mLockTimeoutMillis) {
 			Log.d(TAG, "no enough timeout " + passedTime + " for "
-                    + lockTimeOut);
+                    + mLockTimeoutMillis);
 			return false;
 		}
 
 		// start more than one page
-		if (visibleCount > 1) {
+		if (mVisibleActivitiesCount > 1) {
 			return false;
 		}
 
@@ -132,7 +132,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityPaused " + clazzName);
 
-        lastActive = System.currentTimeMillis();
+        mLastActiveMillis = System.currentTimeMillis();
 	}
 
 	@Override
@@ -147,12 +147,12 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		if (shouldLockSceen(activity)) {
 			Intent intent = new Intent(activity.getApplicationContext(),
 					AppLockActivity.class);
-			intent.putExtra(AppLock.TYPE, AppLock.UNLOCK_PIN);
+			intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.getApplication().startActivity(intent);
 		}
 
-		lastActive = System.currentTimeMillis();
+		mLastActiveMillis = System.currentTimeMillis();
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			return;
 		}
 
-		liveCount++;
+		mLiveActivitiesCount++;
 	}
 
 	@Override
@@ -171,10 +171,10 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			return;
 		}
 
-		liveCount--;
-		if (liveCount == 0) {
-			lastActive = System.currentTimeMillis();
-			Log.d(TAG, "set last active " + lastActive);
+		mLiveActivitiesCount--;
+		if (mLiveActivitiesCount == 0) {
+			mLastActiveMillis = System.currentTimeMillis();
+			Log.d(TAG, "set last active " + mLastActiveMillis);
 		}
 	}
 
@@ -194,7 +194,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			return;
 		}
 
-		visibleCount++;
+		mVisibleActivitiesCount++;
 	}
 
 	@Override
@@ -206,10 +206,10 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			return;
 		}
 
-		visibleCount--;
-		if (visibleCount == 0) {
-			lastActive = System.currentTimeMillis();
-			Log.d(TAG, "set last active " + lastActive);
+		mVisibleActivitiesCount--;
+		if (mVisibleActivitiesCount == 0) {
+			mLastActiveMillis = System.currentTimeMillis();
+			Log.d(TAG, "set last active " + mLastActiveMillis);
 		}
 	}
 }
