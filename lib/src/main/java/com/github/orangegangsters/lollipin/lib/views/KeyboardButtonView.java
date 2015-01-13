@@ -2,8 +2,11 @@ package com.github.orangegangsters.lollipin.lib.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,15 +38,21 @@ public class KeyboardButtonView extends RelativeLayout {
         if (attrs != null && !isInEditMode()) {
             final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.KeyboardButtonView,
                     defStyleAttr, 0);
-            String largeText = attributes.getString(R.styleable.KeyboardButtonView_large_text);
+            String text = attributes.getString(R.styleable.KeyboardButtonView_keyboard_button_text);
+            Drawable image = attributes.getDrawable(R.styleable.KeyboardButtonView_keyboard_button_image);
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardButtonView view = (KeyboardButtonView) inflater.inflate(R.layout.view_keyboard_button, this);
 
-            TextView largeTextView = (TextView) view.findViewById(R.id.pin_code_textview_large);
+            TextView textView = (TextView) view.findViewById(R.id.keyboard_button_textview);
+            ImageView imageView = (ImageView) view.findViewById(R.id.keyboard_button_imageview);
 
-            if (largeTextView != null && largeText != null) {
-                largeTextView.setText(largeText);
+            if (textView != null && text != null) {
+                textView.setText(text);
+            }
+            if(imageView != null && image != null) {
+                imageView.setImageDrawable(image);
+                imageView.setVisibility(View.VISIBLE);
             }
         }
     }

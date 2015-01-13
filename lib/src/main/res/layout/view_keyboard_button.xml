@@ -13,14 +13,21 @@
     app:rv_color="@android:color/black">
 
     <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
-        android:id="@+id/pin_code_textview_large"
+        android:id="@+id/keyboard_button_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/keyboard_button_large_text_size"
+        android:textSize="@dimen/keyboard_button_text_size"
         android:textStyle="bold"
         android:singleLine="true"
         app:typeface="Roboto-Thin.ttf" />
+
+    <ImageView
+        android:id="@+id/keyboard_button_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </com.andexert.library.RippleView>

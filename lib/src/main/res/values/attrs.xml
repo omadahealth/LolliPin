@@ -5,7 +5,8 @@
     </declare-styleable>
 
     <declare-styleable name="KeyboardButtonView">
-        <attr name="large_text" format="string" />
+        <attr name="keyboard_button_text" format="string" />
+        <attr name="keyboard_button_image" format="integer" />
     </declare-styleable>
 
 </resources>
