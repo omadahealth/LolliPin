@@ -51,5 +51,18 @@ public class PinCodeRoundView extends RelativeLayout {
         }
     }
 
-    //TODO handle different state of pin_code_roundx
+    /**
+     * Refresh the {@link android.widget.ImageView}s to look like what typed the user
+     *
+     * @param pinLength the current pin code length typed by the user
+     */
+    public void refresh(int pinLength) {
+        for (int i = 0; i < mRoundViews.size() - 1; i++) {
+            if (pinLength - 1 >= i) {
+                mRoundViews.get(i).setBackgroundResource(R.drawable.pin_code_round_full);
+            } else {
+                mRoundViews.get(i).setBackgroundResource(R.drawable.pin_code_round_empty);
+            }
+        }
+    }
 }

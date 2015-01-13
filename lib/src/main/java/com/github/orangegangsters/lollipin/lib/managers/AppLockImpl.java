@@ -1,7 +1,7 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
-import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,9 +25,9 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	private long lastActive;
 
-	public AppLockImpl(Application app) {
+	public AppLockImpl(Context context) {
 		super();
-		this.settings = PreferenceManager.getDefaultSharedPreferences(app);
+		this.settings = PreferenceManager.getDefaultSharedPreferences(context);
 		this.liveCount = 0;
 		this.visibleCount = 0;
 	}
