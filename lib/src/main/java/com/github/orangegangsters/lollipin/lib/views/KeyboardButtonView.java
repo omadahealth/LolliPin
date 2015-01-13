@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -46,22 +47,36 @@ public class KeyboardButtonView extends RelativeLayout {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardButtonView view = (KeyboardButtonView) inflater.inflate(R.layout.view_keyboard_button, this);
 
-            TextView textView = (TextView) view.findViewById(R.id.keyboard_button_textview);
-            ImageView imageView = (ImageView) view.findViewById(R.id.keyboard_button_imageview);
-            RippleView rippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
-
-            if (textView != null && text != null) {
-                textView.setText(text);
+            if (text != null) {
+                TextView textView = (TextView) view.findViewById(R.id.keyboard_button_textview);
+                if (textView != null) {
+                    textView.setText(text);
+                }
             }
-            if(imageView != null && image != null) {
-                imageView.setImageDrawable(image);
-                imageView.setVisibility(View.VISIBLE);
+            if (image != null) {
+                ImageView imageView = (ImageView) view.findViewById(R.id.keyboard_button_imageview);
+                if (imageView != null) {
+                    imageView.setImageDrawable(image);
+                    imageView.setVisibility(View.VISIBLE);
+                }
             }
-            if(!rippleEnabled) {
-                rippleView.setVisibility(View.INVISIBLE);
+            if (!rippleEnabled) {
+                RippleView rippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
+                if (rippleView != null) {
+                    rippleView.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }
 
-    //TODO handle click of the view
+    /**
+     * Retain touches for {@link com.andexert.library.RippleView}.
+     * Otherwise views above will not have the event.
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        onTouchEvent(event);
+        return false;
+    }
+
 }

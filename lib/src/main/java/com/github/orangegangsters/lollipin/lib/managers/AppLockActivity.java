@@ -13,12 +13,16 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.R;
+import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
+import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
+import com.github.orangegangsters.lollipin.lib.views.KeyboardView;
 
 
-public class AppLockActivity extends PinActivity {
+public class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener {
 	public static final String TAG = "AppLockActivity";
 
 	private int type = -1;
@@ -31,11 +35,16 @@ public class AppLockActivity extends PinActivity {
 	protected InputFilter[] filters = null;
 	protected TextView tvMessage = null;
 
+    private KeyboardView mKeyboardView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_pin_code);
+
+        mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
+        mKeyboardView.setKeyboardButtonClickedListener(this);
 //
 //		tvMessage = (TextView) findViewById(R.id.tv_message);
 //
@@ -224,6 +233,11 @@ public class AppLockActivity extends PinActivity {
 			codeField3.setText("");
 		}
 	}
+
+    @Override
+    public void onKeyboardClick(KeyboardButtonEnum keyboardButtonEnum) {
+        Toast.makeText(this, "" + keyboardButtonEnum.getButtonValue(), Toast.LENGTH_SHORT).show();
+    }
 
 	private OnClickListener btnListener = new OnClickListener() {
 		@Override
