@@ -37,7 +37,7 @@ public class PinCodeView extends RelativeLayout {
                     defStyleAttr, 0);
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.view_pin_code, this);
+            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.activity_pin_code, this);
 
         }
     }

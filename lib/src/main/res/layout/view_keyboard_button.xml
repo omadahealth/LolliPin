@@ -2,28 +2,24 @@
 <com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pin_code_button_1"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="@dimen/keyboard_button_padding"
+    android:paddingBottom="@dimen/keyboard_button_padding"
     app:rv_centered="true"
-    app:rv_rippleDuration="@integer/ripple_effect_duration" >
+    app:rv_rippleDuration="@integer/ripple_effect_duration"
+    app:rv_ripplePadding="@dimen/keyboard_button_ripple_padding"
+    app:rv_color="@android:color/black">
 
     <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
         android:id="@+id/pin_code_textview_large"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:textColor="@android:color/black"
-        android:textSize="22sp"
-        android:singleLine="true"
-        app:typeface="Roboto-Thin.ttf" />
-
-    <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
-        android:id="@+id/pin_code_textview_small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
+        android:textSize="@dimen/keyboard_button_large_text_size"
+        android:textStyle="bold"
         android:singleLine="true"
         app:typeface="Roboto-Thin.ttf" />
 

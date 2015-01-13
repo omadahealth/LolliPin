@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,26 +11,26 @@
         android:orientation="horizontal"
         android:weightSum="3" >
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button1_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button2_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button3_large_text" />
 
     </LinearLayout>
 
@@ -37,28 +38,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_first_row"
         android:weightSum="3">
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button4_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button5_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button6_large_text" />
 
     </LinearLayout>
 
@@ -66,28 +68,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_second_row"
         android:weightSum="3">
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button7_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button8_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button9_large_text" />
 
     </LinearLayout>
 
@@ -95,29 +98,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_third_row"
         android:weightSum="3">
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            android:layout_weight="1" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_11"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            app:large_text="@string/button11_large_text" />
 
-        <include
+        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            layout="@layout/view_keyboard_button" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

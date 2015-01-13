@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
+import com.github.orangegangsters.lollipin.lib.R;
 
 
 public class AppLockActivity extends PinActivity {
@@ -34,7 +35,7 @@ public class AppLockActivity extends PinActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-//		setContentView(R.layout.page_passcode);
+		setContentView(R.layout.activity_pin_code);
 //
 //		tvMessage = (TextView) findViewById(R.id.tv_message);
 //

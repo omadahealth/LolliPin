@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.orangegangsters.lollipin.lib.R;
@@ -37,7 +36,8 @@ public class KeyboardView extends RelativeLayout {
                     defStyleAttr, 0);
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.view_keyboard, this);
+            KeyboardView view = (KeyboardView) inflater.inflate(R.layout.view_keyboard, this);
+
 
         }
     }

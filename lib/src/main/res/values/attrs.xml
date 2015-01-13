@@ -4,4 +4,8 @@
         <attr name="typeface" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="KeyboardButtonView">
+        <attr name="large_text" format="string" />
+    </declare-styleable>
+
 </resources>
