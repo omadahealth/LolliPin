@@ -10,7 +10,7 @@ public abstract class AppLock {
 
     public static final String EXTRA_TYPE = "type";
 
-    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 3minutes
+    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
     protected int mLockTimeoutMillis;
     protected HashSet<String> mIgnoredActivities;
