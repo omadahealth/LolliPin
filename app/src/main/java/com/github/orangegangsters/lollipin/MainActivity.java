@@ -7,6 +7,7 @@ import android.view.View;
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
+import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
@@ -23,6 +24,8 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         this.findViewById(R.id.button_enable_pin).setOnClickListener(this);
         this.findViewById(R.id.button_change_pin).setOnClickListener(this);
         this.findViewById(R.id.button_unlock_pin).setOnClickListener(this);
+
+        LockManager.getInstance().enableAppLock(this);
     }
 
     @Override

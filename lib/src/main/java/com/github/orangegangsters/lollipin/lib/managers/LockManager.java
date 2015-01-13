@@ -7,11 +7,10 @@ public class LockManager {
     private volatile static LockManager mInstance;
     private static AppLock mAppLocker;
 
-    public static LockManager getInstance(Context context) {
+    public static LockManager getInstance() {
         synchronized (LockManager.class) {
             if (mInstance == null) {
                 mInstance = new LockManager();
-                mAppLocker = new AppLockImpl(context);
             }
         }
         return mInstance;
@@ -45,7 +44,10 @@ public class LockManager {
         mAppLocker = appLocker;
     }
 
-    public AppLock getAppLock() {
+    public AppLock getAppLock(Context context) {
+        if (mAppLocker == null) {
+            mAppLocker = new AppLockImpl(context);
+        }
         return mAppLocker;
     }
 }

@@ -36,7 +36,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 
         setContentView(R.layout.activity_pin_code);
 
-        mLockManager = LockManager.getInstance(this);
+        mLockManager = LockManager.getInstance();
         mPinCode = "";
         mOldPinCode = "";
 
@@ -94,9 +94,9 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
     protected void onPasscodeInputed() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
-                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
-                    mLockManager.getAppLock().setPasscode(null);
+                    mLockManager.getAppLock(this).setPasscode(null);
                     finish();
                 } else {
                     onPasscodeError();
@@ -110,7 +110,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 } else {
                     if (mPinCode.equals(mOldPinCode)) {
                         setResult(RESULT_OK);
-                        mLockManager.getAppLock().setPasscode(mPinCode);
+                        mLockManager.getAppLock(this).setPasscode(mPinCode);
                         finish();
                     } else {
                         mOldPinCode = "";
@@ -121,7 +121,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 }
                 break;
             case AppLock.CHANGE_PIN:
-                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
                     mStepTextView.setText("Enter passcode");
                     mType = AppLock.ENABLE_PINLOCK;
                     setPinCode("");
@@ -131,7 +131,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 }
                 break;
             case AppLock.UNLOCK_PIN:
-                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     finish();
                 } else {

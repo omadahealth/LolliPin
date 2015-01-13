@@ -15,15 +15,14 @@ import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	public static final String TAG = "DefaultAppLock";
 
-	private static final String PASSWORD_PREFERENCE_KEY = "passcode";
+	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
+    private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
 	private static final String PASSWORD_SALT = "7xn7@c$";
 
 	private SharedPreferences mSharedPreferences;
 
 	private int mLiveActivitiesCount;
 	private int mVisibleActivitiesCount;
-
-	private long mLastActiveMillis;
 
 	public AppLockImpl(Context context) {
 		super();
@@ -39,6 +38,16 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	public void disable() {
         PinActivity.clearListeners();
 	}
+
+    public long getLastActiveMillis() {
+        return mSharedPreferences.getLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, 0);
+    }
+
+    public void setLastActiveMillis() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, System.currentTimeMillis());
+        editor.apply();
+    }
 
 	public boolean checkPasscode(String passcode) {
 		passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
@@ -112,8 +121,9 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		}
 
 		// no enough timeout
-		long passedTime = System.currentTimeMillis() - mLastActiveMillis;
-		if (mLastActiveMillis > 0 && passedTime <= mLockTimeoutMillis) {
+        long lastActiveMillis = getLastActiveMillis();
+		long passedTime = System.currentTimeMillis() - lastActiveMillis;
+		if (lastActiveMillis > 0 && passedTime <= mLockTimeoutMillis) {
 			Log.d(TAG, "no enough timeout " + passedTime + " for "
                     + mLockTimeoutMillis);
 			return false;
@@ -132,7 +142,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityPaused " + clazzName);
 
-        mLastActiveMillis = System.currentTimeMillis();
+        setLastActiveMillis();
 	}
 
 	@Override
@@ -152,7 +162,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			activity.getApplication().startActivity(intent);
 		}
 
-		mLastActiveMillis = System.currentTimeMillis();
+        setLastActiveMillis();
 	}
 
 	@Override
@@ -173,8 +183,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 		mLiveActivitiesCount--;
 		if (mLiveActivitiesCount == 0) {
-			mLastActiveMillis = System.currentTimeMillis();
-			Log.d(TAG, "set last active " + mLastActiveMillis);
+            setLastActiveMillis();
 		}
 	}
 
@@ -208,8 +217,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 		mVisibleActivitiesCount--;
 		if (mVisibleActivitiesCount == 0) {
-			mLastActiveMillis = System.currentTimeMillis();
-			Log.d(TAG, "set last active " + mLastActiveMillis);
+            setLastActiveMillis();
 		}
 	}
 }
