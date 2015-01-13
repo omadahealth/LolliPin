@@ -7,6 +7,7 @@
     <declare-styleable name="KeyboardButtonView">
         <attr name="keyboard_button_text" format="string" />
         <attr name="keyboard_button_image" format="integer" />
+        <attr name="keyboard_button_ripple_enabled" format="boolean" />
     </declare-styleable>
 
 </resources>

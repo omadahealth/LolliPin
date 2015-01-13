@@ -105,7 +105,8 @@
             android:id="@+id/pin_code_button_10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:keyboard_button_ripple_enabled="false" />
 
         <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_11"

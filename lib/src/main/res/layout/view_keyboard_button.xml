@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pin_code_button_1"
+    android:id="@+id/pin_code_keyboard_button_ripple"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@android:color/black"
+        android:textColor="@color/dark_grey_color"
         android:textSize="@dimen/keyboard_button_text_size"
         android:textStyle="bold"
         android:singleLine="true"

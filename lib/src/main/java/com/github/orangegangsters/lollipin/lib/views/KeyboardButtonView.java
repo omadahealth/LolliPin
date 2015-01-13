@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.github.orangegangsters.lollipin.lib.R;
 
 /**
@@ -40,12 +41,14 @@ public class KeyboardButtonView extends RelativeLayout {
                     defStyleAttr, 0);
             String text = attributes.getString(R.styleable.KeyboardButtonView_keyboard_button_text);
             Drawable image = attributes.getDrawable(R.styleable.KeyboardButtonView_keyboard_button_image);
+            boolean rippleEnabled = attributes.getBoolean(R.styleable.KeyboardButtonView_keyboard_button_ripple_enabled, true);
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardButtonView view = (KeyboardButtonView) inflater.inflate(R.layout.view_keyboard_button, this);
 
             TextView textView = (TextView) view.findViewById(R.id.keyboard_button_textview);
             ImageView imageView = (ImageView) view.findViewById(R.id.keyboard_button_imageview);
+            RippleView rippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
 
             if (textView != null && text != null) {
                 textView.setText(text);
@@ -54,6 +57,11 @@ public class KeyboardButtonView extends RelativeLayout {
                 imageView.setImageDrawable(image);
                 imageView.setVisibility(View.VISIBLE);
             }
+            if(!rippleEnabled) {
+                rippleView.setVisibility(View.INVISIBLE);
+            }
         }
     }
+
+    //TODO handle click of the view
 }

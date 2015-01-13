@@ -50,4 +50,6 @@ public class PinCodeRoundView extends RelativeLayout {
             mRoundViews.add((ImageView) view.findViewById(R.id.pin_code_round4));
         }
     }
+
+    //TODO handle different state of pin_code_roundx
 }
