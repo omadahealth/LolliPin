@@ -1,17 +1,19 @@
 package com.github.orangegangsters.lollipin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends PinActivity implements View.OnClickListener {
+
+    private static final int REQUEST_CODE_ENABLE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +31,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.button_enable_pin:
                 intent.putExtra(AppLock.TYPE, AppLock.ENABLE_PINLOCK);
+                startActivityForResult(intent, REQUEST_CODE_ENABLE);
                 break;
             case R.id.button_change_pin:
                 intent.putExtra(AppLock.TYPE, AppLock.CHANGE_PIN);
+                startActivity(intent);
                 break;
             case R.id.button_unlock_pin:
                 intent.putExtra(AppLock.TYPE, AppLock.UNLOCK_PIN);
-            default:
+                startActivity(intent);
                 break;
         }
-        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_ENABLE:
+                //DO nothing here
+                break;
+        }
     }
 }

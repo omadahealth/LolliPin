@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.R;
@@ -76,14 +75,11 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
     @Override
     public void onKeyboardClick(KeyboardButtonEnum keyboardButtonEnum) {
         int value = keyboardButtonEnum.getButtonValue();
-        Toast.makeText(this, "" + value, Toast.LENGTH_SHORT).show();
 
         if (value == KeyboardButtonEnum.BUTTON_CLEAR.getButtonValue()) {
-            mPinCode = "";
-            mPinCodeRoundView.refresh(mPinCode.length());
+            setPinCode("");
         } else {
-            mPinCode += keyboardButtonEnum.getButtonValue();
-            mPinCodeRoundView.refresh(mPinCode.length());
+            setPinCode(mPinCode + value);
             if (mPinCode.length() == PIN_CODE_LENGTH) {
                 onPasscodeInputed();
             }
@@ -103,16 +99,18 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 }
                 break;
             case AppLock.ENABLE_PINLOCK:
-                if (mOldPinCode == null) {
+                if (mOldPinCode == null || mOldPinCode.length() == 0) {
                     mStepTextView.setText("Enter again");
                     mOldPinCode = mPinCode;
+                    setPinCode("");
                 } else {
                     if (mPinCode.equals(mOldPinCode)) {
                         setResult(RESULT_OK);
                         mLockManager.getAppLock().setPasscode(mPinCode);
                         finish();
                     } else {
-                        mOldPinCode = null;
+                        mOldPinCode = "";
+                        setPinCode("");
                         mStepTextView.setText("Enter passcode");
                         onPasscodeError();
                     }
@@ -164,6 +162,11 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
             }
         };
         runOnUiThread(thread);
+    }
+
+    public void setPinCode(String pinCode) {
+        mPinCode = pinCode;
+        mPinCodeRoundView.refresh(mPinCode.length());
     }
 
     public int getType() {

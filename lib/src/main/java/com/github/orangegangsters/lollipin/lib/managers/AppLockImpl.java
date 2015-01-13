@@ -96,7 +96,6 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	}
 
 	private boolean shouldLockSceen(Activity activity) {
-
 		// already unlock
 		if (activity instanceof AppLockActivity) {
 			AppLockActivity ala = (AppLockActivity) activity;
@@ -132,6 +131,8 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	public void onActivityPaused(Activity activity) {
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityPaused " + clazzName);
+
+        lastActive = System.currentTimeMillis();
 	}
 
 	@Override
@@ -151,7 +152,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 			activity.getApplication().startActivity(intent);
 		}
 
-		lastActive = 0;
+		lastActive = System.currentTimeMillis();
 	}
 
 	@Override

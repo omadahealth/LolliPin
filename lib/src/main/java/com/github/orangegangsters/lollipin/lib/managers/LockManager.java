@@ -1,6 +1,5 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
-import android.app.Application;
 import android.content.Context;
 
 public class LockManager {
@@ -18,9 +17,9 @@ public class LockManager {
 		return instance;
 	}
 
-	public void enableAppLock(Application app) {
+	public void enableAppLock(Context context) {
 		if (curAppLocker == null) {
-			curAppLocker = new AppLockImpl(app);
+			curAppLocker = new AppLockImpl(context);
 		}
 		curAppLocker.enable();
 	}

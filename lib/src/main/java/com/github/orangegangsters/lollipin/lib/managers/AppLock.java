@@ -8,10 +8,9 @@ public abstract class AppLock {
     public static final int CHANGE_PIN = 2;
     public static final int UNLOCK_PIN = 3;
 
-    public static final String MESSAGE = "message";
     public static final String TYPE = "type";
 
-    public static final int DEFAULT_TIMEOUT = 0; // 2000ms
+    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
     protected int lockTimeOut;
     protected HashSet<String> ignoredActivities;
