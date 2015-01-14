@@ -51,9 +51,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        Integer appLockLogoId = mLockManager.getAppLock(this).getLogoId();
-        mLogoId =  appLockLogoId != null ? appLockLogoId : android.R.drawable.sym_def_app_icon;
-        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLogoId);
+        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock(this).getLogoId());
 
         initText();
     }

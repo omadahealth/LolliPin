@@ -18,6 +18,8 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    private static final String LOGO_ID_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
 	private static final String PASSWORD_SALT = "7xn7@c$";
 
 	private SharedPreferences mSharedPreferences;
@@ -32,7 +34,31 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		this.mVisibleActivitiesCount = 0;
 	}
 
-	public void enable() {
+    @Override
+    public void setTimeout(int timeout) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putLong(TIMEOUT_MILLIS_PREFERENCE_KEY, timeout);
+        editor.apply();
+    }
+
+    @Override
+    public long getTimeout() {
+        return mSharedPreferences.getLong(TIMEOUT_MILLIS_PREFERENCE_KEY, DEFAULT_TIMEOUT);
+    }
+
+    @Override
+    public void setLogoId(int logoId) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(LOGO_ID_PREFERENCE_KEY, logoId);
+        editor.apply();
+    }
+
+    @Override
+    public Integer getLogoId() {
+        return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, android.R.drawable.sym_def_app_icon);
+    }
+
+    public void enable() {
 		PinActivity.addListener(this);
         PinFragmentActivity.addListener(this);
 	}
@@ -128,9 +154,10 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 		// no enough timeout
         long lastActiveMillis = getLastActiveMillis();
 		long passedTime = System.currentTimeMillis() - lastActiveMillis;
-		if (lastActiveMillis > 0 && passedTime <= mLockTimeoutMillis) {
+        long timeout = getTimeout();
+		if (lastActiveMillis > 0 && passedTime <= timeout) {
 			Log.d(TAG, "no enough timeout " + passedTime + " for "
-                    + mLockTimeoutMillis);
+                    + timeout);
 			return false;
 		}
 

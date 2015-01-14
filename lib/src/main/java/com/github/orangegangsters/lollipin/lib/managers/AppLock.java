@@ -13,26 +13,10 @@ public abstract class AppLock {
 
     public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
-    protected int mLockTimeoutMillis;
-    private Integer mLogoId;
     protected HashSet<String> mIgnoredActivities;
-
-    //TODO set in sharedPrefs
-    public void setTimeout(int timeout) {
-        this.mLockTimeoutMillis = timeout;
-    }
-
-    public void setLogoId(int logoId) {
-        mLogoId = logoId;
-    }
-
-    public Integer getLogoId() {
-        return mLogoId;
-    }
 
     public AppLock() {
         mIgnoredActivities = new HashSet<String>();
-        mLockTimeoutMillis = DEFAULT_TIMEOUT;
     }
 
     public void addIgnoredActivity(Class<?> clazz) {
@@ -44,6 +28,14 @@ public abstract class AppLock {
         String clazzName = clazz.getName();
         this.mIgnoredActivities.remove(clazzName);
     }
+
+    public abstract void setTimeout(int timeout);
+
+    public abstract long getTimeout();
+
+    public abstract void setLogoId(int logoId);
+
+    public abstract Integer getLogoId();
 
     public abstract void enable();
 
