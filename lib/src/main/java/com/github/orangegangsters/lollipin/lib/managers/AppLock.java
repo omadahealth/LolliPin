@@ -14,10 +14,20 @@ public abstract class AppLock {
     public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
     protected int mLockTimeoutMillis;
+    private Integer mLogoId;
     protected HashSet<String> mIgnoredActivities;
 
+    //TODO set in sharedPrefs
     public void setTimeout(int timeout) {
         this.mLockTimeoutMillis = timeout;
+    }
+
+    public void setLogoId(int logoId) {
+        mLogoId = logoId;
+    }
+
+    public Integer getLogoId() {
+        return mLogoId;
     }
 
     public AppLock() {
