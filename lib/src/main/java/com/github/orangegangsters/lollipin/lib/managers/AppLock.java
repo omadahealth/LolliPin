@@ -9,6 +9,7 @@ public abstract class AppLock {
     public static final int UNLOCK_PIN = 3;
 
     public static final String EXTRA_TYPE = "type";
+    public static final String EXTRA_LOGO = "logo";
 
     public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
