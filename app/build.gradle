@@ -24,4 +24,7 @@ dependencies {
 
     compile project(':lib')
     compile 'com.android.support:appcompat-v7:21.0.3'
+
+    //test
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.+'
 }

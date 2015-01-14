@@ -19,6 +19,7 @@ public class PinCodeRoundView extends RelativeLayout {
 
     private Context mContext;
     private List<ImageView> mRoundViews;
+    private int mCurrentLength;
 
     public PinCodeRoundView(Context context) {
         this(context, null);
@@ -57,6 +58,7 @@ public class PinCodeRoundView extends RelativeLayout {
      * @param pinLength the current pin code length typed by the user
      */
     public void refresh(int pinLength) {
+        mCurrentLength = pinLength;
         for (int i = 0; i < mRoundViews.size() - 1; i++) {
             if (pinLength - 1 >= i) {
                 mRoundViews.get(i).setBackgroundResource(R.drawable.pin_code_round_full);
@@ -64,5 +66,9 @@ public class PinCodeRoundView extends RelativeLayout {
                 mRoundViews.get(i).setBackgroundResource(R.drawable.pin_code_round_empty);
             }
         }
+    }
+
+    public int getCurrentLength() {
+        return mCurrentLength;
     }
 }

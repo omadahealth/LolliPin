@@ -4,5 +4,6 @@
     <string name="app_name">LolliPin</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="activity_not_locked_text">Nothing should happen on this page, here for test purpose</string>
 
 </resources>
