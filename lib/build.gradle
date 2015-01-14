@@ -8,7 +8,7 @@ android {
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
     buildTypes {
         release {
@@ -22,4 +22,26 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.github.traex.rippleeffect:ripple:1.2.3'
     compile 'com.android.support:appcompat-v7:21.0.3'
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("../../omada-nexus/release"))
+            snapshotRepository(url: uri("../../omada-nexus/release"))
+            pom.groupId = 'com.github.orangegangsters.lollipin'
+            pom.artifactId = 'lib'
+            pom.version = '0.0.1'
+        }
+    }
 }
