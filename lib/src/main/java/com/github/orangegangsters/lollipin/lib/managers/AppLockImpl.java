@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
+import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
@@ -33,10 +34,12 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	public void enable() {
 		PinActivity.addListener(this);
+        PinFragmentActivity.addListener(this);
 	}
 
 	public void disable() {
         PinActivity.clearListeners();
+        PinFragmentActivity.clearListeners();
 	}
 
     public long getLastActiveMillis() {
@@ -105,6 +108,8 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	}
 
 	private boolean shouldLockSceen(Activity activity) {
+        Log.d(TAG, "Lollipin shouldLockSceen() called");
+
 		// already unlock
 		if (activity instanceof AppLockActivity) {
 			AppLockActivity ala = (AppLockActivity) activity;
@@ -131,6 +136,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 		// start more than one page
 		if (mVisibleActivitiesCount > 1) {
+            Log.d(TAG, "more than one page visible.");
 			return false;
 		}
 
@@ -139,6 +145,10 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	@Override
 	public void onActivityPaused(Activity activity) {
+        if (isIgnoredActivity(activity)) {
+            return;
+        }
+
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityPaused " + clazzName);
 
@@ -147,12 +157,12 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	@Override
 	public void onActivityResumed(Activity activity) {
+        if (isIgnoredActivity(activity)) {
+            return;
+        }
+
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityResumed " + clazzName);
-
-		if (isIgnoredActivity(activity)) {
-			return;
-		}
 
 		if (shouldLockSceen(activity)) {
 			Intent intent = new Intent(activity.getApplicationContext(),
@@ -167,7 +177,6 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	@Override
 	public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
 		if (isIgnoredActivity(activity)) {
 			return;
 		}
@@ -196,24 +205,24 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	@Override
 	public void onActivityStarted(Activity activity) {
+        if (isIgnoredActivity(activity)) {
+            return;
+        }
+
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityStarted " + clazzName);
-
-		if (isIgnoredActivity(activity)) {
-			return;
-		}
 
 		mVisibleActivitiesCount++;
 	}
 
 	@Override
 	public void onActivityStopped(Activity activity) {
+        if (isIgnoredActivity(activity)) {
+            return;
+        }
+
 		String clazzName = activity.getClass().getName();
 		Log.d(TAG, "onActivityStopped " + clazzName);
-
-		if (isIgnoredActivity(activity)) {
-			return;
-		}
 
 		mVisibleActivitiesCount--;
 		if (mVisibleActivitiesCount == 0) {

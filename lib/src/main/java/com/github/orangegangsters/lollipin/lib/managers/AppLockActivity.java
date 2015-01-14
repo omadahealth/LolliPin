@@ -56,16 +56,16 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
     private void initText() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
-                mStepTextView.setText("Disable Passcode");
+                mStepTextView.setText(getString(R.string.pin_code_step_disable));
                 break;
             case AppLock.ENABLE_PINLOCK:
-                mStepTextView.setText("Enable Passcode");
+                mStepTextView.setText(getString(R.string.pin_code_step_create));
                 break;
             case AppLock.CHANGE_PIN:
-                mStepTextView.setText("Change Passcode");
+                mStepTextView.setText(getString(R.string.pin_code_step_change));
                 break;
             case AppLock.UNLOCK_PIN:
-                mStepTextView.setText("Unlock Passcode");
+                mStepTextView.setText(getString(R.string.pin_code_step_unlock));
                 break;
         }
     }
@@ -103,7 +103,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 break;
             case AppLock.ENABLE_PINLOCK:
                 if (mOldPinCode == null || mOldPinCode.length() == 0) {
-                    mStepTextView.setText("Enter again");
+                    mStepTextView.setText(getString(R.string.pin_code_step_enable_confirm));
                     mOldPinCode = mPinCode;
                     setPinCode("");
                 } else {
@@ -114,14 +114,14 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                     } else {
                         mOldPinCode = "";
                         setPinCode("");
-                        mStepTextView.setText("Enter passcode");
+                        mStepTextView.setText(getString(R.string.pin_code_step_create));
                         onPinCodeError();
                     }
                 }
                 break;
             case AppLock.CHANGE_PIN:
                 if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
-                    mStepTextView.setText("Enter passcode");
+                    mStepTextView.setText(getString(R.string.pin_code_step_create));
                     mType = AppLock.ENABLE_PINLOCK;
                     setPinCode("");
                     initText();

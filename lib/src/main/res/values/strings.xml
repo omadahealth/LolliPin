@@ -19,4 +19,11 @@
     <string name="button9_large_text">9</string>
     <string name="button9_small_text">WXYZ</string>
     <string name="button11_large_text">0</string>
+
+    <string name="pin_code_forgot_text">Forgot?</string>
+    <string name="pin_code_step_disable">Disable 4-digit Pincode</string>
+    <string name="pin_code_step_create">Create a 4-digit Pincode</string>
+    <string name="pin_code_step_change">Enter your current 4-digit Pincode</string>
+    <string name="pin_code_step_unlock">Enter your 4-digit Pincode</string>
+    <string name="pin_code_step_enable_confirm">Confirm your 4-digit Pincode</string>
 </resources>

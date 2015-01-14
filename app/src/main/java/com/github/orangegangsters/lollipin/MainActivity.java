@@ -3,6 +3,7 @@ package com.github.orangegangsters.lollipin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
@@ -57,7 +58,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
 
         switch (requestCode){
             case REQUEST_CODE_ENABLE:
-                //DO nothing here
+                Toast.makeText(this, "PinCode enabled", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
