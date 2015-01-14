@@ -35,7 +35,7 @@ public abstract class AppLock {
 
     public abstract void setLogoId(int logoId);
 
-    public abstract Integer getLogoId();
+    public abstract int getLogoId();
 
     public abstract void enable();
 

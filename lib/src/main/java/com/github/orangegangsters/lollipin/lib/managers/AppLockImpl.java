@@ -18,8 +18,8 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
-    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
-    private static final String LOGO_ID_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
+    private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
 	private static final String PASSWORD_SALT = "7xn7@c$";
 
 	private SharedPreferences mSharedPreferences;
@@ -54,7 +54,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
     }
 
     @Override
-    public Integer getLogoId() {
+    public int getLogoId() {
         return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, android.R.drawable.sym_def_app_icon);
     }
 
