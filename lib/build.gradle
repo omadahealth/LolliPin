@@ -8,7 +8,7 @@ android {
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
-        versionName "0.0.1"
+        versionName VERSION_NAME
     }
     buildTypes {
         release {
@@ -39,9 +39,9 @@ uploadArchives {
         mavenDeployer {
             repository(url: uri("../../omada-nexus/release"))
             snapshotRepository(url: uri("../../omada-nexus/release"))
-            pom.groupId = 'com.github.orangegangsters.lollipin'
-            pom.artifactId = 'lib'
-            pom.version = '0.0.1'
+            pom.groupId = POM_GROUP
+            pom.artifactId = POM_ARTIFACT
+            pom.version = VERSION_NAME
         }
     }
 }
