@@ -85,13 +85,12 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
         } else {
             setPinCode(mPinCode + value);
             if (mPinCode.length() == PIN_CODE_LENGTH) {
-                onPasscodeInputed();
+                onPinCodeInputed();
             }
         }
-
     }
 
-    protected void onPasscodeInputed() {
+    protected void onPinCodeInputed() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
                 if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
@@ -99,7 +98,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                     mLockManager.getAppLock(this).setPasscode(null);
                     finish();
                 } else {
-                    onPasscodeError();
+                    onPinCodeError();
                 }
                 break;
             case AppLock.ENABLE_PINLOCK:
@@ -116,7 +115,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                         mOldPinCode = "";
                         setPinCode("");
                         mStepTextView.setText("Enter passcode");
-                        onPasscodeError();
+                        onPinCodeError();
                     }
                 }
                 break;
@@ -127,7 +126,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                     setPinCode("");
                     initText();
                 } else {
-                    onPasscodeError();
+                    onPinCodeError();
                 }
                 break;
             case AppLock.UNLOCK_PIN:
@@ -135,7 +134,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    onPasscodeError();
+                    onPinCodeError();
                 }
                 break;
             default:
@@ -157,7 +156,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 //		}
     }
 
-    protected void onPasscodeError() {
+    protected void onPinCodeError() {
         Thread thread = new Thread() {
             public void run() {
                 mPinCode = "";
