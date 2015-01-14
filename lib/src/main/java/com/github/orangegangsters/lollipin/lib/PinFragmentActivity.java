@@ -1,7 +1,7 @@
 package com.github.orangegangsters.lollipin.lib;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Then to enable PinCode blocking, you must call
  * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context)}
  */
-public class PinActivity extends Activity {
+public class PinFragmentActivity extends FragmentActivity {
     private static List<LifeCycleInterface> mLifeCycleListeners;
 
     @Override
