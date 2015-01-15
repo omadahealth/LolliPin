@@ -92,9 +92,13 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             setPinCode("");
         } else {
             setPinCode(mPinCode + value);
-            if (mPinCode.length() == PIN_CODE_LENGTH) {
-                onPinCodeInputed();
-            }
+        }
+    }
+
+    @Override
+    public void onRippleAnimationEnd() {
+        if (mPinCode.length() == PIN_CODE_LENGTH) {
+            onPinCodeInputed();
         }
     }
 
@@ -199,7 +203,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onClick(View view) {
-
         showForgotDialog();
     }
 }

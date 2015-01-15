@@ -9,4 +9,6 @@ public interface KeyboardButtonClickedListener {
 
     public void onKeyboardClick(KeyboardButtonEnum keyboardButtonEnum);
 
+    public void onRippleAnimationEnd();
+
 }

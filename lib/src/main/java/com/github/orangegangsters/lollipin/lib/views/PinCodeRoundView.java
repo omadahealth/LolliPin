@@ -59,7 +59,7 @@ public class PinCodeRoundView extends RelativeLayout {
      */
     public void refresh(int pinLength) {
         mCurrentLength = pinLength;
-        for (int i = 0; i < mRoundViews.size() - 1; i++) {
+        for (int i = 0; i < mRoundViews.size(); i++) {
             if (pinLength - 1 >= i) {
                 mRoundViews.get(i).setBackgroundResource(R.drawable.pin_code_round_full);
             } else {

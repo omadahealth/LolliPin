@@ -11,15 +11,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleAnimationListener;
 import com.andexert.library.RippleView;
 import com.github.orangegangsters.lollipin.lib.R;
+import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
 
 /**
  * Created by stoyan and oliviergoutay on 1/13/15.
  */
-public class KeyboardButtonView extends RelativeLayout {
+public class KeyboardButtonView extends RelativeLayout implements RippleAnimationListener {
+
+    private KeyboardButtonClickedListener mKeyboardButtonClickedListener;
 
     private Context mContext;
+    private RippleView mRippleView;
 
     public KeyboardButtonView(Context context) {
         this(context, null);
@@ -60,12 +65,25 @@ public class KeyboardButtonView extends RelativeLayout {
                     imageView.setVisibility(View.VISIBLE);
                 }
             }
-            if (!rippleEnabled) {
-                RippleView rippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
-                if (rippleView != null) {
-                    rippleView.setVisibility(View.INVISIBLE);
+
+            mRippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
+            mRippleView.setRippleAnimationListener(this);
+            if (mRippleView != null) {
+                if (!rippleEnabled) {
+                    mRippleView.setVisibility(View.INVISIBLE);
                 }
             }
+        }
+    }
+
+    public void setOnRippleAnimationEndListener(KeyboardButtonClickedListener keyboardButtonClickedListener) {
+        mKeyboardButtonClickedListener = keyboardButtonClickedListener;
+    }
+
+    @Override
+    public void onRippleAnimationEnd() {
+        if (mKeyboardButtonClickedListener != null) {
+            mKeyboardButtonClickedListener.onRippleAnimationEnd();
         }
     }
 
@@ -78,5 +96,4 @@ public class KeyboardButtonView extends RelativeLayout {
         onTouchEvent(event);
         return false;
     }
-
 }

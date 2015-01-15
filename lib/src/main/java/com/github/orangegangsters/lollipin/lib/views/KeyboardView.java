@@ -11,6 +11,9 @@ import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
 import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by stoyan and olivier on 1/13/15.
  */
@@ -18,6 +21,8 @@ public class KeyboardView extends RelativeLayout implements View.OnClickListener
 
     private Context mContext;
     private KeyboardButtonClickedListener mKeyboardButtonClickedListener;
+
+    private List<KeyboardButtonView> mButtons;
 
     public KeyboardView(Context context) {
         this(context, null);
@@ -47,17 +52,22 @@ public class KeyboardView extends RelativeLayout implements View.OnClickListener
     }
 
     private void initKeyboardButtons(KeyboardView view) {
-        view.findViewById(R.id.pin_code_button_0).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_1).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_2).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_3).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_4).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_5).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_6).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_7).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_8).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_9).setOnClickListener(this);
-        view.findViewById(R.id.pin_code_button_clear).setOnClickListener(this);
+        mButtons = new ArrayList<>();
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_0));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_1));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_2));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_3));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_4));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_5));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_6));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_7));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_8));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_9));
+        mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_clear));
+
+        for(View button : mButtons) {
+            button.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -94,5 +104,8 @@ public class KeyboardView extends RelativeLayout implements View.OnClickListener
 
     public void setKeyboardButtonClickedListener(KeyboardButtonClickedListener keyboardButtonClickedListener) {
         this.mKeyboardButtonClickedListener = keyboardButtonClickedListener;
+        for(KeyboardButtonView button : mButtons) {
+            button.setOnRippleAnimationEndListener(mKeyboardButtonClickedListener);
+        }
     }
 }
