@@ -1,8 +1,8 @@
 package lollipin.orangegangsters.github.com.lollipin.functional;
 
+import com.github.orangegangsters.lollipin.CustomPinActivity;
 import com.github.orangegangsters.lollipin.MainActivity;
 import com.github.orangegangsters.lollipin.NotLockedActivity;
-import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
 
@@ -48,21 +48,21 @@ public class PinLockTest extends AbstractTest {
         clickOnView(R.id.pin_code_button_3);
         clickOnView(R.id.pin_code_button_4);
         clickOnView(R.id.pin_code_button_5);
-        solo.waitForActivity(AppLockActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
         solo.sleep(1000);
 
         //--------Same pin--------
         enablePin();
     }
 
-    public void testPinChecking() {
+    public void testPinEnablingChecking() {
         enablePin();
 
         //Go to unlock
         clickOnView(R.id.button_unlock_pin);
-        solo.waitForActivity(AppLockActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
 
         //Enter the code
         clickOnView(R.id.pin_code_button_1);
@@ -75,13 +75,13 @@ public class PinLockTest extends AbstractTest {
         solo.assertCurrentActivity("MainActivity", MainActivity.class);
     }
 
-    public void testPinChanging() {
+    public void testPinEnablingChanging() {
         enablePin();
 
         //Go to change
         clickOnView(R.id.button_change_pin);
-        solo.waitForActivity(AppLockActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
 
         //Enter previous code
         clickOnView(R.id.pin_code_button_1);
@@ -105,8 +105,8 @@ public class PinLockTest extends AbstractTest {
 
         //Go to unlock
         clickOnView(R.id.button_unlock_pin);
-        solo.waitForActivity(AppLockActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
 
         //Enter the code
         clickOnView(R.id.pin_code_button_2);
@@ -123,17 +123,18 @@ public class PinLockTest extends AbstractTest {
         enablePin();
 
         //Go to NotLockedActivity
+        solo.sleep(1000);
         clickOnView(R.id.button_not_locked);
         solo.waitForActivity(NotLockedActivity.class);
         solo.assertCurrentActivity("NotLockedActivity", NotLockedActivity.class);
 
         //Set the last time to now - 11sec
-        setMillis(System.currentTimeMillis() - (1000 * 11));
+        setMillis(System.currentTimeMillis() - (1000 * 15));
         solo.getCurrentActivity().finish();
 
         //Check view
-        solo.waitForActivity(AppLockActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
         solo.sleep(1000);
     }
 
@@ -141,7 +142,7 @@ public class PinLockTest extends AbstractTest {
         enablePin();
 
         //Set to 3minutes
-        LockManager.getInstance().getAppLock(solo.getCurrentActivity()).setTimeout(1000 * 60 * 3);
+        LockManager.getInstance().getAppLock().setTimeout(1000 * 60 * 3);
 
         //Go to NotLockedActivity
         clickOnView(R.id.button_not_locked);
@@ -154,7 +155,7 @@ public class PinLockTest extends AbstractTest {
 
         //Check view
         solo.waitForActivity(MainActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", MainActivity.class);
+        solo.assertCurrentActivity("MainActivity", MainActivity.class);
         solo.sleep(1000);
 
         //Go to NotLockedActivity
@@ -168,7 +169,7 @@ public class PinLockTest extends AbstractTest {
 
         //Check view
         solo.waitForActivity(MainActivity.class);
-        solo.assertCurrentActivity("AppLockActivity", MainActivity.class);
+        solo.assertCurrentActivity("MainActivity", MainActivity.class);
         solo.sleep(1000);
     }
 
@@ -195,8 +196,9 @@ public class PinLockTest extends AbstractTest {
         //Go to enable
         if (solo.getCurrentActivity() instanceof MainActivity) {
             clickOnView(R.id.button_enable_pin);
-            solo.waitForActivity(AppLockActivity.class);
-            solo.assertCurrentActivity("AppLockActivity", AppLockActivity.class);
+            solo.waitForActivity(CustomPinActivity.class);
+            solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+            solo.waitForText("1");
         }
     }
 

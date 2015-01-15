@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
 
-public class MainActivity extends CustomPinActivity implements View.OnClickListener {
+public class MainActivity extends PinActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_ENABLE = 11;
 

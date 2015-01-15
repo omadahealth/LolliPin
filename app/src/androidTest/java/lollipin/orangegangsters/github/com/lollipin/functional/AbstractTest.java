@@ -15,6 +15,8 @@ public class AbstractTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
+    private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
 
     protected Solo solo;
 
@@ -55,9 +57,11 @@ public class AbstractTest extends ActivityInstrumentationTestCase2<MainActivity>
     protected void removeAllPrefs() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.remove(PASSWORD_PREFERENCE_KEY);
-        editor.remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY);
-        editor.apply();
+        editor.remove(PASSWORD_PREFERENCE_KEY)
+                .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
+                .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
+                .remove(LOGO_ID_PREFERENCE_KEY)
+                .apply();
     }
 
     protected void setMillis(long millis) {
