@@ -97,6 +97,13 @@ public abstract class AppLock {
     public abstract void disable();
 
     /**
+     * Disable the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} by removing any
+     * {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface} and also delete
+     * all the previous saved configurations into {@link android.content.SharedPreferences}
+     */
+    public abstract void disableAndRemoveConfiguration();
+
+    /**
      * Get the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}
      */
     public abstract long getLastActiveMillis();

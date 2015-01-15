@@ -103,6 +103,17 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
+    public void disableAndRemoveConfiguration() {
+        PinActivity.clearListeners();
+        PinFragmentActivity.clearListeners();
+        mSharedPreferences.edit().remove(PASSWORD_PREFERENCE_KEY)
+                .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
+                .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
+                .remove(LOGO_ID_PREFERENCE_KEY)
+                .apply();
+    }
+
+    @Override
     public long getLastActiveMillis() {
         return mSharedPreferences.getLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, 0);
     }
@@ -231,14 +242,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityResumed " + clazzName);
 
-		if (shouldLockSceen(activity)) {
+        if (shouldLockSceen(activity)) {
             Log.d(TAG, "mActivityClass.getClass() " + mActivityClass);
-			Intent intent = new Intent(activity.getApplicationContext(),
+            Intent intent = new Intent(activity.getApplicationContext(),
                     mActivityClass);
-			intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			activity.getApplication().startActivity(intent);
-		}
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.getApplication().startActivity(intent);
+        }
 
         setLastActiveMillis();
     }
