@@ -51,6 +51,9 @@ public class KeyboardView extends RelativeLayout implements View.OnClickListener
         }
     }
 
+    /**
+     * Init the keyboard buttons (onClickListener)
+     */
     private void initKeyboardButtons(KeyboardView view) {
         mButtons = new ArrayList<>();
         mButtons.add((KeyboardButtonView) view.findViewById(R.id.pin_code_button_0));
@@ -102,6 +105,10 @@ public class KeyboardView extends RelativeLayout implements View.OnClickListener
         }
     }
 
+    /**
+     * Set the {@link com.andexert.library.RippleAnimationListener} to the
+     * {@link com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView}
+     */
     public void setKeyboardButtonClickedListener(KeyboardButtonClickedListener keyboardButtonClickedListener) {
         this.mKeyboardButtonClickedListener = keyboardButtonClickedListener;
         for(KeyboardButtonView button : mButtons) {

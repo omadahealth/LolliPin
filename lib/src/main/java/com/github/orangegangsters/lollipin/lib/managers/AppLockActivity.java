@@ -20,6 +20,9 @@ import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
 public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
     public static final String TAG = "AppLockActivity";
+    /**
+     * The PIN length
+     */
     private static final int PIN_CODE_LENGTH = 4;
 
     private TextView mStepTextView;
@@ -61,6 +64,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         initText();
     }
 
+    /**
+     * Init the {@link #mStepTextView} based on {@link #mType}
+     */
     private void initText() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
@@ -78,12 +84,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
     }
 
+    /**
+     * Overrides to allow a slide_down animation when finishing
+     */
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.nothing, R.anim.slide_down);
     }
 
+    /**
+     * Add the button clicked to {@link #mPinCode} each time.
+     * Refreshes also the {@link com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView}
+     */
     @Override
     public void onKeyboardClick(KeyboardButtonEnum keyboardButtonEnum) {
         int value = keyboardButtonEnum.getButtonValue();
@@ -95,6 +108,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
     }
 
+    /**
+     * Called at the end of the animation of the {@link com.andexert.library.RippleView}
+     * Calls {@link #onPinCodeInputed} when {@link #mPinCode}
+     */
     @Override
     public void onRippleAnimationEnd() {
         if (mPinCode.length() == PIN_CODE_LENGTH) {
@@ -102,6 +119,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
     }
 
+    /**
+     * Switch over the {@link #mType} to determine if the password is ok, if we should pass to the next step etc...
+     */
     protected void onPinCodeInputed() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
@@ -154,26 +174,22 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
     }
 
+    /**
+     * Override {@link #onBackPressed()} to prevent user for finishing the activity
+     */
     @Override
     public void onBackPressed() {
-//		if (type == AppLock.UNLOCK_PIN) {
-//			// back to home screen
-//			Intent intent = new Intent();
-//			intent.setAction(Intent.ACTION_MAIN);
-//			intent.addCategory(Intent.CATEGORY_HOME);
-//			this.startActivity(intent);
-//			finish();
-//		} else {
-//			finish();
-//		}
     }
+
     /**
      * Displays the information dialog when the user clicks the
      * {@link #mForgotTextView}
      */
     public abstract void showForgotDialog();
 
-
+    /**
+     * Run a shake animation when the password is not valid.
+     */
     protected void onPinCodeError() {
         Thread thread = new Thread() {
             public void run() {
@@ -187,11 +203,17 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         runOnUiThread(thread);
     }
 
+    /**
+     * Set the pincode and refreshes the {@link com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView}
+     */
     public void setPinCode(String pinCode) {
         mPinCode = pinCode;
         mPinCodeRoundView.refresh(mPinCode.length());
     }
 
+    /**
+     * Returns the type of this {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
+     */
     public int getType() {
         return mType;
     }
@@ -199,6 +221,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     /**
      * When we click on the {@link #mForgotTextView} handle the pop-up
      * dialog
+     *
      * @param view {@link #mForgotTextView}
      */
     @Override

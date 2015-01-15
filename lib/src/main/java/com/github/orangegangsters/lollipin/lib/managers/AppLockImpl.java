@@ -14,17 +14,43 @@ import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
-	public static final String TAG = "DefaultAppLock";
 
+	public static final String TAG = "AppLockImpl";
+
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the password
+     */
 	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the last active time
+     */
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the timeout
+     */
     private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the logo resource id
+     */
     private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
+    /**
+     * A string used to pollute the SHA1 password stored into
+     * {@link android.content.SharedPreferences} for more security.
+     */
 	private static final String PASSWORD_SALT = "7xn7@c$";
 
+    /**
+     * The {@link android.content.SharedPreferences} used to store the password, the last active time etc...
+     */
 	private SharedPreferences mSharedPreferences;
 
+    /**
+     * Used to know if activities were all in pause or not
+     */
 	private int mLiveActivitiesCount;
+    /**
+     * Used to know if activities were all in pause or not
+     */
 	private int mVisibleActivitiesCount;
 
     /**
@@ -64,26 +90,31 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, android.R.drawable.sym_def_app_icon);
     }
 
+    @Override
     public void enable() {
 		PinActivity.addListener(this);
         PinFragmentActivity.addListener(this);
 	}
 
+    @Override
 	public void disable() {
         PinActivity.clearListeners();
         PinFragmentActivity.clearListeners();
 	}
 
+    @Override
     public long getLastActiveMillis() {
         return mSharedPreferences.getLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, 0);
     }
 
+    @Override
     public void setLastActiveMillis() {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, System.currentTimeMillis());
         editor.apply();
     }
 
+    @Override
 	public boolean checkPasscode(String passcode) {
 		passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
 		passcode = Encryptor.getSHA1(passcode);
@@ -100,6 +131,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 		}
 	}
 
+    @Override
 	public boolean setPasscode(String passcode) {
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -118,7 +150,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 		return true;
 	}
 
-	// Check if we need to show the lock screen at startup
+    @Override
 	public boolean isPasscodeSet() {
 		if (mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
 			return true;
@@ -127,7 +159,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 		return false;
 	}
 
-	private boolean isIgnoredActivity(Activity activity) {
+    @Override
+	public boolean isIgnoredActivity(Activity activity) {
 		String clazzName = activity.getClass().getName();
 
 		// ignored activities
@@ -139,7 +172,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 		return false;
 	}
 
-	private boolean shouldLockSceen(Activity activity) {
+    @Override
+	public boolean shouldLockSceen(Activity activity) {
         Log.d(TAG, "Lollipin shouldLockSceen() called");
 
 		// already unlock
