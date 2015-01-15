@@ -25,16 +25,16 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     private static final int PIN_CODE_LENGTH = 4;
 
-    private TextView mStepTextView;
-    private PinCodeRoundView mPinCodeRoundView;
-    private KeyboardView mKeyboardView;
-    private LockManager mLockManager;
-    private TypefaceTextView mForgotTextView;
+    protected TextView mStepTextView;
+    protected PinCodeRoundView mPinCodeRoundView;
+    protected KeyboardView mKeyboardView;
+    protected LockManager mLockManager;
+    protected TypefaceTextView mForgotTextView;
 
-    private int mType = AppLock.UNLOCK_PIN;
-    private int mLogoId;
-    private String mPinCode;
-    private String mOldPinCode;
+    protected int mType = AppLock.UNLOCK_PIN;
+    protected int mLogoId;
+    protected String mPinCode;
+    protected String mOldPinCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
