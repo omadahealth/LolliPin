@@ -14,7 +14,7 @@ import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
-	public static final String TAG = "DefaultAppLock";
+	public static final String TAG = "AppLockImpl";
 
 	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
