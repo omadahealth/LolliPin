@@ -76,6 +76,10 @@ public class KeyboardButtonView extends RelativeLayout implements RippleAnimatio
         }
     }
 
+    /**
+     * Set by {@link com.github.orangegangsters.lollipin.lib.views.KeyboardView} to returns events to
+     * {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
+     */
     public void setOnRippleAnimationEndListener(KeyboardButtonClickedListener keyboardButtonClickedListener) {
         mKeyboardButtonClickedListener = keyboardButtonClickedListener;
     }

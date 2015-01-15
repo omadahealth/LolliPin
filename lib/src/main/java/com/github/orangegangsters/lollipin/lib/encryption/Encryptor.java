@@ -5,8 +5,17 @@ import android.text.TextUtils;
 import java.security.MessageDigest;
 import java.util.Locale;
 
+/**
+ * Used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl} to get the SHA1
+ * of the 4-digit password.
+ */
 public class Encryptor {
 
+    /**
+     * Convert a chain of bytes into a {@link java.lang.String}
+     * @param bytes The chain of bytes
+     * @return The converted String
+     */
 	private static String bytes2Hex(byte[] bytes) {
 		String hs = "";
 		String stmp = "";
@@ -21,6 +30,9 @@ public class Encryptor {
 		return hs.toLowerCase(Locale.ENGLISH);
 	}
 
+    /**
+     * Allows to get the SHA1 of a {@link java.lang.String} using {@link java.security.MessageDigest}
+     */
 	public static String getSHA1(String text) {
 		String sha1 = null;
 		if (TextUtils.isEmpty(text)) {

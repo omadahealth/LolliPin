@@ -12,7 +12,7 @@ import java.util.List;
  * Created by stoyan and olivier on 1/12/15.
  * You must extend this Activity in order to support this library.
  * Then to enable PinCode blocking, you must call
- * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context)}
+ * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
  */
 public class PinActivity extends Activity {
     private static List<LifeCycleInterface> mLifeCycleListeners;

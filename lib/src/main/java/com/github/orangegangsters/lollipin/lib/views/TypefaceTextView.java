@@ -12,6 +12,8 @@ import com.github.orangegangsters.lollipin.lib.R;
 
 /**
  * Created by stoyan and oliviergoutay on 12/8/14.
+ *
+ * Used for loading custom fonts located into assets
  */
 public class TypefaceTextView extends TextView {
 
