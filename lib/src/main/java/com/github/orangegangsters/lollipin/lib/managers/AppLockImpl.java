@@ -231,13 +231,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityResumed " + clazzName);
 
-        if (shouldLockSceen(activity)) {
-            Intent intent = new Intent(activity.getApplicationContext(),
-                    mActivityClass.getClass());
-            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.getApplication().startActivity(intent);
-        }
+		if (shouldLockSceen(activity)) {
+            Log.d(TAG, "mActivityClass.getClass() " + mActivityClass);
+			Intent intent = new Intent(activity.getApplicationContext(),
+                    mActivityClass);
+			intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			activity.getApplication().startActivity(intent);
+		}
 
         setLastActiveMillis();
     }
