@@ -33,7 +33,7 @@ public abstract class AppLock {
      * If you want to modify it, you can call {@link #setTimeout(int)}. Will be stored using
      * {@link android.content.SharedPreferences}
      */
-    public static final int DEFAULT_TIMEOUT = 1000 * 10; // 10sec
+    public static final long DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
     /**
      * A {@link java.util.HashSet} of {@link java.lang.String} which are the classes we don't want to
