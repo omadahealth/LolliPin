@@ -13,7 +13,7 @@ import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
-public class AppLockImpl extends AppLock implements LifeCycleInterface {
+public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
 	public static final String TAG = "DefaultAppLock";
 
 	private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
@@ -27,11 +27,17 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 	private int mLiveActivitiesCount;
 	private int mVisibleActivitiesCount;
 
-	public AppLockImpl(Context context) {
+    /**
+     * The activity class that extends {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
+     */
+    private Class<T> mActivityClass;
+
+	public AppLockImpl(Context context, Class<T> activityClass) {
 		super();
 		this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		this.mLiveActivitiesCount = 0;
 		this.mVisibleActivitiesCount = 0;
+        this.mActivityClass = activityClass;
 	}
 
     @Override
@@ -193,7 +199,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
 		if (shouldLockSceen(activity)) {
 			Intent intent = new Intent(activity.getApplicationContext(),
-					AppLockActivity.class);
+                    mActivityClass.getClass());
 			intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activity.getApplication().startActivity(intent);

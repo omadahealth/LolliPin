@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.managers.AppLock;
-import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
 
-public class MainActivity extends PinActivity implements View.OnClickListener {
+public class MainActivity extends CustomPinActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_ENABLE = 11;
 
@@ -26,13 +23,11 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         this.findViewById(R.id.button_change_pin).setOnClickListener(this);
         this.findViewById(R.id.button_unlock_pin).setOnClickListener(this);
         this.findViewById(R.id.button_not_locked).setOnClickListener(this);
-
-        LockManager.getInstance().enableAppLock(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, AppLockActivity.class);
+        Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
         switch (v.getId()) {
             case R.id.button_enable_pin:
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);

@@ -2,7 +2,7 @@ package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.content.Context;
 
-public class LockManager {
+public class LockManager<T extends AppLockActivity> {
 
     private volatile static LockManager mInstance;
     private static AppLock mAppLocker;
@@ -10,15 +10,15 @@ public class LockManager {
     public static LockManager getInstance() {
         synchronized (LockManager.class) {
             if (mInstance == null) {
-                mInstance = new LockManager();
+                mInstance = new LockManager<>();
             }
         }
         return mInstance;
     }
 
-    public void enableAppLock(Context context) {
+    public void enableAppLock(Context context, Class<T> activityClass) {
         if (mAppLocker == null) {
-            mAppLocker = new AppLockImpl(context);
+            mAppLocker = new AppLockImpl<>(context, activityClass);
         }
         mAppLocker.enable();
     }
@@ -44,10 +44,7 @@ public class LockManager {
         mAppLocker = appLocker;
     }
 
-    public AppLock getAppLock(Context context) {
-        if (mAppLocker == null) {
-            mAppLocker = new AppLockImpl(context);
-        }
+    public AppLock getAppLock() {
         return mAppLocker;
     }
 }

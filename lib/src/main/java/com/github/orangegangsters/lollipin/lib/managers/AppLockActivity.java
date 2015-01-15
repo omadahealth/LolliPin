@@ -1,6 +1,7 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -11,11 +12,12 @@ import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
 import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
 import com.github.orangegangsters.lollipin.lib.views.KeyboardView;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
+import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
 
 /**
  * Created by stoyan and olivier on 1/13/15.
  */
-public class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener {
+public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
     public static final String TAG = "AppLockActivity";
     private static final int PIN_CODE_LENGTH = 4;
@@ -24,6 +26,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
     private PinCodeRoundView mPinCodeRoundView;
     private KeyboardView mKeyboardView;
     private LockManager mLockManager;
+    private TypefaceTextView mForgotTextView;
 
     private int mType = AppLock.UNLOCK_PIN;
     private int mLogoId;
@@ -43,6 +46,8 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
+        mForgotTextView = (TypefaceTextView) this.findViewById(R.id.pin_code_forgot_textview);
+        mForgotTextView.setOnClickListener(this);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
@@ -51,7 +56,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock(this).getLogoId());
+        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock().getLogoId());
 
         initText();
     }
@@ -96,9 +101,9 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
     protected void onPinCodeInputed() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
-                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
-                    mLockManager.getAppLock(this).setPasscode(null);
+                    mLockManager.getAppLock().setPasscode(null);
                     finish();
                 } else {
                     onPinCodeError();
@@ -112,7 +117,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 } else {
                     if (mPinCode.equals(mOldPinCode)) {
                         setResult(RESULT_OK);
-                        mLockManager.getAppLock(this).setPasscode(mPinCode);
+                        mLockManager.getAppLock().setPasscode(mPinCode);
                         finish();
                     } else {
                         mOldPinCode = "";
@@ -123,7 +128,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 }
                 break;
             case AppLock.CHANGE_PIN:
-                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     mStepTextView.setText(getString(R.string.pin_code_step_create));
                     mType = AppLock.ENABLE_PINLOCK;
                     setPinCode("");
@@ -133,7 +138,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
                 }
                 break;
             case AppLock.UNLOCK_PIN:
-                if (mLockManager.getAppLock(this).checkPasscode(mPinCode)) {
+                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     finish();
                 } else {
@@ -158,6 +163,12 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 //			finish();
 //		}
     }
+    /**
+     * Displays the information dialog when the user clicks the
+     * {@link #mForgotTextView}
+     */
+    public abstract void showForgotDialog();
+
 
     protected void onPinCodeError() {
         Thread thread = new Thread() {
@@ -179,5 +190,16 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
 
     public int getType() {
         return mType;
+    }
+
+    /**
+     * When we click on the {@link #mForgotTextView} handle the pop-up
+     * dialog
+     * @param view {@link #mForgotTextView}
+     */
+    @Override
+    public void onClick(View view) {
+
+        showForgotDialog();
     }
 }

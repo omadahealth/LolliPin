@@ -8,6 +8,10 @@
         <attr name="keyboard_button_text" format="string" />
         <attr name="keyboard_button_image" format="integer" />
         <attr name="keyboard_button_ripple_enabled" format="boolean" />
+        <attr name="pin_forgot_dialog_title" format="string" />
+        <attr name="pin_forgot_dialog_content" format="string" />
+        <attr name="pin_forgot_dialog_positive" format="string" />
+        <attr name="pin_forgot_dialog_negative" format="string" />
     </declare-styleable>
 
 </resources>
