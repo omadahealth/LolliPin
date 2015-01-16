@@ -93,7 +93,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     @Override
     public void enable() {
         PinActivity.setListener(this);
-        PinFragmentActivity.addListener(this);
+        PinFragmentActivity.setListener(this);
     }
 
     @Override
