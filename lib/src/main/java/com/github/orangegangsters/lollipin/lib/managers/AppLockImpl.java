@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -45,15 +44,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     private SharedPreferences mSharedPreferences;
 
     /**
-     * Used to know if activities were all in pause or not
-     */
-    private int mLiveActivitiesCount;
-    /**
-     * Used to know if activities were all in pause or not
-     */
-    private int mVisibleActivitiesCount;
-
-    /**
      * The activity class that extends {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
     private Class<T> mActivityClass;
@@ -61,8 +51,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     public AppLockImpl(Context context, Class<T> activityClass) {
         super();
         this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        this.mLiveActivitiesCount = 0;
-        this.mVisibleActivitiesCount = 0;
         this.mActivityClass = activityClass;
     }
 
@@ -246,60 +234,5 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         setLastActiveMillis();
-    }
-
-    @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
-
-        mLiveActivitiesCount++;
-    }
-
-    @Override
-    public void onActivityDestroyed(Activity activity) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
-
-        mLiveActivitiesCount--;
-        if (mLiveActivitiesCount == 0) {
-            setLastActiveMillis();
-        }
-    }
-
-    @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
-    }
-
-    @Override
-    public void onActivityStarted(Activity activity) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
-
-        String clazzName = activity.getClass().getName();
-        Log.d(TAG, "onActivityStarted " + clazzName);
-
-        mVisibleActivitiesCount++;
-    }
-
-    @Override
-    public void onActivityStopped(Activity activity) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
-
-        String clazzName = activity.getClass().getName();
-        Log.d(TAG, "onActivityStopped " + clazzName);
-
-        mVisibleActivitiesCount--;
-        if (mVisibleActivitiesCount == 0) {
-            setLastActiveMillis();
-        }
     }
 }

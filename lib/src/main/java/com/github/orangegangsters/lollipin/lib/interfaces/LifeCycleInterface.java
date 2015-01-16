@@ -1,7 +1,6 @@
 package com.github.orangegangsters.lollipin.lib.interfaces;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 /**
  * Created by stoyan on 1/12/15.
@@ -13,16 +12,6 @@ import android.os.Bundle;
 public interface LifeCycleInterface {
 
     /**
-     * Called in {@link android.app.Activity#onCreate(android.os.Bundle)}
-     */
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState);
-
-    /**
-     * Called in {@link android.app.Activity#onStart()}
-     */
-    public void onActivityStarted(Activity activity);
-
-    /**
      * Called in {@link android.app.Activity#onResume()}
      */
     public void onActivityResumed(Activity activity);
@@ -31,19 +20,4 @@ public interface LifeCycleInterface {
      * Called in {@link android.app.Activity#onPause()}
      */
     public void onActivityPaused(Activity activity);
-
-    /**
-     * Called in {@link android.app.Activity#onStop()}
-     */
-    public void onActivityStopped(Activity activity);
-
-    /**
-     * Called in {@link android.app.Activity#onSaveInstanceState(android.os.Bundle)}
-     */
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState);
-
-    /**
-     * Called in {@link android.app.Activity#onDestroy()}
-     */
-    public void onActivityDestroyed(Activity activity);
 }
