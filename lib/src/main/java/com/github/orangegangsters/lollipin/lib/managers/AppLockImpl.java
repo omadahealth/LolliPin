@@ -94,18 +94,21 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     public void enable() {
         PinActivity.addListener(this);
         PinFragmentActivity.addListener(this);
+        LockManager.getInstance().disableAppLock();
     }
 
     @Override
     public void disable() {
         PinActivity.clearListeners();
         PinFragmentActivity.clearListeners();
+        LockManager.getInstance().disableAppLock();
     }
 
     @Override
     public void disableAndRemoveConfiguration() {
         PinActivity.clearListeners();
         PinFragmentActivity.clearListeners();
+        LockManager.getInstance().disableAppLock();
         mSharedPreferences.edit().remove(PASSWORD_PREFERENCE_KEY)
                 .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
                 .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
