@@ -121,4 +121,8 @@ public class PinFragmentActivity extends FragmentActivity {
         }
         mLifeCycleListeners.clear();
     }
+
+    public static boolean hasListeners() {
+        return (mLifeCycleListeners != null && !mLifeCycleListeners.isEmpty());
+    }
 }

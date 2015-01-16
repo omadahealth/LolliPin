@@ -121,4 +121,8 @@ public class PinActivity extends Activity {
         }
         mLifeCycleListeners.clear();
     }
+
+    public static boolean hasListeners() {
+        return (mLifeCycleListeners != null && !mLifeCycleListeners.isEmpty());
+    }
 }
