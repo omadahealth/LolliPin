@@ -15,28 +15,18 @@ public class PinFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onResume() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityResumed(PinFragmentActivity.this);
+        }
         super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mLifeCycleListener != null) {
-                    mLifeCycleListener.onActivityResumed(PinFragmentActivity.this);
-                }
-            }
-        }).start();
     }
 
     @Override
     protected void onPause() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityPaused(PinFragmentActivity.this);
+        }
         super.onPause();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mLifeCycleListener != null) {
-                    mLifeCycleListener.onActivityPaused(PinFragmentActivity.this);
-                }
-            }
-        }).start();
     }
 
     public static void setListener(LifeCycleInterface listener) {

@@ -15,28 +15,18 @@ public class PinActivity extends Activity {
 
     @Override
     protected void onResume() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityResumed(PinActivity.this);
+        }
         super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mLifeCycleListener != null) {
-                    mLifeCycleListener.onActivityResumed(PinActivity.this);
-                }
-            }
-        }).start();
     }
 
     @Override
     protected void onPause() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityPaused(PinActivity.this);
+        }
         super.onPause();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mLifeCycleListener != null) {
-                    mLifeCycleListener.onActivityPaused(PinActivity.this);
-                }
-            }
-        }).start();
     }
 
     public static void setListener(LifeCycleInterface listener) {
