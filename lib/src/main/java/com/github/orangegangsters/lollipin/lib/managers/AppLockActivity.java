@@ -1,5 +1,6 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -39,9 +40,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.nothing, R.anim.nothing);
-
         setContentView(R.layout.activity_pin_code);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+            //Animate if greater than 2.3.3
+            overridePendingTransition(R.anim.nothing, R.anim.nothing);
+        }
 
         mLockManager = LockManager.getInstance();
         mPinCode = "";
@@ -90,7 +94,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.nothing, R.anim.slide_down);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+            //Animate if greater than 2.3.3
+            overridePendingTransition(R.anim.nothing, R.anim.slide_down);
+        }
     }
 
     /**

@@ -5,9 +5,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by stoyan and olivier on 1/12/15.
  * You must extend this Activity in order to support this library.
@@ -15,114 +12,76 @@ import java.util.List;
  * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
  */
 public class PinFragmentActivity extends FragmentActivity {
-    private static List<LifeCycleInterface> mLifeCycleListeners;
+    private static LifeCycleInterface mLifeCycleListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityCreated(this, savedInstanceState);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityCreated(this, savedInstanceState);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityStarted(this);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityStarted(this);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityResumed(this);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityResumed(this);
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityPaused(this);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityPaused(this);
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityStopped(this);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityStopped(this);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivityDestroyed(this);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityDestroyed(this);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mLifeCycleListeners != null) {
-            for (LifeCycleInterface listener : mLifeCycleListeners) {
-                listener.onActivitySaveInstanceState(this, outState);
-            }
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivitySaveInstanceState(this, outState);
         }
     }
 
-    public static void addListener(LifeCycleInterface listener) {
-        if(mLifeCycleListeners == null) {
-            mLifeCycleListeners = new ArrayList<>();
+    public static void setListener(LifeCycleInterface listener) {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener = null;
         }
-        mLifeCycleListeners.add(listener);
-    }
-
-    public static boolean removeListener(LifeCycleInterface listener) {
-        if(mLifeCycleListeners == null) {
-            return false;
-        }
-        return mLifeCycleListeners.remove(listener);
-    }
-
-    public static void addListeners(List<LifeCycleInterface> listeners) {
-        if(mLifeCycleListeners == null) {
-            mLifeCycleListeners = new ArrayList<>();
-        }
-        mLifeCycleListeners.addAll(listeners);
-    }
-
-    public static boolean removeListeners(List<LifeCycleInterface> listeners) {
-        if(mLifeCycleListeners == null) {
-            return false;
-        }
-        return mLifeCycleListeners.removeAll(listeners);
+        mLifeCycleListener = listener;
     }
 
     public static void clearListeners() {
-        if(mLifeCycleListeners == null) {
-            return;
-        }
-        mLifeCycleListeners.clear();
+        mLifeCycleListener = null;
     }
 
     public static boolean hasListeners() {
-        return (mLifeCycleListeners != null && !mLifeCycleListeners.isEmpty());
+        return (mLifeCycleListener != null);
     }
 }

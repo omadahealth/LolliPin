@@ -38,9 +38,10 @@ public class LockManager<T extends AppLockActivity> {
      * {@link com.github.orangegangsters.lollipin.lib.PinActivity}
      */
     public void enableAppLock(Context context, Class<T> activityClass) {
-        if (mAppLocker == null) {
-            mAppLocker = new AppLockImpl<>(context, activityClass);
+        if (mAppLocker != null) {
+            mAppLocker.disable();
         }
+        mAppLocker = new AppLockImpl<>(context, activityClass);
         mAppLocker.enable();
     }
 
