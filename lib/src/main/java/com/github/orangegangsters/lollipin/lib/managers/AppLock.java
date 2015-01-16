@@ -30,7 +30,7 @@ public abstract class AppLock {
 
     /**
      * DEFAULT_TIMEOUT, define the default timeout returned by {@link #getTimeout()}.
-     * If you want to modify it, you can call {@link #setTimeout(int)}. Will be stored using
+     * If you want to modify it, you can call {@link #setTimeout(long)}. Will be stored using
      * {@link android.content.SharedPreferences}
      */
     public static final long DEFAULT_TIMEOUT = 1000 * 10; // 10sec
@@ -71,7 +71,7 @@ public abstract class AppLock {
     /**
      * Set the timeout used in {@link #shouldLockSceen(android.app.Activity)}
      */
-    public abstract void setTimeout(int timeout);
+    public abstract void setTimeout(long timeout);
 
     /**
      * Get logo resource id used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}

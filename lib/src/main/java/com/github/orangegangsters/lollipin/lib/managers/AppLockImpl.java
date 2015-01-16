@@ -67,7 +67,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public void setTimeout(int timeout) {
+    public void setTimeout(long timeout) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putLong(TIMEOUT_MILLIS_PREFERENCE_KEY, timeout);
         editor.apply();
