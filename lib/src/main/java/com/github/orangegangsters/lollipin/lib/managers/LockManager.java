@@ -59,6 +59,7 @@ public class LockManager<T extends AppLockActivity> {
         if (mAppLocker != null) {
             mAppLocker.disable();
         }
+        mAppLocker = null;
     }
 
     /**
