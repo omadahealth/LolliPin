@@ -17,6 +17,11 @@ import com.github.orangegangsters.lollipin.lib.R;
  */
 public class TypefaceTextView extends TextView {
 
+    public TypefaceTextView(Context context) {
+        super(context);
+        setCustomTypeface(context, null);
+    }
+
     public TypefaceTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setCustomTypeface(context, attrs);
@@ -35,7 +40,7 @@ public class TypefaceTextView extends TextView {
 
     private void setCustomTypeface(Context context, AttributeSet attrs) {
         //Typeface.createFromAsset doesn't work in the layout editor. Skipping...
-        if (isInEditMode()) {
+        if (isInEditMode() || attrs == null) {
             return;
         }
 
@@ -49,3 +54,4 @@ public class TypefaceTextView extends TextView {
         }
     }
 }
+
