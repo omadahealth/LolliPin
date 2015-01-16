@@ -212,12 +212,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             return false;
         }
 
-        // start more than one page
-        if (mVisibleActivitiesCount > 1) {
-            Log.d(TAG, "more than one page visible.");
-            return false;
-        }
-
         return true;
     }
 
