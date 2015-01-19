@@ -118,6 +118,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void finish() {
         super.finish();
+        if(mLockManager != null) {
+            AppLock appLock = mLockManager.getAppLock();
+            if(appLock != null) {
+                appLock.setLastActiveMillis();
+            }
+        }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             //Animate if greater than 2.3.3
             overridePendingTransition(R.anim.nothing, R.anim.slide_down);
