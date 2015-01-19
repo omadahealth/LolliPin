@@ -1,5 +1,6 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,9 @@ import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
 
 /**
  * Created by stoyan and olivier on 1/13/15.
+ * The activity that appears when the password needs to be set or has to be asked.
+ * Call this activity in normal or singleTop mode (not singleTask or singleInstance, it does not work
+ * with {@link android.app.Activity#startActivityForResult(android.content.Intent, int)}).
  */
 public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
@@ -37,11 +41,31 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected String mPinCode;
     protected String mOldPinCode;
 
+    /**
+     * First creation
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pin_code);
 
+        setContentView(R.layout.activity_pin_code);
+        initLayout(getIntent());
+    }
+
+    /**
+     * If called in singleTop mode
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        initLayout(intent);
+    }
+
+    /**
+     * Init completely the layout, depending of the extra {@link com.github.orangegangsters.lollipin.lib.managers.AppLock#EXTRA_TYPE}
+     */
+    private void initLayout(Intent intent) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             //Animate if greater than 2.3.3
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
@@ -58,7 +82,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = intent.getExtras();
         if (extras != null) {
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
