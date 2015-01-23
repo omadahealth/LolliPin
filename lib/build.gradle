@@ -31,19 +31,22 @@ task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.sourceFiles
 }
 
-artifacts {
-    archives androidSourcesJar
-}
+//artifacts {
+//    archives androidSourcesJar
+//}
+//
+//apply plugin: 'maven'
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri("../../omada-nexus/release"))
+//            snapshotRepository(url: uri("../../omada-nexus/release"))
+//            pom.groupId = POM_GROUP
+//            pom.artifactId = POM_ARTIFACT
+//            pom.version = VERSION_NAME
+//        }
+//    }
+//}
 
-apply plugin: 'maven'
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri("../../omada-nexus/release"))
-            snapshotRepository(url: uri("../../omada-nexus/release"))
-            pom.groupId = POM_GROUP
-            pom.artifactId = POM_ARTIFACT
-            pom.version = VERSION_NAME
-        }
-    }
-}
+//gradle clean build uploadArchives
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
