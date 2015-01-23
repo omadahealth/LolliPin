@@ -26,11 +26,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
 }
 
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.sourceFiles
-}
+//gradle clean build uploadArchives
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
+//task androidSourcesJar(type: Jar) {
+//    classifier = 'sources'
+//    from android.sourceSets.main.java.sourceFiles
+//}
 //artifacts {
 //    archives androidSourcesJar
 //}
@@ -47,6 +49,3 @@ task androidSourcesJar(type: Jar) {
 //        }
 //    }
 //}
-
-//gradle clean build uploadArchives
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
