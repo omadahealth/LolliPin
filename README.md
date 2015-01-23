@@ -28,13 +28,13 @@ public class CustomPinActivity extends AppLockActivity {
 
 Advised to be done by extending the Application, but can be done elsewhere. The method below provides a way to enable or disable the PinCode system:
 
-###### Enabling
+##### Enabling
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.enableAppLock(this, CustomPinActivity.class);
 ```
 
-###### Disabling
+##### Disabling
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.disableAppLock();
@@ -58,6 +58,27 @@ Please refer to the next section to know how to customize these values.
 ========
 
 ### Customization
+
+Some features are customizable:
+
+* The unlock timeout:
+```
+LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+lockManager.getAppLock().setTimeout(10000);
+```
+
+* The logo displayed at the top of the page:
+```
+LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+lockManager.getAppLock().setLogoId(R.drawable.security_lock);
+```
+
+* The ignored activities:
+For instance you got a login activity that you want to avoid getting the lock screen, you can ignore this activity by doing:
+```
+LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+lockManager.getAppLock().addIgnoredActivity(NotLockedActivity.class);
+```
 
 ========
 
