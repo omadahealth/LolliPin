@@ -15,8 +15,8 @@ To include in your project, add this to your build.gradle file:
 
 ========
 ### By
-![Stoyan](https://avatars0.githubusercontent.com/u/746098?v=3&s=460)
-Format: ![Alt Text](https://github.com/StoyanD)
+![Olivier Goutay](https://github.com/olivierg13) and ![Stoyan Dimitrov](https://github.com/StoyanD)
+
 ### Usage
 
 If you want an example on how to use it, you can find an example app in this repo.
