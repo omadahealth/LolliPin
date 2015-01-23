@@ -1,7 +1,7 @@
 LolliPin
 ================
 
-A Lollipop (5.0) android pincode library
+A Lollipop material design styled android pincode library (API 10+)
 
 ![Demo](app/src/main/res/raw/github_gif.gif)
 
