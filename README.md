@@ -1,22 +1,75 @@
-# LolliPin
-=============================
+LolliPin
+================
+
 A Lollipop (5.0) android pincode library
 
-->![Demo](app/src/main/res/raw/github_gif.gif)<-
+![Demo](app/src/main/res/raw/github_gif.gif)
 
+========
 
-=============================
+### Usage
 
-# How to use it
+If you want an example on how to use it, you can find an example app in this repo.
 
-=============================
+#### Overriding the AppLockActivity
 
-# Credits
+In order to use the "Forgot" system, we let you extend the AppLockActivity class to provide your own way of handling the user behaviour in this case (logout, delete datas etc...)
 
+```
+public class CustomPinActivity extends AppLockActivity {
+    @Override
+    public void showForgotDialog() {
+        //Launch your popup or anything you want here
+    }
+}
+```
 
-=============================
+#### Init
 
-# License
+Advised to be done by extending the Application, but can be done elsewhere. The method below provides a way to enable or disable the PinCode system:
+
+###### Enabling
+```
+LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+lockManager.enableAppLock(this, CustomPinActivity.class);
+```
+
+###### Disabling
+```
+LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+lockManager.disableAppLock();
+```
+
+#### Set up the PinCode
+
+Whenever you want the user to set up his pin code, you need to request:
+
+```
+Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
+intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+startActivityForResult(intent, REQUEST_CODE_ENABLE);
+```
+
+#### Unlock system
+
+As soon as you enable the PinCode system, the Unlock screen will appear by itself when the user resume the app after a defined timeout.
+Please refer to the next section to know how to customize these values.
+
+========
+
+### Customization
+
+========
+
+### Credits
+
+We used the RippleEffect library from Traex (https://github.com/traex/RippleEffect) to implement the Ripple effect from material design on API 10+
+We used the L-dialogs library from lewisjdeane (https://github.com/lewisjdeane/L-Dialogs) to demonstrate how to use a popup for the "forgot" button
+We used the Robotium library from RobotiumTech (https://github.com/RobotiumTech/robotium) to run powerful unit and functional testing
+
+========
+
+### License
 
 ```
 The MIT License (MIT)
