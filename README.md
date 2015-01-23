@@ -6,15 +6,16 @@ A Lollipop (5.0) android pincode library
 
 =============================
 
-How to use it
+# How to use it
 
 =============================
 
-Credits
-I used FloatingActionButton library by Oleksandr Melnykov as a base for development.
+# Credits
+
 
 =============================
-License
+
+# License
 
 ```
 The MIT License (MIT)
