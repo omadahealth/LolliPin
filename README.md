@@ -2,7 +2,7 @@
 =============================
 A Lollipop (5.0) android pincode library
 
--> ![Demo](app/src/main/res/raw/github_gif.gif) <-
+->![Demo](app/src/main/res/raw/github_gif.gif)<-
 
 
 =============================
