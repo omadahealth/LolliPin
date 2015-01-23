@@ -84,9 +84,9 @@ lockManager.getAppLock().addIgnoredActivity(NotLockedActivity.class);
 
 ### Credits
 
-We used the RippleEffect library from Traex (https://github.com/traex/RippleEffect) to implement the Ripple effect from material design on API 10+
-We used the L-dialogs library from lewisjdeane (https://github.com/lewisjdeane/L-Dialogs) to demonstrate how to use a popup for the "forgot" button
-We used the Robotium library from RobotiumTech (https://github.com/RobotiumTech/robotium) to run powerful unit and functional testing
+* We used the RippleEffect library from Traex (https://github.com/traex/RippleEffect) to implement the Ripple effect from material design on API 10+
+* We used the L-dialogs library from lewisjdeane (https://github.com/lewisjdeane/L-Dialogs) to demonstrate how to use a popup for the "forgot" button
+* We used the Robotium library from RobotiumTech (https://github.com/RobotiumTech/robotium) to run powerful unit and functional testing
 
 ========
 
