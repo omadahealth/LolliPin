@@ -21,6 +21,13 @@ Developers:
 Designers:
         [Yassine Bentaieb](http://yassinebentaieb.com/)
 
+========
+### Security
+
+The password itself is not saved, only its hash using the SHA-1 algorithm.
+This hash is then saved on the SharedPreferences, allowing to verify that the user entered the right PinCode,
+without giving the possibility to retrieve it.
+
 ### Usage
 
 If you want an example on how to use it, you can find an example app in this repo.
