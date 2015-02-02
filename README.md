@@ -32,6 +32,22 @@ without giving the possibility to retrieve it.
 
 If you want an example on how to use it, you can find an example app in this repo.
 
+#### Preparing dependencies
+
+We are using a custom version of RippleView that contains a RippleAnimationListener.
+In order to be able to fetch this dependency, you need to add these lines into your main build.gradle file:
+```
+allprojects {
+    repositories {
+        maven{
+            url "https://github.com/omadahealth/omada-nexus/raw/master/release"
+        }
+        jcenter()
+
+    }
+}
+```
+
 #### Overriding the AppLockActivity
 
 In order to use the "Forgot" system, we let you extend the AppLockActivity class to provide your own way of handling the user behaviour in this case (logout, delete datas etc...)
