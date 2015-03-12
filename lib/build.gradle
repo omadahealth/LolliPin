@@ -43,8 +43,8 @@ apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn
 //        mavenDeployer {
 //            repository(url: uri("../../omada-nexus/release"))
 //            snapshotRepository(url: uri("../../omada-nexus/release"))
-//            pom.groupId = POM_GROUP
-//            pom.artifactId = POM_ARTIFACT
+//            pom.groupId = GROUP
+//            pom.artifactId = POM_ARTIFACT_ID
 //            pom.version = VERSION_NAME
 //        }
 //    }
