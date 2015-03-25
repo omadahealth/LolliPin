@@ -8,7 +8,7 @@ To include in your project, add this to your build.gradle file:
 
 ```
    //Lollipin
-   compile 'com.github.orangegangsters:lollipin:1.0.2@aar'
+   compile 'com.github.orangegangsters:lollipin:1.1.0@aar'
 ```
 
 ![Demo](app/src/main/res/raw/github_gif.gif)
