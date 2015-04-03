@@ -49,11 +49,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private Class<T> mActivityClass;
 
-    /**
-     * The callback to be called when a pin attempt has been made.
-     */
-    private AttemptListener mAttemptListener;
-
     public AppLockImpl(Context context, Class<T> activityClass) {
         super();
         this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -207,16 +202,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         return true;
-    }
-
-    @Override
-    public void setAttemptListener(AttemptListener attemptListener) {
-        mAttemptListener = attemptListener;
-    }
-
-    @Override
-    public AttemptListener getAttemptListener() {
-        return mAttemptListener;
     }
 
     @Override
