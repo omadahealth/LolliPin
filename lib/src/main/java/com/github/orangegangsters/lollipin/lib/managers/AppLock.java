@@ -148,4 +148,13 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    public abstract void setAttemptListener(AttemptListener failureListener);
+
+    public abstract AttemptListener getAttemptListener();
+
+    public interface AttemptListener {
+        void onFailure(int attempts);
+        void onSuccess(int attempts);
+    }
 }
