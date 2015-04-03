@@ -22,7 +22,7 @@ import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
  * Call this activity in normal or singleTop mode (not singleTask or singleInstance, it does not work
  * with {@link android.app.Activity#startActivityForResult(android.content.Intent, int)}).
  */
-public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
+public class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
     public static final String TAG = "AppLockActivity";
     /**
@@ -87,11 +87,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock().getLogoId());
         findViewById(R.id.pin_code_logo_imageview)
                 .setBackgroundResource(mLockManager.getAppLock().getLogoId());
-        TypefaceTextView forgot = (TypefaceTextView) findViewById(R.id.pin_code_forgot_textview);
-        forgot.setText(getForgotText());
+        mForgotTextView.setText(getForgotText());
+        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         initText();
     }
@@ -243,7 +242,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Displays the information dialog when the user clicks the
      * {@link #mForgotTextView}
      */
-    public abstract void showForgotDialog();
+    public void showForgotDialog() {
+
+    }
 
     /**
      * Run a shake animation when the password is not valid.
