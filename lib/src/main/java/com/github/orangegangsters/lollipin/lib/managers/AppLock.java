@@ -84,6 +84,16 @@ public abstract class AppLock {
     public abstract void setLogoId(int logoId);
 
     /**
+     * Get the forgot option used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
+     */
+    public abstract boolean getShouldShowForgot();
+
+    /**
+     * Set the forgot option used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
+     */
+    public abstract void setShouldShowForgot(boolean showForgot);
+
+    /**
      * Enable the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} by setting
      * {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl} as the
      * {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface}
@@ -148,4 +158,13 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    public abstract void setAttemptListener(AttemptListener failureListener);
+
+    public abstract AttemptListener getAttemptListener();
+
+    public interface AttemptListener {
+        void onFailure(int attempts);
+        void onSuccess(int attempts);
+    }
 }

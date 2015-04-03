@@ -37,6 +37,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected TypefaceTextView mForgotTextView;
 
     protected int mType = AppLock.UNLOCK_PIN;
+    protected int mAttempts = 1;
     protected int mLogoId;
     protected String mPinCode;
     protected String mOldPinCode;
@@ -87,7 +88,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        findViewById(R.id.pin_code_logo_imageview)
+                .setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        findViewById(R.id.pin_code_forgot_textview)
+                .setVisibility(mLockManager.getAppLock().getShouldShowForgot() ? View.VISIBLE : View.GONE);
 
         initText();
     }
@@ -167,6 +171,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(null);
+                    onPinCodeSuccess();
                     finish();
                 } else {
                     onPinCodeError();
@@ -179,8 +184,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setPinCode("");
                 } else {
                     if (mPinCode.equals(mOldPinCode)) {
+                        mAttempts = 0;
                         setResult(RESULT_OK);
                         mLockManager.getAppLock().setPasscode(mPinCode);
+                        onPinCodeSuccess();
                         finish();
                     } else {
                         mOldPinCode = "";
@@ -195,6 +202,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     mStepTextView.setText(getString(R.string.pin_code_step_create));
                     mType = AppLock.ENABLE_PINLOCK;
                     setPinCode("");
+                    onPinCodeSuccess();
                     initText();
                 } else {
                     onPinCodeError();
@@ -203,6 +211,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             case AppLock.UNLOCK_PIN:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
+                    onPinCodeSuccess();
                     finish();
                 } else {
                     onPinCodeError();
@@ -224,12 +233,15 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Displays the information dialog when the user clicks the
      * {@link #mForgotTextView}
      */
-    public abstract void showForgotDialog();
+    public void showForgotDialog() {
+
+    }
 
     /**
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError() {
+        notifyAttemptListenerOnFailure();
         Thread thread = new Thread() {
             public void run() {
                 mPinCode = "";
@@ -240,6 +252,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             }
         };
         runOnUiThread(thread);
+    }
+
+    protected void onPinCodeSuccess() {
+        notifyAttemptListenerOnSuccess();
     }
 
     /**
@@ -266,5 +282,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void onClick(View view) {
         showForgotDialog();
+    }
+
+    private void notifyAttemptListenerOnFailure() {
+        AppLock.AttemptListener atl = mLockManager.getAppLock().getAttemptListener();
+        if (atl != null) {
+            atl.onFailure(mAttempts++);
+        }
+    }
+    private void notifyAttemptListenerOnSuccess() {
+        AppLock.AttemptListener atl = mLockManager.getAppLock().getAttemptListener();
+        if (atl != null) {
+            atl.onSuccess(mAttempts);
+        }
+        mAttempts = 1;
     }
 }
