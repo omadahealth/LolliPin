@@ -88,7 +88,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        findViewById(R.id.pin_code_logo_imageview)
+                .setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        findViewById(R.id.pin_code_forgot_textview)
+                .setVisibility(mLockManager.getAppLock().getShouldShowForgot() ? View.VISIBLE : View.GONE);
 
         initText();
     }
@@ -230,7 +233,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Displays the information dialog when the user clicks the
      * {@link #mForgotTextView}
      */
-    public abstract void showForgotDialog();
+    public void showForgotDialog() {
+
+    }
 
     /**
      * Run a shake animation when the password is not valid.

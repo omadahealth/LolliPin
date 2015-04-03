@@ -34,6 +34,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
     /**
+     * The {@link android.content.SharedPreferences} key used to store the forgot option
+     */
+    private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
+    /**
      * A string used to pollute the SHA1 password stored into
      * {@link android.content.SharedPreferences} for more security.
      */
@@ -85,6 +89,18 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
+    public void setShouldShowForgot(boolean showForgot) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(SHOW_FORGOT_PREFERENCE_KEY, showForgot);
+        editor.apply();
+    }
+
+    @Override
+    public boolean getShouldShowForgot() {
+        return mSharedPreferences.getBoolean(SHOW_FORGOT_PREFERENCE_KEY, true);
+    }
+
+    @Override
     public void enable() {
         PinActivity.setListener(this);
         PinFragmentActivity.setListener(this);
@@ -104,6 +120,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
                 .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
                 .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
                 .remove(LOGO_ID_PREFERENCE_KEY)
+                .remove(SHOW_FORGOT_PREFERENCE_KEY)
                 .apply();
     }
 
