@@ -90,8 +90,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
         findViewById(R.id.pin_code_logo_imageview)
                 .setBackgroundResource(mLockManager.getAppLock().getLogoId());
-        findViewById(R.id.pin_code_forgot_textview)
-                .setVisibility(mLockManager.getAppLock().getShouldShowForgot() ? View.VISIBLE : View.GONE);
+        TypefaceTextView forgot = (TypefaceTextView) findViewById(R.id.pin_code_forgot_textview);
+        forgot.setText(getForgotText());
+        forgot.setVisibility(mLockManager.getAppLock().getShouldShowForgot() ? View.VISIBLE : View.GONE);
 
         initText();
     }
@@ -125,6 +126,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 break;
         }
         return msg;
+    }
+
+    public String getForgotText() {
+        return getString(R.string.pin_code_forgot_text);
     }
 
     /**
