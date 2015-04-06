@@ -88,6 +88,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
 
         findViewById(R.id.pin_code_logo_imageview).setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        findViewById(R.id.pin_code_logo_imageview)
+                .setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        TypefaceTextView forgot = (TypefaceTextView) findViewById(R.id.pin_code_forgot_textview);
+        forgot.setText(getForgotText());
 
         initText();
     }
@@ -96,20 +100,35 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Init the {@link #mStepTextView} based on {@link #mType}
      */
     private void initText() {
-        switch (mType) {
+        mStepTextView.setText(getMessage(mType));
+    }
+
+    /**
+     * Gets the {@link String} to be used in the {@link #mStepTextView} based on {@link #mType}
+     * @param reason The {@link #mType} to return a {@link String} for
+     * @return The {@link String} for the {@link AppLockActivity}
+     */
+    public String getMessage(int reason) {
+        String msg = null;
+        switch (reason) {
             case AppLock.DISABLE_PINLOCK:
-                mStepTextView.setText(getString(R.string.pin_code_step_disable));
+                msg = getString(R.string.pin_code_step_disable);
                 break;
             case AppLock.ENABLE_PINLOCK:
-                mStepTextView.setText(getString(R.string.pin_code_step_create));
+                msg = getString(R.string.pin_code_step_create);
                 break;
             case AppLock.CHANGE_PIN:
-                mStepTextView.setText(getString(R.string.pin_code_step_change));
+                msg = getString(R.string.pin_code_step_change);
                 break;
             case AppLock.UNLOCK_PIN:
-                mStepTextView.setText(getString(R.string.pin_code_step_unlock));
+                msg = getString(R.string.pin_code_step_unlock);
                 break;
         }
+        return msg;
+    }
+
+    public String getForgotText() {
+        return getString(R.string.pin_code_forgot_text);
     }
 
     /**

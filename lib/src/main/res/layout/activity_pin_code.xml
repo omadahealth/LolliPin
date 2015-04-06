@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@android:color/white"
@@ -48,7 +49,7 @@
             android:layout_centerInParent="true"
             android:textColor="@color/dark_grey_color"
             android:textSize="@dimen/pin_code_forgot_text_size"
-            android:text="@string/pin_code_forgot_text"
+            tools:text="@string/pin_code_forgot_text"
             android:singleLine="true"
             app:typeface="Roboto-Regular.ttf"
             android:layout_below="@+id/pin_code_round_view" />
