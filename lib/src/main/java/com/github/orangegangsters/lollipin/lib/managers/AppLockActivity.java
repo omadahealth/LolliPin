@@ -241,7 +241,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError() {
-        notifyAttemptListenerOnFailure();
+        onPinFailure(mAttempts++);
         Thread thread = new Thread() {
             public void run() {
                 mPinCode = "";
@@ -255,7 +255,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     protected void onPinCodeSuccess() {
-        notifyAttemptListenerOnSuccess();
+        onPinSuccess(mAttempts);
+        mAttempts = 1;
     }
 
     /**
@@ -284,17 +285,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         showForgotDialog();
     }
 
-    private void notifyAttemptListenerOnFailure() {
-        AppLock.AttemptListener atl = mLockManager.getAppLock().getAttemptListener();
-        if (atl != null) {
-            atl.onFailure(mAttempts++);
-        }
+    /**
+     * When the user has failed a pin challenge
+     * @param attempts the number of attempts the user has used
+     */
+    public void onPinFailure(int attempts) {
+
     }
-    private void notifyAttemptListenerOnSuccess() {
-        AppLock.AttemptListener atl = mLockManager.getAppLock().getAttemptListener();
-        if (atl != null) {
-            atl.onSuccess(mAttempts);
-        }
-        mAttempts = 1;
+
+    /**
+     * When the user has succeeded at a pin challenge
+     * @param attempts the number of attempts the user had used
+     */
+    public void onPinSuccess(int attempts) {
+
     }
 }
