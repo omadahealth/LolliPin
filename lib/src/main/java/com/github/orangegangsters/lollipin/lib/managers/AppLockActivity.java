@@ -226,6 +226,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onBackPressed() {
+        if (mType != AppLock.UNLOCK_PIN) {
+            super.onBackPressed();
+        }
     }
 
     /**
