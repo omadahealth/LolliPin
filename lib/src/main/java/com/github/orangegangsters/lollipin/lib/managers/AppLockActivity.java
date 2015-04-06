@@ -37,6 +37,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected TypefaceTextView mForgotTextView;
 
     protected int mType = AppLock.UNLOCK_PIN;
+    protected int mAttempts = 1;
     protected int mLogoId;
     protected String mPinCode;
     protected String mOldPinCode;
@@ -167,6 +168,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(null);
+                    onPinCodeSuccess();
                     finish();
                 } else {
                     onPinCodeError();
@@ -181,6 +183,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     if (mPinCode.equals(mOldPinCode)) {
                         setResult(RESULT_OK);
                         mLockManager.getAppLock().setPasscode(mPinCode);
+                        onPinCodeSuccess();
                         finish();
                     } else {
                         mOldPinCode = "";
@@ -195,6 +198,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     mStepTextView.setText(getString(R.string.pin_code_step_create));
                     mType = AppLock.ENABLE_PINLOCK;
                     setPinCode("");
+                    onPinCodeSuccess();
                     initText();
                 } else {
                     onPinCodeError();
@@ -203,6 +207,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             case AppLock.UNLOCK_PIN:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
+                    onPinCodeSuccess();
                     finish();
                 } else {
                     onPinCodeError();
@@ -230,6 +235,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError() {
+        onPinFailure(mAttempts++);
         Thread thread = new Thread() {
             public void run() {
                 mPinCode = "";
@@ -240,6 +246,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             }
         };
         runOnUiThread(thread);
+    }
+
+    protected void onPinCodeSuccess() {
+        onPinSuccess(mAttempts);
+        mAttempts = 1;
     }
 
     /**
@@ -266,5 +277,21 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void onClick(View view) {
         showForgotDialog();
+    }
+
+    /**
+     * When the user has failed a pin challenge
+     * @param attempts the number of attempts the user has used
+     */
+    public void onPinFailure(int attempts) {
+
+    }
+
+    /**
+     * When the user has succeeded at a pin challenge
+     * @param attempts the number of attempts the user had used
+     */
+    public void onPinSuccess(int attempts) {
+
     }
 }
