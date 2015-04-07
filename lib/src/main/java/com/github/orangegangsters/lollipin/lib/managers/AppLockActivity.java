@@ -22,7 +22,7 @@ import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
  * Call this activity in normal or singleTop mode (not singleTask or singleInstance, it does not work
  * with {@link android.app.Activity#startActivityForResult(android.content.Intent, int)}).
  */
-public class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
+public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
     public static final String TAG = "AppLockActivity";
     /**
@@ -242,9 +242,7 @@ public class AppLockActivity extends PinActivity implements KeyboardButtonClicke
      * Displays the information dialog when the user clicks the
      * {@link #mForgotTextView}
      */
-    public void showForgotDialog() {
-
-    }
+    public abstract void showForgotDialog();
 
     /**
      * Run a shake animation when the password is not valid.
