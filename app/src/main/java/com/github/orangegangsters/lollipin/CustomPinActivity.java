@@ -62,4 +62,14 @@ public class CustomPinActivity extends AppLockActivity {
         // Show the dialog.
         customDialog.show();
     }
+
+    @Override
+    public void onPinFailure(int attempts) {
+
+    }
+
+    @Override
+    public void onPinSuccess(int attempts) {
+
+    }
 }
