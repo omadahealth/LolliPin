@@ -22,7 +22,9 @@
             android:layout_marginBottom="@dimen/pin_code_logo_margin"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@android:drawable/sym_def_app_icon" />
+            android:visibility="invisible"
+            tools:visibility="visible"
+            tools:src="@android:drawable/sym_def_app_icon" />
 
         <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
             android:id="@+id/pin_code_step_textview"

@@ -23,6 +23,11 @@ public abstract class AppLock {
     public static final int UNLOCK_PIN = 3;
 
     /**
+     * LOGO_ID_NONE used to denote when a user has not set a logoId using {@link #setLogoId(int)}
+     */
+    public static final int LOGO_ID_NONE = -1;
+
+    /**
      * EXTRA_TYPE, uses to pass to the {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      * to determine in which type it musts be started.
      */
