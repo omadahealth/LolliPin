@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
@@ -24,7 +25,7 @@ import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
  */
 public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
-    public static final String TAG = "AppLockActivity";
+    public static final String TAG = AppLockActivity.class.getSimpleName();
     /**
      * The PIN length
      */
@@ -38,7 +39,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
-    protected int mLogoId;
     protected String mPinCode;
     protected String mOldPinCode;
 
@@ -88,8 +88,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
-        findViewById(R.id.pin_code_logo_imageview)
-                .setBackgroundResource(mLockManager.getAppLock().getLogoId());
+        int logoId = mLockManager.getAppLock().getLogoId();
+        ImageView logoImage = ((ImageView)findViewById(R.id.pin_code_logo_imageview));
+        if (logoId != AppLock.LOGO_ID_NONE) {
+            logoImage.setVisibility(View.VISIBLE);
+            logoImage.setImageResource(logoId);
+        }
         mForgotTextView.setText(getForgotText());
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 

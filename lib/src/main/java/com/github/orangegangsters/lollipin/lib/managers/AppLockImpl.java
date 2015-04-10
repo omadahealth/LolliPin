@@ -80,7 +80,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public int getLogoId() {
-        return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, android.R.drawable.sym_def_app_icon);
+        return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, LOGO_ID_NONE);
     }
 
     @Override
