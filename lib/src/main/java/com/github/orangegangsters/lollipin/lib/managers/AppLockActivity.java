@@ -32,10 +32,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     private static final int PIN_CODE_LENGTH = 4;
 
     protected TextView mStepTextView;
+    protected TextView mForgotTextView;
     protected PinCodeRoundView mPinCodeRoundView;
     protected KeyboardView mKeyboardView;
     protected LockManager mLockManager;
-    protected TypefaceTextView mForgotTextView;
 
     protected int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
@@ -49,7 +49,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_pin_code);
+        setContentView(getContentView());
         initLayout(getIntent());
     }
 
@@ -315,4 +315,17 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * @param attempts the number of attempts the user had used
      */
     public abstract void onPinSuccess(int attempts);
+
+    /**
+     * Gets the resource id to the {@link View} to be set with {@link #setContentView(int)}.
+     * The custom layout must include the following:
+     * - {@link TextView} with an id of pin_code_step_textview
+     * - {@link TextView} with an id of pin_code_forgot_textview
+     * - {@link PinCodeRoundView} with an id of pin_code_round_view
+     * - {@link KeyboardView} with an id of pin_code_keyboard_view
+     * @return the resource id to the {@link View}
+     */
+    public int getContentView() {
+        return R.layout.activity_pin_code;
+    }
 }
