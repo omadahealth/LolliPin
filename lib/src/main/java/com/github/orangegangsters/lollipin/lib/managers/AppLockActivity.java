@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
@@ -36,6 +37,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected KeyboardView mKeyboardView;
     protected LockManager mLockManager;
     protected TypefaceTextView mForgotTextView;
+    protected LinearLayout mBackground;
 
     protected int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
@@ -80,6 +82,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
         mForgotTextView = (TypefaceTextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
+        mBackground = (LinearLayout) this.findViewById(R.id.pin_code_background);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
@@ -88,6 +91,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
 
+        mBackground.setBackgroundColor(getBackgroundColor());
+        mStepTextView.setTextColor(getTitleTextColor());
+
         int logoId = mLockManager.getAppLock().getLogoId();
         ImageView logoImage = ((ImageView)findViewById(R.id.pin_code_logo_imageview));
         if (logoId != AppLock.LOGO_ID_NONE) {
@@ -95,6 +101,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             logoImage.setImageResource(logoId);
         }
         mForgotTextView.setText(getForgotText());
+        mForgotTextView.setTextColor(getForgotTextColor());
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         initText();
@@ -315,4 +322,28 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * @param attempts the number of attempts the user had used
      */
     public abstract void onPinSuccess(int attempts);
+
+    /**
+     * Gets the {@link android.graphics.Color} of the top portion of the view.
+     * @return the background color
+     */
+    public int getBackgroundColor() {
+        return getResources().getColor(R.color.light_gray_bar);
+    }
+
+    /**
+     * Gets the {@link android.graphics.Color} of the main text on the view.
+     * @return the background color
+     */
+    public int getTitleTextColor() {
+        return getResources().getColor(R.color.dark_grey_color);
+    }
+
+    /**
+     * Gets the {@link android.graphics.Color} of the Forgot text on the view.
+     * @return the background color
+     */
+    public int getForgotTextColor() {
+        return getResources().getColor(R.color.dark_grey_color);
+    }
 }
