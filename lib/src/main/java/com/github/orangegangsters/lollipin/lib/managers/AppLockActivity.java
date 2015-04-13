@@ -97,14 +97,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView.setText(getForgotText());
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
-        initText();
+        setStepText();
     }
 
     /**
      * Init the {@link #mStepTextView} based on {@link #mType}
      */
-    private void initText() {
-        mStepTextView.setText(getMessage(mType));
+    private void setStepText() {
+        mStepTextView.setText(getStepText(mType));
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * @param reason The {@link #mType} to return a {@link String} for
      * @return The {@link String} for the {@link AppLockActivity}
      */
-    public String getMessage(int reason) {
+    public String getStepText(int reason) {
         String msg = null;
         switch (reason) {
             case AppLock.DISABLE_PINLOCK:
@@ -197,31 +197,31 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 }
                 break;
             case AppLock.ENABLE_PINLOCK:
-                if (mOldPinCode == null || mOldPinCode.length() == 0) {
-                    mStepTextView.setText(getString(R.string.pin_code_step_enable_confirm));
-                    mOldPinCode = mPinCode;
-                    setPinCode("");
+                mOldPinCode = mPinCode;
+                setPinCode("");
+                mType = AppLock.CONFIRM_PIN;
+                setStepText();
+                break;
+            case AppLock.CONFIRM_PIN:
+                if (mPinCode.equals(mOldPinCode)) {
+                    setResult(RESULT_OK);
+                    mLockManager.getAppLock().setPasscode(mPinCode);
+                    onPinCodeSuccess();
+                    finish();
                 } else {
-                    if (mPinCode.equals(mOldPinCode)) {
-                        setResult(RESULT_OK);
-                        mLockManager.getAppLock().setPasscode(mPinCode);
-                        onPinCodeSuccess();
-                        finish();
-                    } else {
-                        mOldPinCode = "";
-                        setPinCode("");
-                        mStepTextView.setText(getString(R.string.pin_code_step_create));
-                        onPinCodeError();
-                    }
+                    mOldPinCode = "";
+                    setPinCode("");
+                    mType = AppLock.ENABLE_PINLOCK;
+                    setStepText();
+                    onPinCodeError();
                 }
                 break;
             case AppLock.CHANGE_PIN:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
-                    mStepTextView.setText(getString(R.string.pin_code_step_create));
                     mType = AppLock.ENABLE_PINLOCK;
+                    setStepText();
                     setPinCode("");
                     onPinCodeSuccess();
-                    initText();
                 } else {
                     onPinCodeError();
                 }
