@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="PinCodeView">
         <attr name="typeface" format="string" />
+        <attr name="empty_pin_dot" format="integer" />
+        <attr name="full_pin_dot" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="KeyboardButtonView">

@@ -17,6 +17,9 @@ To include in your project, add this to your build.gradle file:
 ### By
 Developers:
         [Olivier Goutay](https://github.com/olivierg13) and [Stoyan Dimitrov](https://github.com/StoyanD)
+        
+Contributor:
+        [Art Beatte IV](https://github.com/abeatte)
 
 Designers:
         [Yassine Bentaieb](http://yassinebentaieb.com/)
@@ -28,10 +31,12 @@ The password itself is not saved, only its hash using the SHA-1 algorithm.
 This hash is then saved on the SharedPreferences, allowing to verify that the user entered the right PinCode,
 without giving the possibility to retrieve it.
 
+========
 ### Usage
 
 If you want an example on how to use it, you can find an example app in this repo.
 
+========
 #### Preparing dependencies
 
 We are using a custom version of RippleView that contains a RippleAnimationListener.
@@ -48,6 +53,7 @@ allprojects {
 }
 ```
 
+========
 #### Overriding the AppLockActivity
 
 In order to use the "Forgot" system, we let you extend the AppLockActivity class to provide your own way of handling the user behaviour in this case (logout, delete datas etc...)
@@ -61,22 +67,28 @@ public class CustomPinActivity extends AppLockActivity {
 }
 ```
 
+========
 #### Init
 
 Advised to be done by extending the Application, but can be done elsewhere. The method below provides a way to enable or disable the PinCode system:
 
+========
 ##### Enabling
+
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.enableAppLock(this, CustomPinActivity.class);
 ```
 
+========
 ##### Disabling
+
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.disableAppLock();
 ```
 
+========
 #### Set up the PinCode
 
 Whenever you want the user to set up his pin code, you need to request:
@@ -87,34 +99,71 @@ intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
 startActivityForResult(intent, REQUEST_CODE_ENABLE);
 ```
 
+========
 #### Unlock system
 
 As soon as you enable the PinCode system, the Unlock screen will appear by itself when the user resume the app after a defined timeout.
 Please refer to the next section to know how to customize these values.
 
 ========
-
 ### Customization
 
 Some features are customizable:
 
-* The unlock timeout:
+The unlock timeout:
+-------------------
+
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().setTimeout(10000);
 ```
 
-* The logo displayed at the top of the page:
+The logo displayed at the top of the page:
+-------------------
+
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().setLogoId(R.drawable.security_lock);
 ```
 
-* The ignored activities:
+The ignored activities:
+-------------------
 For instance you got a login activity that you want to avoid getting the lock screen, you can ignore this activity by doing:
+
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().addIgnoredActivity(NotLockedActivity.class);
+```
+
+The AppLockActivity Layout:
+-------------------
+By providing a custom layout to getContentView() you can alter how your AppLockActivity looks.
+However, you must include 4 required elements:
+- TextView with an id of pin_code_step_textview
+- TextView with an id of pin_code_forgot_textview
+- PinCodeRoundView with an id of pin_code_round_view
+- KeyboardView with an id of pin_code_keyboard_view
+
+```
+@Override
+    public int getContentView() {
+        return R.layout.activity_pin;
+    }
+```
+
+The Pin Dots:
+-------------------
+By supplying alternate drawable resources for app:empty_pin_dot and app:full_pin_dot you can custimize how it looks.
+
+```
+<com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
+                android:id="@+id/pin_code_round_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pin_code_round_top_margin"
+                android:layout_marginBottom="@dimen/pin_code_elements_margin"
+                app:empty_pin_dot="@drawable/pin_empty_dot"
+                app:full_pin_dot="@drawable/pin_full_dot"/>
 ```
 
 ========
