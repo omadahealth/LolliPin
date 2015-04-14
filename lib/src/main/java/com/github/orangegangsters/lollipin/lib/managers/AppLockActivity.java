@@ -17,6 +17,9 @@ import com.github.orangegangsters.lollipin.lib.views.KeyboardView;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
 import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by stoyan and olivier on 1/13/15.
  * The activity that appears when the password needs to be set or has to be asked.
@@ -245,9 +248,18 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onBackPressed() {
-        if (mType == AppLock.CHANGE_PIN || mType == AppLock.DISABLE_PINLOCK) {
+        if (getBackableTypes().contains(mType)) {
             super.onBackPressed();
         }
+    }
+
+    /**
+     * Gets the list of {@link AppLock} types that are acceptable to be backed out of using
+     * the device's back button
+     * @return an {@link List<Integer>} of {@link AppLock} types which are backable
+     */
+    public List<Integer> getBackableTypes() {
+        return Arrays.asList(AppLock.CHANGE_PIN, AppLock.DISABLE_PINLOCK);
     }
 
     /**
