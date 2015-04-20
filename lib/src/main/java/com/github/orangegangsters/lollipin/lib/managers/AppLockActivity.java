@@ -166,7 +166,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             int value = keyboardButtonEnum.getButtonValue();
 
             if (value == KeyboardButtonEnum.BUTTON_CLEAR.getButtonValue()) {
-                setPinCode("");
+                if (!mPinCode.isEmpty()) {
+                    setPinCode(mPinCode.substring(0, mPinCode.length() - 1));
+                } else {
+                    setPinCode("");
+                }
             } else {
                 setPinCode(mPinCode + value);
             }
