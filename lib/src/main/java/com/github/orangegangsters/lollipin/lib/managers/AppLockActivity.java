@@ -3,6 +3,7 @@ package com.github.orangegangsters.lollipin.lib.managers;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,6 +30,7 @@ import java.util.List;
 public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
 
     public static final String TAG = AppLockActivity.class.getSimpleName();
+    public static final String ACTION_CANCEL = TAG + ".actionCancelled";
     /**
      * The PIN length
      */
@@ -78,6 +80,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mLockManager = LockManager.getInstance();
         mPinCode = "";
         mOldPinCode = "";
+
+        mLockManager.getAppLock().setPinChallengeCancelled(false);
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
@@ -253,6 +257,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void onBackPressed() {
         if (getBackableTypes().contains(mType)) {
+            if (AppLock.UNLOCK_PIN == getType()) {
+                mLockManager.getAppLock().setPinChallengeCancelled(true);
+                LocalBroadcastManager
+                        .getInstance(this)
+                        .sendBroadcast(new Intent().setAction(ACTION_CANCEL));
+            }
             super.onBackPressed();
         }
     }

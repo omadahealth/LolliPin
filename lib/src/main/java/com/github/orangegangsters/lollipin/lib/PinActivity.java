@@ -1,8 +1,15 @@
 package com.github.orangegangsters.lollipin.lib;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
+import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
 
 /**
  * Created by stoyan and olivier on 1/12/15.
@@ -12,6 +19,24 @@ import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
  */
 public class PinActivity extends Activity {
     private static LifeCycleInterface mLifeCycleListener;
+    private final BroadcastReceiver mPinCancelledReceiver;
+
+    public PinActivity() {
+        super();
+        mPinCancelledReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+        };
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(AppLockActivity.ACTION_CANCEL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mPinCancelledReceiver, filter);
+    }
 
     @Override
     protected void onResume() {
@@ -27,6 +52,12 @@ public class PinActivity extends Activity {
             mLifeCycleListener.onActivityPaused(PinActivity.this);
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mPinCancelledReceiver);
     }
 
     public static void setListener(LifeCycleInterface listener) {

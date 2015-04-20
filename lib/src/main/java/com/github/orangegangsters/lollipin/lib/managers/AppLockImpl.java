@@ -47,6 +47,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
     /**
+     * The {@link SharedPreferences} key used to store whether the user has backed out of the {@link AppLockActivity}
+     */
+    private static final String PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY = "PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY";
+    /**
      * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
      */
     private static final String PASSWORD_SALT_PREFERENCE_KEY = "PASSWORD_SALT_PREFERENCE_KEY";
@@ -143,6 +147,18 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     public void setShouldShowForgot(boolean showForgot) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(SHOW_FORGOT_PREFERENCE_KEY, showForgot);
+        editor.apply();
+    }
+
+    @Override
+    public boolean pinChallengeCancelled() {
+        return mSharedPreferences.getBoolean(PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY, false);
+    }
+
+    @Override
+    public void setPinChallengeCancelled(boolean backedOut) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY, backedOut);
         editor.apply();
     }
 
@@ -250,6 +266,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     @Override
     public boolean shouldLockSceen(Activity activity) {
         Log.d(TAG, "Lollipin shouldLockSceen() called");
+
+        // previously backed out of pin screen
+        if (pinChallengeCancelled()) {
+            return true;
+        }
 
         // already unlock
         if (activity instanceof AppLockActivity) {

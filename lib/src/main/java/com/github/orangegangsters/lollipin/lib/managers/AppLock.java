@@ -103,6 +103,16 @@ public abstract class AppLock {
     public abstract void setShouldShowForgot(boolean showForgot);
 
     /**
+     * Get whether the user backed out of the {@link AppLockActivity} previously
+     */
+    public abstract boolean pinChallengeCancelled();
+
+    /**
+     * Set whether the user backed out of the {@link AppLockActivity}
+     */
+    public abstract void setPinChallengeCancelled(boolean cancelled);
+
+    /**
      * Enable the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} by setting
      * {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl} as the
      * {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface}
