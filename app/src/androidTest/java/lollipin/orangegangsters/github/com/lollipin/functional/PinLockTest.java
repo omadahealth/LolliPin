@@ -32,7 +32,7 @@ public class PinLockTest extends AbstractTest {
 
         //Check length 0
         solo.sleep(1000);
-        assertEquals(0, pinCodeRoundView.getCurrentLength());
+        assertEquals(2, pinCodeRoundView.getCurrentLength());
     }
 
     public void testPinEnabling() {
