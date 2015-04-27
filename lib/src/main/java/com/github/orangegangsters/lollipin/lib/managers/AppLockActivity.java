@@ -134,6 +134,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             case AppLock.UNLOCK_PIN:
                 msg = getString(R.string.pin_code_step_unlock);
                 break;
+            case AppLock.CONFIRM_PIN:
+                msg = getString(R.string.pin_code_step_enable_confirm);
+                break;
         }
         return msg;
     }
