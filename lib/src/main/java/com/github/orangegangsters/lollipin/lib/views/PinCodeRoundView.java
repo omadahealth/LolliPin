@@ -45,11 +45,11 @@ public class PinCodeRoundView extends RelativeLayout {
             final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.PinCodeView,
                     defStyleAttr, 0);
 
-            mEmptyDotDrawableId = attributes.getDrawable(R.styleable.PinCodeView_empty_pin_dot);
+            mEmptyDotDrawableId = attributes.getDrawable(R.styleable.PinCodeView_lp_empty_pin_dot);
             if (mEmptyDotDrawableId == null) {
                 mEmptyDotDrawableId = getResources().getDrawable(R.drawable.pin_code_round_empty);
             }
-            mFullDotDrawableId = attributes.getDrawable(R.styleable.PinCodeView_full_pin_dot);
+            mFullDotDrawableId = attributes.getDrawable(R.styleable.PinCodeView_lp_full_pin_dot);
             if (mFullDotDrawableId == null) {
                 mFullDotDrawableId = getResources().getDrawable(R.drawable.pin_code_round_full);
             }

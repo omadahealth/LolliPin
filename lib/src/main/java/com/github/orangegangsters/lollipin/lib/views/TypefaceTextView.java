@@ -48,7 +48,7 @@ public class TypefaceTextView extends TextView {
         }
 
         TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.PinCodeView);
-        String fontName = styledAttrs.getString(R.styleable.PinCodeView_typeface);
+        String fontName = styledAttrs.getString(R.styleable.PinCodeView_lp_typeface);
         styledAttrs.recycle();
 
         if (fontName != null) {

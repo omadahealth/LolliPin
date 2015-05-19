@@ -20,7 +20,7 @@
         android:textColor="@color/dark_grey_color"
         android:textSize="@dimen/keyboard_button_text_size"
         android:singleLine="true"
-        app:typeface="Roboto-Light.ttf" />
+        app:lp_typeface="Roboto-Light.ttf" />
 
     <ImageView
         android:id="@+id/keyboard_button_imageview"
