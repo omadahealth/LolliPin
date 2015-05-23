@@ -22,8 +22,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.github.traex.rippleeffect:ripple:1.2.3.2-OG'
-
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
+    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.1.1'
 }
 
 //gradle clean build uploadArchives

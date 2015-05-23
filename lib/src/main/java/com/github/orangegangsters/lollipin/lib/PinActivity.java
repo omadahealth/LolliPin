@@ -1,12 +1,13 @@
 package com.github.orangegangsters.lollipin.lib;
 
-import android.app.Activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
@@ -17,7 +18,7 @@ import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
  * Then to enable PinCode blocking, you must call
  * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
  */
-public class PinActivity extends Activity {
+public class PinActivity extends AppCompatActivity {
     private static LifeCycleInterface mLifeCycleListener;
     private final BroadcastReceiver mPinCancelledReceiver;
 
