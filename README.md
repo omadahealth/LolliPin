@@ -154,7 +154,7 @@ However, you must include 4 required elements:
 
 The Pin Dots:
 -------------------
-By supplying alternate drawable resources for app:empty_pin_dot and app:full_pin_dot you can custimize how it looks.
+By supplying alternate drawable resources for app:lp_empty_pin_dot and app:lp_full_pin_dot you can custimize how it looks.
 
 ```
 <com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
@@ -163,8 +163,8 @@ By supplying alternate drawable resources for app:empty_pin_dot and app:full_pin
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pin_code_round_top_margin"
                 android:layout_marginBottom="@dimen/pin_code_elements_margin"
-                app:empty_pin_dot="@drawable/pin_empty_dot"
-                app:full_pin_dot="@drawable/pin_full_dot"/>
+                app:lp_empty_pin_dot="@drawable/pin_empty_dot"
+                app:lp_full_pin_dot="@drawable/pin_full_dot"/>
 ```
 
 ========
