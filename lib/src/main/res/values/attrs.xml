@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PinCodeView">
-        <attr name="lp_typeface" format="string" />
         <attr name="lp_empty_pin_dot" format="integer" />
         <attr name="lp_full_pin_dot" format="integer" />
     </declare-styleable>

@@ -10,13 +10,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.omadahealth.typefaceview.TypefaceTextView;
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
 import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
 import com.github.orangegangsters.lollipin.lib.views.KeyboardView;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
-import com.github.orangegangsters.lollipin.lib.views.TypefaceTextView;
 
 import java.util.Arrays;
 import java.util.List;
