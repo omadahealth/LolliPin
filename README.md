@@ -79,6 +79,7 @@ Advised to be done by extending the Application, but can be done elsewhere. The 
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.enableAppLock(this, CustomPinActivity.class);
 ```
+Once enabled, you must extend "PinActivity" for every Activity you wish to protect.
 
 ========
 ##### Disabling
