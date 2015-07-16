@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -24,6 +25,7 @@ public class PinCodeRoundView extends RelativeLayout {
     private int mCurrentLength;
     private Drawable mEmptyDotDrawableId;
     private Drawable mFullDotDrawableId;
+    private ViewGroup mRoundContainer;
 
     public PinCodeRoundView(Context context) {
         this(context, null);
@@ -56,14 +58,9 @@ public class PinCodeRoundView extends RelativeLayout {
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             PinCodeRoundView view = (PinCodeRoundView) inflater.inflate(R.layout.view_round_pin_code, this);
+            mRoundContainer = (ViewGroup) view.findViewById( R.id.round_container );
 
             mRoundViews = new ArrayList<>();
-            mRoundViews.add((ImageView) view.findViewById(R.id.pin_code_round1));
-            mRoundViews.add((ImageView) view.findViewById(R.id.pin_code_round2));
-            mRoundViews.add((ImageView) view.findViewById(R.id.pin_code_round3));
-            mRoundViews.add((ImageView) view.findViewById(R.id.pin_code_round4));
-
-            refresh(0);
         }
     }
 
@@ -117,5 +114,20 @@ public class PinCodeRoundView extends RelativeLayout {
      */
     public void setFullDotDrawable(int drawableId) {
         mFullDotDrawableId = getResources().getDrawable(drawableId);
+    }
+
+    /**
+     * Sets the maximum length of the pin code.
+     *
+     * @param pinMaxLength the max length of the pin code
+     */
+    public void setPinMaxLength(int pinMaxLength) {
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for (int i = 0; i < pinMaxLength; i++) {
+            ImageView roundView = (ImageView) inflater.inflate(R.layout.view_round, mRoundContainer, false);
+            mRoundContainer.addView(roundView);
+            mRoundViews.add(roundView);
+        }
+        refresh(0);
     }
 }

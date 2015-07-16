@@ -34,7 +34,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     /**
      * The PIN length
      */
-    private static final int PIN_CODE_LENGTH = 4;
+    private static final int DEFAULT_PIN_MAX_LENGTH = 4;
 
     protected TextView mStepTextView;
     protected TextView mForgotTextView;
@@ -85,6 +85,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
+        mPinCodeRoundView.setPinMaxLength(this.getPinMaxLength());
         mForgotTextView = (TypefaceTextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
@@ -123,19 +124,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         String msg = null;
         switch (reason) {
             case AppLock.DISABLE_PINLOCK:
-                msg = getString(R.string.pin_code_step_disable);
+                msg = getString(R.string.pin_code_step_disable, this.getPinMaxLength());
                 break;
             case AppLock.ENABLE_PINLOCK:
-                msg = getString(R.string.pin_code_step_create);
+                msg = getString(R.string.pin_code_step_create, this.getPinMaxLength());
                 break;
             case AppLock.CHANGE_PIN:
-                msg = getString(R.string.pin_code_step_change);
+                msg = getString(R.string.pin_code_step_change, this.getPinMaxLength());
                 break;
             case AppLock.UNLOCK_PIN:
-                msg = getString(R.string.pin_code_step_unlock);
+                msg = getString(R.string.pin_code_step_unlock, this.getPinMaxLength());
                 break;
             case AppLock.CONFIRM_PIN:
-                msg = getString(R.string.pin_code_step_enable_confirm);
+                msg = getString(R.string.pin_code_step_enable_confirm, this.getPinMaxLength());
                 break;
         }
         return msg;
@@ -169,7 +170,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onKeyboardClick(KeyboardButtonEnum keyboardButtonEnum) {
-        if (mPinCode.length() < PIN_CODE_LENGTH) {
+        if (mPinCode.length() < this.getPinMaxLength()) {
             int value = keyboardButtonEnum.getButtonValue();
 
             if (value == KeyboardButtonEnum.BUTTON_CLEAR.getButtonValue()) {
@@ -190,7 +191,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onRippleAnimationEnd() {
-        if (mPinCode.length() == PIN_CODE_LENGTH) {
+        if (mPinCode.length() == this.getPinMaxLength()) {
             onPinCodeInputed();
         }
     }
@@ -356,5 +357,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public int getContentView() {
         return R.layout.activity_pin_code;
+    }
+
+    /**
+     * Gets the number of digits in the pin code.  Subclasses can override this to change the
+     * length of the pin.
+     * @return the number of digits
+     */
+    public int getPinMaxLength() {
+        return AppLockActivity.DEFAULT_PIN_MAX_LENGTH;
     }
 }
