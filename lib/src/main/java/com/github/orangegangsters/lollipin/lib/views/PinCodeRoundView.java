@@ -117,13 +117,13 @@ public class PinCodeRoundView extends RelativeLayout {
     }
 
     /**
-     * Sets the maximum length of the pin code.
+     * Sets the length of the pin code.
      *
-     * @param pinMaxLength the max length of the pin code
+     * @param pinLength the length of the pin code
      */
-    public void setPinMaxLength(int pinMaxLength) {
+    public void setPinLength(int pinLength) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < pinMaxLength; i++) {
+        for (int i = 0; i < pinLength; i++) {
             ImageView roundView = (ImageView) inflater.inflate(R.layout.view_round, mRoundContainer, false);
             mRoundContainer.addView(roundView);
             mRoundViews.add(roundView);
