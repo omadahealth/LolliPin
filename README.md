@@ -119,7 +119,7 @@ LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().setTimeout(10000);
 ```
 
-To pin length required:
+The pin length required:
 -------------------
 
 ```
