@@ -8,7 +8,7 @@ To include in your project, add this to your build.gradle file:
 
 ```
    //Lollipin
-   compile 'com.github.orangegangsters:lollipin:1.3.0@aar'
+   compile 'com.github.orangegangsters:lollipin:1.3.1@aar'
 ```
 
 ![Demo](app/src/main/res/raw/github_gif.gif)
@@ -18,8 +18,8 @@ To include in your project, add this to your build.gradle file:
 Developers:
         [Olivier Goutay](https://github.com/olivierg13) and [Stoyan Dimitrov](https://github.com/StoyanD)
         
-Contributor:
-        [Art Beatte IV](https://github.com/abeatte)
+Contributors:
+        [Art Beatte IV](https://github.com/abeatte), [Alex Morgan](https://github.com/axemorgan)
 
 Designers:
         [Yassine Bentaieb](http://yassinebentaieb.com/)
@@ -119,7 +119,7 @@ LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().setTimeout(10000);
 ```
 
-To change the length of the required pin from the default of 4, override the `public int getPinLength()` function in AppLockActivity:
+To pin length required:
 -------------------
 
 ```
