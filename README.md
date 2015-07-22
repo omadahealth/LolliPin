@@ -8,7 +8,7 @@ To include in your project, add this to your build.gradle file:
 
 ```
    //Lollipin
-   compile 'com.github.orangegangsters:lollipin:1.2.2@aar'
+   compile 'com.github.orangegangsters:lollipin:1.3.0@aar'
 ```
 
 ![Demo](app/src/main/res/raw/github_gif.gif)
@@ -117,6 +117,25 @@ The unlock timeout:
 ```
 LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
 lockManager.getAppLock().setTimeout(10000);
+```
+
+To change the length of the required pin from the default of 4, override the `public int getPinLength()` function in AppLockActivity:
+-------------------
+
+```
+public class CustomPinActivity extends AppLockActivity {
+
+    ...
+    ...
+
+    @Override
+    public int getPinLength() {
+        return 5;
+    }
+
+    ...
+    ...
+}
 ```
 
 The logo displayed at the top of the page:
