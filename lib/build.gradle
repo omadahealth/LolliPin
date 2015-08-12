@@ -23,7 +23,7 @@ dependencies {
 
     compile 'com.github.traex.rippleeffect:ripple:1.2.3.2-OG'
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
 
     //TypefaceView
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.3.0@aar'
