@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName VERSION_NAME
     }
@@ -23,7 +23,7 @@ dependencies {
 
     compile 'com.github.traex.rippleeffect:ripple:1.2.3.2-OG'
 
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
 }
 
 //gradle clean build uploadArchives
