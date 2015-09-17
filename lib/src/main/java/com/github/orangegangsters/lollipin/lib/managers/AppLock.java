@@ -18,9 +18,18 @@ public abstract class AppLock {
      */
     public static final int CHANGE_PIN = 2;
     /**
+     * CONFIRM_PIN type, used to confirm the new password
+     */
+    public static final int CONFIRM_PIN = 3;
+    /**
      * UNLOCK_PIN type, uses to ask the password to the user, in order to unlock the app
      */
-    public static final int UNLOCK_PIN = 3;
+    public static final int UNLOCK_PIN = 4;
+
+    /**
+     * LOGO_ID_NONE used to denote when a user has not set a logoId using {@link #setLogoId(int)}
+     */
+    public static final int LOGO_ID_NONE = -1;
 
     /**
      * EXTRA_TYPE, uses to pass to the {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
@@ -92,6 +101,16 @@ public abstract class AppLock {
      * Set the forgot option used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
     public abstract void setShouldShowForgot(boolean showForgot);
+
+    /**
+     * Get whether the user backed out of the {@link AppLockActivity} previously
+     */
+    public abstract boolean pinChallengeCancelled();
+
+    /**
+     * Set whether the user backed out of the {@link AppLockActivity}
+     */
+    public abstract void setPinChallengeCancelled(boolean cancelled);
 
     /**
      * Enable the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} by setting

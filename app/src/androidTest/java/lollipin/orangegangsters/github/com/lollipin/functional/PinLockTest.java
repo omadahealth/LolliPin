@@ -9,7 +9,8 @@ import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
 import lollipin.orangegangsters.github.com.lollipin.R;
 
 /**
- * Created by stoyan and oliviergoutay on 1/13/15.
+ * @author stoyan and oliviergoutay
+ * @version 1/13/15
  */
 public class PinLockTest extends AbstractTest {
 
@@ -31,7 +32,7 @@ public class PinLockTest extends AbstractTest {
 
         //Check length 0
         solo.sleep(1000);
-        assertEquals(0, pinCodeRoundView.getCurrentLength());
+        assertEquals(2, pinCodeRoundView.getCurrentLength());
     }
 
     public void testPinEnabling() {
@@ -173,6 +174,33 @@ public class PinLockTest extends AbstractTest {
         solo.sleep(1000);
     }
 
+    public void testBackButton() {
+        enablePin();
+
+        //Go to unlock
+        clickOnView(R.id.button_unlock_pin);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+
+        solo.goBack();
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+
+        //reset
+        clickOnView(R.id.pin_code_button_1);
+        clickOnView(R.id.pin_code_button_2);
+        clickOnView(R.id.pin_code_button_3);
+        clickOnView(R.id.pin_code_button_4);
+        solo.sleep(1000);
+
+        //Go to change
+        clickOnView(R.id.button_change_pin);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+
+        solo.goBack();
+        solo.assertCurrentActivity("MainActivity", MainActivity.class);
+    }
+
     private void enablePin() {
         removePrefsAndGoToEnable();
 
@@ -201,5 +229,4 @@ public class PinLockTest extends AbstractTest {
             solo.waitForText("1");
         }
     }
-
 }

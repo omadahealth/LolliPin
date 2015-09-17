@@ -45,9 +45,9 @@ public class KeyboardButtonView extends RelativeLayout implements RippleAnimatio
         if (attrs != null && !isInEditMode()) {
             final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.KeyboardButtonView,
                     defStyleAttr, 0);
-            String text = attributes.getString(R.styleable.KeyboardButtonView_keyboard_button_text);
-            Drawable image = attributes.getDrawable(R.styleable.KeyboardButtonView_keyboard_button_image);
-            boolean rippleEnabled = attributes.getBoolean(R.styleable.KeyboardButtonView_keyboard_button_ripple_enabled, true);
+            String text = attributes.getString(R.styleable.KeyboardButtonView_lp_keyboard_button_text);
+            Drawable image = attributes.getDrawable(R.styleable.KeyboardButtonView_lp_keyboard_button_image);
+            boolean rippleEnabled = attributes.getBoolean(R.styleable.KeyboardButtonView_lp_keyboard_button_ripple_enabled, true);
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardButtonView view = (KeyboardButtonView) inflater.inflate(R.layout.view_keyboard_button, this);

@@ -22,9 +22,11 @@
             android:layout_marginBottom="@dimen/pin_code_logo_margin"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@android:drawable/sym_def_app_icon" />
+            android:visibility="invisible"
+            tools:visibility="visible"
+            tools:src="@android:drawable/sym_def_app_icon" />
 
-        <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
+        <com.github.omadahealth.typefaceview.TypefaceTextView
             android:id="@+id/pin_code_step_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +34,7 @@
             android:textColor="@color/dark_grey_color"
             android:textSize="@dimen/pin_code_step_text_size"
             android:layout_below="@+id/pin_code_logo_imageview"
-            app:typeface="Roboto-Light.ttf" />
+            app:tv_typeface="roboto_light" />
 
         <com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
             android:id="@+id/pin_code_round_view"
@@ -42,7 +44,7 @@
             android:layout_marginBottom="@dimen/pin_code_elements_margin"
             android:layout_below="@+id/pin_code_step_textview" />
 
-        <com.github.orangegangsters.lollipin.lib.views.TypefaceTextView
+        <com.github.omadahealth.typefaceview.TypefaceTextView
             android:id="@+id/pin_code_forgot_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +53,7 @@
             android:textSize="@dimen/pin_code_forgot_text_size"
             tools:text="@string/pin_code_forgot_text"
             android:singleLine="true"
-            app:typeface="Roboto-Regular.ttf"
+            app:tv_typeface="roboto_regular"
             android:layout_below="@+id/pin_code_round_view" />
 
         <LinearLayout

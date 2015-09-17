@@ -6,12 +6,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
+
+import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
 
@@ -38,10 +47,30 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
     /**
-     * A string used to pollute the SHA1 password stored into
-     * {@link android.content.SharedPreferences} for more security.
+     * The {@link SharedPreferences} key used to store whether the user has backed out of the {@link AppLockActivity}
      */
-    private static final String PASSWORD_SALT = "7xn7@c$";
+    private static final String PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY = "PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY";
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
+     */
+    private static final String PASSWORD_SALT_PREFERENCE_KEY = "PASSWORD_SALT_PREFERENCE_KEY";
+
+    /**
+     * The default password salt
+     */
+    private static final String DEFAULT_PASSWORD_SALT = "7xn7@c$";
+    /**
+     * The key algorithm used to generating the dynamic salt
+     */
+    private static final String KEY_ALGORITHM = "PBEWithMD5AndDES";
+    /**
+     * The key length of the salt
+     */
+    private static final int KEY_LENGTH = 256;
+    /**
+     * The number of iterations used to generate a dynamic salt
+     */
+    private static final int KEY_ITERATIONS = 20;
 
     /**
      * The {@link android.content.SharedPreferences} used to store the password, the last active time etc...
@@ -66,6 +95,37 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         editor.apply();
     }
 
+    private void setSalt(String salt) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
+        editor.apply();
+    }
+
+    private String getSalt() {
+        String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
+        if (salt == null) {
+            salt = generateSalt();
+            setSalt(salt);
+        }
+        return salt;
+    }
+
+    private String generateSalt() {
+        byte[] salt;
+        try {
+            SecretKey key = SecretKeyFactory
+                    .getInstance(KEY_ALGORITHM)
+                    .generateSecret(new PBEKeySpec(DEFAULT_PASSWORD_SALT.toCharArray()));
+            Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+            salt = new byte[KEY_LENGTH];
+            new SecureRandom().nextBytes(salt);
+            cipher.init(Cipher.ENCRYPT_MODE, key, new PBEParameterSpec(salt, KEY_ITERATIONS));
+        } catch (Exception e) {
+            salt = DEFAULT_PASSWORD_SALT.getBytes();
+        }
+        return Base64.encodeToString(salt, Base64.DEFAULT);
+    }
+
     @Override
     public long getTimeout() {
         return mSharedPreferences.getLong(TIMEOUT_MILLIS_PREFERENCE_KEY, DEFAULT_TIMEOUT);
@@ -80,13 +140,25 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public int getLogoId() {
-        return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, android.R.drawable.sym_def_app_icon);
+        return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, LOGO_ID_NONE);
     }
 
     @Override
     public void setShouldShowForgot(boolean showForgot) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(SHOW_FORGOT_PREFERENCE_KEY, showForgot);
+        editor.apply();
+    }
+
+    @Override
+    public boolean pinChallengeCancelled() {
+        return mSharedPreferences.getBoolean(PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY, false);
+    }
+
+    @Override
+    public void setPinChallengeCancelled(boolean backedOut) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY, backedOut);
         editor.apply();
     }
 
@@ -133,7 +205,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean checkPasscode(String passcode) {
-        passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
+        String salt = getSalt();
+        passcode = salt + passcode + salt;
         passcode = Encryptor.getSHA1(passcode);
         String storedPasscode = "";
 
@@ -150,6 +223,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean setPasscode(String passcode) {
+        String salt = getSalt();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         if (passcode == null) {
@@ -157,7 +231,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             editor.apply();
             this.disable();
         } else {
-            passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
+            passcode = salt + passcode + salt;
             passcode = Encryptor.getSHA1(passcode);
             editor.putString(PASSWORD_PREFERENCE_KEY, passcode);
             editor.apply();
@@ -192,6 +266,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     @Override
     public boolean shouldLockSceen(Activity activity) {
         Log.d(TAG, "Lollipin shouldLockSceen() called");
+
+        // previously backed out of pin screen
+        if (pinChallengeCancelled()) {
+            return true;
+        }
 
         // already unlock
         if (activity instanceof AppLockActivity) {
