@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleAnimationListener;
 import com.andexert.library.RippleView;
 import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
@@ -18,7 +19,7 @@ import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedL
 /**
  * Created by stoyan and oliviergoutay on 1/13/15.
  */
-public class KeyboardButtonView extends RelativeLayout implements RippleView.OnRippleCompleteListener {
+public class KeyboardButtonView extends RelativeLayout implements RippleAnimationListener {
 
     private KeyboardButtonClickedListener mKeyboardButtonClickedListener;
 
@@ -38,13 +39,6 @@ public class KeyboardButtonView extends RelativeLayout implements RippleView.OnR
 
         this.mContext = context;
         initializeView(attrs, defStyleAttr);
-    }
-
-    @Override
-    public void onComplete(RippleView rippleView) {
-        if (mKeyboardButtonClickedListener != null) {
-            mKeyboardButtonClickedListener.onRippleAnimationEnd();
-        }
     }
 
     private void initializeView(AttributeSet attrs, int defStyleAttr) {
@@ -73,7 +67,7 @@ public class KeyboardButtonView extends RelativeLayout implements RippleView.OnR
             }
 
             mRippleView = (RippleView) view.findViewById(R.id.pin_code_keyboard_button_ripple);
-            mRippleView.setOnRippleCompleteListener(this);
+            mRippleView.setRippleAnimationListener(this);
             if (mRippleView != null) {
                 if (!rippleEnabled) {
                     mRippleView.setVisibility(View.INVISIBLE);
@@ -90,6 +84,13 @@ public class KeyboardButtonView extends RelativeLayout implements RippleView.OnR
         mKeyboardButtonClickedListener = keyboardButtonClickedListener;
     }
 
+    @Override
+    public void onRippleAnimationEnd() {
+        if (mKeyboardButtonClickedListener != null) {
+            mKeyboardButtonClickedListener.onRippleAnimationEnd();
+        }
+    }
+
     /**
      * Retain touches for {@link com.andexert.library.RippleView}.
      * Otherwise views above will not have the event.
@@ -99,6 +100,4 @@ public class KeyboardButtonView extends RelativeLayout implements RippleView.OnR
         onTouchEvent(event);
         return false;
     }
-
-
 }
