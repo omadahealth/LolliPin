@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -78,6 +79,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mPinCode = "";
         mOldPinCode = "";
 
+        enableAppLockerIfDoesNotExist();
         mLockManager.getAppLock().setPinChallengeCancelled(false);
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
@@ -94,7 +96,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
 
         int logoId = mLockManager.getAppLock().getLogoId();
-        ImageView logoImage = ((ImageView)findViewById(R.id.pin_code_logo_imageview));
+        ImageView logoImage = ((ImageView) findViewById(R.id.pin_code_logo_imageview));
         if (logoId != AppLock.LOGO_ID_NONE) {
             logoImage.setVisibility(View.VISIBLE);
             logoImage.setImageResource(logoId);
@@ -106,6 +108,21 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     /**
+     * Re enable {@link AppLock} if it has been collected to avoid
+     * {@link NullPointerException}.
+     */
+    @SuppressWarnings("unchecked")
+    private void enableAppLockerIfDoesNotExist() {
+        try {
+            if (mLockManager.getAppLock() == null) {
+                mLockManager.enableAppLock(this, getCustomAppLockActivityClass());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    /**
      * Init the {@link #mStepTextView} based on {@link #mType}
      */
     private void setStepText() {
@@ -114,6 +131,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     /**
      * Gets the {@link String} to be used in the {@link #mStepTextView} based on {@link #mType}
+     *
      * @param reason The {@link #mType} to return a {@link String} for
      * @return The {@link String} for the {@link AppLockActivity}
      */
@@ -149,9 +167,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void finish() {
         super.finish();
-        if(mLockManager != null) {
+        if (mLockManager != null) {
             AppLock appLock = mLockManager.getAppLock();
-            if(appLock != null) {
+            if (appLock != null) {
                 appLock.setLastActiveMillis();
             }
         }
@@ -271,6 +289,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     /**
      * Gets the list of {@link AppLock} types that are acceptable to be backed out of using
      * the device's back button
+     *
      * @return an {@link List<Integer>} of {@link AppLock} types which are backable
      */
     public List<Integer> getBackableTypes() {
@@ -333,12 +352,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     /**
      * When the user has failed a pin challenge
+     *
      * @param attempts the number of attempts the user has used
      */
     public abstract void onPinFailure(int attempts);
 
     /**
      * When the user has succeeded at a pin challenge
+     *
      * @param attempts the number of attempts the user had used
      */
     public abstract void onPinSuccess(int attempts);
@@ -350,6 +371,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * - {@link TextView} with an id of pin_code_forgot_textview
      * - {@link PinCodeRoundView} with an id of pin_code_round_view
      * - {@link KeyboardView} with an id of pin_code_keyboard_view
+     *
      * @return the resource id to the {@link View}
      */
     public int getContentView() {
@@ -359,9 +381,20 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     /**
      * Gets the number of digits in the pin code.  Subclasses can override this to change the
      * length of the pin.
+     *
      * @return the number of digits in the PIN
      */
     public int getPinLength() {
         return AppLockActivity.DEFAULT_PIN_LENGTH;
+    }
+
+    /**
+     * Get the current class extending {@link AppLockActivity} to re-enable {@link AppLock}
+     * in case it has been collected
+     *
+     * @return the current class extending {@link AppLockActivity}
+     */
+    public Class<? extends AppLockActivity> getCustomAppLockActivityClass() {
+        return this.getClass();
     }
 }

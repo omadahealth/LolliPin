@@ -15,7 +15,7 @@ public class LockManager<T extends AppLockActivity> {
     /**
      * The static singleton instance
      */
-    private volatile static LockManager mInstance;
+    private static LockManager mInstance;
     /**
      * The static singleton instance of {@link com.github.orangegangsters.lollipin.lib.managers.AppLock}
      */
@@ -41,7 +41,7 @@ public class LockManager<T extends AppLockActivity> {
         if (mAppLocker != null) {
             mAppLocker.disable();
         }
-        mAppLocker = new AppLockImpl<>(context, activityClass);
+        mAppLocker = AppLockImpl.getInstance(context, activityClass);
         mAppLocker.enable();
     }
 

@@ -41,6 +41,7 @@ public class AbstractTest extends ActivityInstrumentationTestCase2<MainActivity>
      * @param id
      */
     protected void clickOnView(int id) {
+        solo.sleep(300);
         solo.clickOnView(getView(id));
     }
 
