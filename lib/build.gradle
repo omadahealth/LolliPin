@@ -28,7 +28,8 @@ dependencies {
 }
 
 //gradle clean build uploadArchives
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+apply from: 'https://raw.github.com/omadahealth/omada-nexus/master/gradle-mvn-push/gradle-mvn-push.gradle'
 
 //task androidSourcesJar(type: Jar) {
 //    classifier = 'sources'
