@@ -77,6 +77,13 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //Init layout for Fingerprint
+        initLayoutForFingerprint();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (mFingerprintUiHelper != null) {
@@ -97,9 +104,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         if (extras != null) {
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
         }
-
-        //Init layout for Fingerprint
-        initLayoutForFingerprint();
 
         mLockManager = LockManager.getInstance();
         mPinCode = "";
