@@ -1,6 +1,8 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -28,7 +30,7 @@ import java.util.List;
  * Call this activity in normal or singleTop mode (not singleTask or singleInstance, it does not work
  * with {@link android.app.Activity#startActivityForResult(android.content.Intent, int)}).
  */
-public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener {
+public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener, FingerprintUiHelper.Callback {
 
     public static final String TAG = AppLockActivity.class.getSimpleName();
     public static final String ACTION_CANCEL = TAG + ".actionCancelled";
@@ -38,11 +40,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected TextView mForgotTextView;
     protected PinCodeRoundView mPinCodeRoundView;
     protected KeyboardView mKeyboardView;
+    protected ImageView mFingerprintImageView;
+    protected TextView mFingerprintTextView;
+
     protected LockManager mLockManager;
+
+
+    protected FingerprintManager mFingerprintManager;
+    protected FingerprintUiHelper mFingerprintUiHelper;
 
     protected int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
     protected String mPinCode;
+
     protected String mOldPinCode;
 
     /**
@@ -66,6 +76,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         initLayout(intent);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mFingerprintUiHelper != null) {
+            mFingerprintUiHelper.stopListening();
+        }
+    }
+
     /**
      * Init completely the layout, depending of the extra {@link com.github.orangegangsters.lollipin.lib.managers.AppLock#EXTRA_TYPE}
      */
@@ -74,6 +92,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             //Animate if greater than 2.3.3
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         }
+
+        //Init layout for Fingerprint
+        initLayoutForFingerprint();
 
         mLockManager = LockManager.getInstance();
         mPinCode = "";
@@ -105,6 +126,36 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         setStepText();
+    }
+
+    /**
+     * Init {@link FingerprintManager} of the {@link android.os.Build.VERSION#SDK_INT} is > to Marshmallow
+     * and {@link FingerprintManager#isHardwareDetected()}.
+     */
+    private void initLayoutForFingerprint() {
+        mFingerprintImageView = (ImageView) this.findViewById(R.id.pin_code_fingerprint_imageview);
+        mFingerprintTextView = (TextView) this.findViewById(R.id.pin_code_fingerprint_textview);
+        if (mType == AppLock.UNLOCK_PIN && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mFingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
+            mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(mFingerprintManager).build(mFingerprintImageView, mFingerprintTextView, this);
+            try {
+                if (mFingerprintManager.isHardwareDetected()) {
+                    mFingerprintImageView.setVisibility(View.VISIBLE);
+                    mFingerprintTextView.setVisibility(View.VISIBLE);
+                    mFingerprintUiHelper.startListening();
+                } else {
+                    mFingerprintImageView.setVisibility(View.GONE);
+                    mFingerprintTextView.setVisibility(View.GONE);
+                }
+            } catch (SecurityException e) {
+                Log.e(TAG, e.toString());
+                mFingerprintImageView.setVisibility(View.GONE);
+                mFingerprintTextView.setVisibility(View.GONE);
+            }
+        } else {
+            mFingerprintImageView.setVisibility(View.GONE);
+            mFingerprintTextView.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -286,6 +337,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
     }
 
+    @Override
+    public void onAuthenticated() {
+        Log.e(TAG, "Fingerprint READ!!!");
+        setResult(RESULT_OK);
+        onPinCodeSuccess();
+        finish();
+    }
+
+    @Override
+    public void onError() {
+        Log.e(TAG, "Fingerprint READ ERROR!!!");
+    }
+
     /**
      * Gets the list of {@link AppLock} types that are acceptable to be backed out of using
      * the device's back button
@@ -331,6 +395,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mPinCode = pinCode;
         mPinCodeRoundView.refresh(mPinCode.length());
     }
+
 
     /**
      * Returns the type of this {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}

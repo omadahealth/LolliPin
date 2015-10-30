@@ -8,7 +8,7 @@ To include in your project, add this to your build.gradle file:
 
 ```
    //Lollipin
-   compile 'com.github.orangegangsters:lollipin:1.3.4@aar'
+   compile 'com.github.orangegangsters:lollipin:1.4.0@aar'
 ```
 
 ![Demo](app/src/main/res/raw/github_gif.gif)
@@ -16,7 +16,7 @@ To include in your project, add this to your build.gradle file:
 ========
 ### By
 Developers:
-        [Olivier Goutay](https://github.com/olivierg13) and [Stoyan Dimitrov](https://github.com/StoyanD)
+        [Olivier Goutay](https://github.com/olivierg13) and [Stoyan Dimitrov](https://github.com/StoyanD) and [Dae Park](https://github.com/daespark)
         
 Contributors:
         [Art Beatte IV](https://github.com/abeatte), [Alex Morgan](https://github.com/axemorgan)
@@ -27,9 +27,14 @@ Designers:
 ========
 ### Security
 
+##### Password protection
 The password itself is not saved, only its hash using the SHA-1 algorithm.
 This hash is then saved on the SharedPreferences, allowing to verify that the user entered the right PinCode,
 without giving the possibility to retrieve it.
+
+##### Introducing Fingerprint
+Once the user has enabled the password, he can also use his fingerprint scanner (using Google Api, not Samsung)
+to unlock his device.
 
 ========
 ### Usage
