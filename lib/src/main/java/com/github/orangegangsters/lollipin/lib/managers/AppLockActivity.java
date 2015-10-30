@@ -93,6 +93,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         }
 
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+        }
+
         //Init layout for Fingerprint
         initLayoutForFingerprint();
 
@@ -110,11 +115,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
-
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-        }
 
         int logoId = mLockManager.getAppLock().getLogoId();
         ImageView logoImage = ((ImageView) findViewById(R.id.pin_code_logo_imageview));

@@ -1,5 +1,12 @@
 package lollipin.orangegangsters.github.com.lollipin.functional;
 
+import android.content.Context;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.github.orangegangsters.lollipin.CustomPinActivity;
 import com.github.orangegangsters.lollipin.MainActivity;
 import com.github.orangegangsters.lollipin.NotLockedActivity;
@@ -38,6 +45,10 @@ public class PinLockTest extends AbstractTest {
     public void testPinEnabling() {
         removePrefsAndGoToEnable();
 
+        //Test no fingerprint
+        assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+        assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+
         //--------Not the same pin--------
         //Enter 4 codes
         clickOnView(R.id.pin_code_button_1);
@@ -57,13 +68,23 @@ public class PinLockTest extends AbstractTest {
         enablePin();
     }
 
-    public void testPinEnablingChecking() {
+    public void testPinEnablingChecking() throws SecurityException {
         enablePin();
 
         //Go to unlock
         clickOnView(R.id.button_unlock_pin);
         solo.waitForActivity(CustomPinActivity.class);
         solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+
+        //Test fingerprint if available
+        FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && fingerprintManager.isHardwareDetected()) {
+            assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+            assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+        } else {
+            assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+            assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+        }
 
         //Enter the code
         clickOnView(R.id.pin_code_button_1);
