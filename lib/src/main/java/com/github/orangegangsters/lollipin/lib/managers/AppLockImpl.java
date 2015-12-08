@@ -15,12 +15,7 @@ import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 import java.security.SecureRandom;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
+import java.util.Arrays;
 
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
 
@@ -132,15 +127,12 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     private String generateSalt() {
-        byte[] salt;
+        byte[] salt = new byte[KEY_LENGTH];
         try {
-            SecretKey key = SecretKeyFactory
-                    .getInstance(KEY_ALGORITHM)
-                    .generateSecret(new PBEKeySpec(DEFAULT_PASSWORD_SALT.toCharArray()));
-            Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
-            salt = new byte[KEY_LENGTH];
-            new SecureRandom().nextBytes(salt);
-            cipher.init(Cipher.ENCRYPT_MODE, key, new PBEParameterSpec(salt, KEY_ITERATIONS));
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            sr.setSeed(System.currentTimeMillis());
+            sr.nextBytes(salt);
+            return Arrays.toString(salt);
         } catch (Exception e) {
             salt = DEFAULT_PASSWORD_SALT.getBytes();
         }

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.orangegangsters.lollipin.CustomPinActivity;
 import com.github.orangegangsters.lollipin.MainActivity;
@@ -77,10 +75,15 @@ public class PinLockTest extends AbstractTest {
         solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
 
         //Test fingerprint if available
-        FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && fingerprintManager.isHardwareDetected()) {
-            assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
-            assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+            if (fingerprintManager.isHardwareDetected()) {
+                assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+                assertEquals(View.VISIBLE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+            } else {
+                assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+                assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+            }
         } else {
             assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
             assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
