@@ -100,6 +100,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         }
 
+        if (this.getSupportActionBar() != null) {
+            this.getSupportActionBar().hide();
+        }
+
         Bundle extras = intent.getExtras();
         if (extras != null) {
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
