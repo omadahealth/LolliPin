@@ -5,6 +5,17 @@ import android.app.Activity;
 import java.util.HashSet;
 
 public abstract class AppLock {
+
+    /**
+     * intent key for passing hashed password when password is set.
+     */
+    public static final String KEY_HASHED_PASSWORD = "lollipop_key_hashed_password";
+
+    /**
+     * intent key for passing salt when password is set.
+     */
+    public static final String KEY_SALT = "lollipop_key_salt";
+
     /**
      * ENABLE_PINLOCK type, uses at firt to define the password
      */
@@ -183,8 +194,12 @@ public abstract class AppLock {
      */
     public abstract boolean shouldLockSceen(Activity activity);
 
-    public abstract String getForgotPinMsg();
+    public abstract String getHashedPassword();
 
+    public abstract String getSalt();
+    public abstract void setHashedPasswordIntoPref(String hashedPassword);
+    public abstract void setSaltIntoPref(String salt);
+    public abstract String getForgotPinMsg();
     public abstract void setForgotPinMsg(String msg);
 
     public abstract String getDisablePinMsg();

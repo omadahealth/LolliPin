@@ -310,9 +310,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 break;
             case AppLock.CONFIRM_PIN:
                 if (mPinCode.equals(mOldPinCode)) {
-                    setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(mPinCode);
                     onPinCodeSuccess();
+                    Intent resultData = new Intent();
+                    resultData.putExtra(AppLock.KEY_HASHED_PASSWORD, mLockManager.getAppLock().getHashedPassword());
+                    resultData.putExtra(AppLock.KEY_SALT, mLockManager.getAppLock().getSalt());
+                    setResult(RESULT_OK, resultData);
                     finish();
                 } else {
                     mOldPinCode = "";

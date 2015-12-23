@@ -31,31 +31,31 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     /**
      * The {@link android.content.SharedPreferences} key used to store the password
      */
-    private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
+    private static final String PASSWORD_PREFERENCE_KEY = "LOLLIPOP_PASSCODE";
     /**
      * The {@link android.content.SharedPreferences} key used to store the last active time
      */
-    private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LOLLIPOP_LAST_ACTIVE_MILLIS";
     /**
      * The {@link android.content.SharedPreferences} key used to store the timeout
      */
-    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
+    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "LOLLIPOP_TIMEOUT_MILLIS_PREFERENCE_KEY";
     /**
      * The {@link android.content.SharedPreferences} key used to store the logo resource id
      */
-    private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
+    private static final String LOGO_ID_PREFERENCE_KEY = "LOLLIPOP_LOGO_ID_PREFERENCE_KEY";
     /**
      * The {@link android.content.SharedPreferences} key used to store the forgot option
      */
-    private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
+    private static final String SHOW_FORGOT_PREFERENCE_KEY = "LOLLIPOP_SHOW_FORGOT_PREFERENCE_KEY";
     /**
      * The {@link SharedPreferences} key used to store whether the user has backed out of the {@link AppLockActivity}
      */
-    private static final String PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY = "PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY";
+    private static final String PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY = "LOLLIPOP_PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY";
     /**
      * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
      */
-    private static final String PASSWORD_SALT_PREFERENCE_KEY = "PASSWORD_SALT_PREFERENCE_KEY";
+    private static final String PASSWORD_SALT_PREFERENCE_KEY = "LOLLIPOP_PASSWORD_SALT_PREFERENCE_KEY";
 
     /**
      * The default password salt
@@ -108,16 +108,16 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         return mInstance;
     }
 
-    private String getSalt() {
+    private String getSaltOrGenerate() {
         String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
         if (salt == null) {
             salt = generateSalt();
-            setSalt(salt);
+            saveSalt(salt);
         }
         return salt;
     }
 
-    private void setSalt(String salt) {
+    private void saveSalt(String salt) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
         editor.apply();
@@ -222,7 +222,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean checkPasscode(String passcode) {
-        String salt = getSalt();
+        String salt = getSaltOrGenerate();
         passcode = salt + passcode + salt;
         passcode = Encryptor.getSHA1(passcode);
         String storedPasscode = "";
@@ -240,7 +240,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean setPasscode(String passcode) {
-        String salt = getSalt();
+        String salt = getSaltOrGenerate();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         if (passcode == null) {
@@ -315,6 +315,28 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         return true;
+    }
+
+    @Override
+    public String getHashedPassword() {
+        return mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, null);
+    }
+
+    @Override
+    public String getSalt() {
+        return mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
+    }
+
+    @Override
+    public void setHashedPasswordIntoPref(String hashedPassword) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PASSWORD_PREFERENCE_KEY, hashedPassword);
+        editor.apply();
+    }
+
+    @Override
+    public void setSaltIntoPref(String salt) {
+        saveSalt(salt);
     }
 
     @Override
