@@ -318,28 +318,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public String getHashedPassword() {
-        return mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, null);
-    }
-
-    @Override
-    public String getSalt() {
-        return mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
-    }
-
-    @Override
-    public void setHashedPasswordIntoPref(String hashedPassword) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(PASSWORD_PREFERENCE_KEY, hashedPassword);
-        editor.apply();
-    }
-
-    @Override
-    public void setSaltIntoPref(String salt) {
-        saveSalt(salt);
-    }
-
-    @Override
     public String getForgotPinMsg() {
         return mSharedPreferences.getString(FORGOT_PIN_MSG_KEY, null);
     }

@@ -194,11 +194,7 @@ public abstract class AppLock {
      */
     public abstract boolean shouldLockSceen(Activity activity);
 
-    public abstract String getHashedPassword();
 
-    public abstract String getSalt();
-    public abstract void setHashedPasswordIntoPref(String hashedPassword);
-    public abstract void setSaltIntoPref(String salt);
     public abstract String getForgotPinMsg();
     public abstract void setForgotPinMsg(String msg);
 
