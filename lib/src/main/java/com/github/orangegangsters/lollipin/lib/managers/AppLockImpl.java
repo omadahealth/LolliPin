@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
-import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
@@ -74,21 +73,24 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * The number of iterations used to generate a dynamic salt
      */
     private static final int KEY_ITERATIONS = 20;
-
+    /**
+     * Static instance of {@link AppLockImpl}
+     */
+    private static AppLockImpl mInstance;
     /**
      * The {@link android.content.SharedPreferences} used to store the password, the last active time etc...
      */
     private SharedPreferences mSharedPreferences;
-
     /**
      * The activity class that extends {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
     private Class<T> mActivityClass;
 
-    /**
-     * Static instance of {@link AppLockImpl}
-     */
-    private static AppLockImpl mInstance;
+    private AppLockImpl(Context context, Class<T> activityClass) {
+        super();
+        this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.mActivityClass = activityClass;
+    }
 
     /**
      * Static method that allows to get back the current static Instance of {@link AppLockImpl}
@@ -106,25 +108,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         return mInstance;
     }
 
-    private AppLockImpl(Context context, Class<T> activityClass) {
-        super();
-        this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        this.mActivityClass = activityClass;
-    }
-
-    @Override
-    public void setTimeout(long timeout) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putLong(TIMEOUT_MILLIS_PREFERENCE_KEY, timeout);
-        editor.apply();
-    }
-
-    private void setSalt(String salt) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
-        editor.apply();
-    }
-
     private String getSalt() {
         String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
         if (salt == null) {
@@ -132,6 +115,12 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             setSalt(salt);
         }
         return salt;
+    }
+
+    private void setSalt(String salt) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
+        editor.apply();
     }
 
     private String generateSalt() {
@@ -153,15 +142,22 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public void setLogoId(int logoId) {
+    public void setTimeout(long timeout) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(LOGO_ID_PREFERENCE_KEY, logoId);
+        editor.putLong(TIMEOUT_MILLIS_PREFERENCE_KEY, timeout);
         editor.apply();
     }
 
     @Override
     public int getLogoId() {
         return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, LOGO_ID_NONE);
+    }
+
+    @Override
+    public void setLogoId(int logoId) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(LOGO_ID_PREFERENCE_KEY, logoId);
+        editor.apply();
     }
 
     @Override
@@ -293,10 +289,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             return true;
         }
 
-        // already unlock
+        // already unlock todo should consider change & disable
         if (activity instanceof AppLockActivity) {
             AppLockActivity ala = (AppLockActivity) activity;
-            if (ala.getType() == AppLock.UNLOCK_PIN) {
+            if (ala.getType() == AppLock.UNLOCK_PIN || ala.getType() == AppLock.UNLOCK_PIN_CANCELLABLE) {
                 Log.d(TAG, "already unlock activity");
                 return false;
             }
