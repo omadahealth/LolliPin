@@ -312,10 +312,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mPinCode.equals(mOldPinCode)) {
                     mLockManager.getAppLock().setPasscode(mPinCode);
                     onPinCodeSuccess();
-                    Intent resultData = new Intent();
-                    resultData.putExtra(AppLock.KEY_HASHED_PASSWORD, mLockManager.getAppLock().getHashedPassword());
-                    resultData.putExtra(AppLock.KEY_SALT, mLockManager.getAppLock().getSalt());
-                    setResult(RESULT_OK, resultData);
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     mOldPinCode = "";
