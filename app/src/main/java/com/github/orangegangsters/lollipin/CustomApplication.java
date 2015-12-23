@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 
-import lollipin.orangegangsters.github.com.lollipin.R;
-
 /**
  * Created by oliviergoutay on 1/14/15.
  */
@@ -18,10 +16,6 @@ public class CustomApplication extends Application {
 
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
-        //lockManager.getAppLock().setLogoId(R.drawable.security_lock);
-        lockManager.getAppLock().setForgotPinMsg("Esqueceu?");
-        lockManager.getAppLock().setChangePinMsg("Mude seu código");
-        lockManager.getAppLock().setCreatePinMsg("Crie seu código");
-        lockManager.getAppLock().setConfirmPinMsg("Digite sua senha");
+        lockManager.getAppLock().setTimeout(2 * 1000);
     }
 }
