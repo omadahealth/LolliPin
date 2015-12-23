@@ -228,7 +228,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     public String getForgotText() {
-        String msg = mLockManager.getAppLock().getDisablePinMsg();
+        String msg = mLockManager.getAppLock().getForgotPinMsg();
 
         if(msg == null)
             getString(R.string.pin_code_forgot_text);
