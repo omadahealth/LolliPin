@@ -15,7 +15,7 @@ public class CustomApplication extends Application {
         super.onCreate();
 
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
-        lockManager.enableAppLock(this, CustomPinActivity.class);
+        lockManager.enableDefaultAppLock(this, CustomPinActivity.class);
         lockManager.getAppLock().setTimeout(2 * 1000);
     }
 }

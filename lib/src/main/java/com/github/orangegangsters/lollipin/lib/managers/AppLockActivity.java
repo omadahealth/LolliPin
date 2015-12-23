@@ -175,7 +175,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     private void enableAppLockerIfDoesNotExist() {
         try {
             if (mLockManager.getAppLock() == null) {
-                mLockManager.enableAppLock(this, getCustomAppLockActivityClass());
+                mLockManager.enableDefaultAppLock(this, getCustomAppLockActivityClass());
             }
         } catch (Exception e) {
             Log.e(TAG, e.toString());
