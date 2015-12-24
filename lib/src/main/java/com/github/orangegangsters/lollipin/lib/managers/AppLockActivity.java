@@ -304,6 +304,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     finish();
                 } else {
                     onPinCodeError();
+                    setStepText();
                 }
                 break;
             case AppLock.ENABLE_PINLOCK:
@@ -334,6 +335,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     onPinCodeSuccess();
                 } else {
                     onPinCodeError();
+                    setStepText();
+
                 }
                 break;
             case AppLock.UNLOCK_PIN:
@@ -344,6 +347,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     finish();
                 } else {
                     onPinCodeError();
+                    setStepText();
                 }
                 break;
             default:
