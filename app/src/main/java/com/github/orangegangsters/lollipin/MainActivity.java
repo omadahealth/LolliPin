@@ -28,6 +28,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         this.findViewById(R.id.button_unlock_pin_cancellable).setOnClickListener(this);
         this.findViewById(R.id.button_disable_pin).setOnClickListener(this);
         this.findViewById(R.id.button_not_locked).setOnClickListener(this);
+        this.findViewById(R.id.button_locked).setOnClickListener(this);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
                 break;
             case R.id.button_unlock_pin_cancellable:
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN_CANCELLABLE);
-                startActivityForResult(intent,REQUEST_CODE_UNLOCK_PIN_CANCELLABLE);
+                startActivityForResult(intent, REQUEST_CODE_UNLOCK_PIN_CANCELLABLE);
                 break;
             case R.id.button_disable_pin:
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
@@ -57,6 +58,12 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
             case R.id.button_not_locked:
                 Intent intent2 = new Intent(MainActivity.this, NotLockedActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.button_locked:
+                Intent intent3 = new Intent(MainActivity.this, LockedActivity.class);
+                startActivity(intent3);
+                break;
+
         }
     }
 

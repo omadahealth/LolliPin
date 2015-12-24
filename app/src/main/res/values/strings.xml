@@ -5,6 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="activity_not_locked_text">Nothing should happen on this page, here for test purpose</string>
+    <string name="activity_locked_text">A locked activity.</string>
     <string name="activity_dialog_title">Forgot you Pincode?</string>
     <string name="activity_dialog_accept">OK</string>
     <string name="activity_dialog_decline">CANCEL</string>

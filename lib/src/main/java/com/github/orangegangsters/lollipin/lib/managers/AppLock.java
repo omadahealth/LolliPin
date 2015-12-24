@@ -99,6 +99,17 @@ public abstract class AppLock {
     public abstract void setTimeout(long timeout);
 
     /**
+     * Get the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     */
+    public abstract int getAttempts();
+
+    /**
+     * Set the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     */
+    public abstract void setAttempts(int timeout);
+
+
+    /**
      * Get logo resource id used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
     public abstract int getLogoId();

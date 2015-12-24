@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lollipin.orangegangsters.github.com.lollipin" >
+    package="lollipin.orangegangsters.github.com.lollipin">
 
     <application
         android:name="com.github.orangegangsters.lollipin.CustomApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.github.orangegangsters.lollipin.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,12 +19,13 @@
         </activity>
         <activity
             android:name="com.github.orangegangsters.lollipin.NotLockedActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.github.orangegangsters.lollipin.LockedActivity"
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.github.orangegangsters.lollipin.CustomPinActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
     </application>
 
 </manifest>
