@@ -409,7 +409,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError(boolean countAsAttempt) {
-        if (countAsAttempt){
+        if (countAsAttempt) {
             onPinFailure(++mAttempts);
         }
         Thread thread = new Thread() {
@@ -427,6 +427,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected void onPinCodeSuccess() {
         onPinSuccess(mAttempts);
+        mAttempts = 0;
     }
 
     /**
