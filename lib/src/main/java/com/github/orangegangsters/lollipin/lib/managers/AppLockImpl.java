@@ -171,7 +171,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     @Override
     public void resetPassword() {
-        // TODO: 12/24/15  
+        // TODO: 12/24/15
     }
 
     @Override
@@ -237,9 +237,9 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public void setLastActiveMillis() {
+    public void setLastActiveMillis(long lastActiveMillis) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, System.currentTimeMillis());
+        editor.putLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, lastActiveMillis);
         editor.apply();
     }
 
@@ -424,7 +424,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityPaused " + clazzName);
 
-        setLastActiveMillis();
+        setLastActiveMillis(System.currentTimeMillis());
     }
 
     @Override
@@ -449,6 +449,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             return;
         }
 
-        setLastActiveMillis();
+        setLastActiveMillis(System.currentTimeMillis());
     }
 }

@@ -174,7 +174,7 @@ public abstract class AppLock {
      * Set in {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityPaused(android.app.Activity)}
      * and {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityResumed(android.app.Activity)}
      */
-    public abstract void setLastActiveMillis();
+    public abstract void setLastActiveMillis(long lastActiveMillis);
 
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
