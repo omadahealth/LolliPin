@@ -106,7 +106,12 @@ public abstract class AppLock {
     /**
      * Set the timeout used in {@link #shouldLockSceen(android.app.Activity)}
      */
-    public abstract void setAttempts(int timeout);
+    public abstract void setAttempts(int attempts);
+
+    /**
+     * reset password
+      */
+    public abstract void resetPassword();
 
 
     /**
@@ -207,6 +212,7 @@ public abstract class AppLock {
 
 
     public abstract String getForgotPinMsg();
+
     public abstract void setForgotPinMsg(String msg);
 
     public abstract String getDisablePinMsg();

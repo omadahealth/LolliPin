@@ -166,6 +166,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 // TODO: 12/24/15
     }
 
+    /**
+     * Set the timeout used in {@link #shouldLockSceen(Activity)}
+     */
+    @Override
+    public void resetPassword() {
+        // TODO: 12/24/15  
+    }
+
     @Override
     public int getLogoId() {
         return mSharedPreferences.getInt(LOGO_ID_PREFERENCE_KEY, LOGO_ID_NONE);
