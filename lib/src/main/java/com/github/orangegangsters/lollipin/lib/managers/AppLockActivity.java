@@ -410,7 +410,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     protected void onPinCodeError(boolean countAsAttempt) {
         if (countAsAttempt){
-            onPinFailure(--mAttempts);
+            onPinFailure(++mAttempts);
         }
         Thread thread = new Thread() {
             public void run() {
