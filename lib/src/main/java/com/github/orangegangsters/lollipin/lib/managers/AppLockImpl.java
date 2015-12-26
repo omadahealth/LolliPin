@@ -1,6 +1,7 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.List;
 
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
 
@@ -84,6 +86,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * The activity class that extends {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
     private Class<T> mActivityClass;
+    private boolean passwordVerified;
+    private boolean appOnForeground;
 
     private AppLockImpl(Context context, Class<T> activityClass) {
         super();
@@ -307,6 +311,9 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     public boolean shouldLockSceen(Activity activity) {
         Log.d(TAG, "Lollipin shouldLockSceen() called");
 
+        if (isAppOnForeground() && isPasswordVerified()) {
+            return false;
+        }
         // previously backed out of pin screen
         if (pinChallengeCancelled()) {
             return true;
@@ -401,6 +408,26 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
+    public boolean isPasswordVerified() {
+        return passwordVerified;
+    }
+
+    @Override
+    public void setPasswordVerified(boolean passwordVerified) {
+        this.passwordVerified = passwordVerified;
+    }
+
+    @Override
+    public boolean isAppOnForeground() {
+        return this.appOnForeground;
+    }
+
+    @Override
+    public void setAppOnForeground(boolean appOnForeground) {
+        this.appOnForeground = appOnForeground;
+    }
+
+    @Override
     public void setMsg(String sharedPreferenceKey, String msg) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -417,15 +444,39 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public void onActivityStopped(Activity activity) {
-        if (isIgnoredActivity(activity)) {
-            return;
-        }
 
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityStopped " + clazzName);
 
+        if (isIgnoredActivity(activity)) {
+            return;
+        }
+
+        if (!isAppOnForeground(activity)) {
+            setAppOnForeground(false);
+        }
+
         setLastActiveMillis(System.currentTimeMillis());
     }
+
+
+    public boolean isAppOnForeground(Activity activity) {
+        ActivityManager activityManager = (ActivityManager) activity.getSystemService(
+                Context.ACTIVITY_SERVICE);
+        String packageName = activity.getPackageName();
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void onActivityResumed(Activity activity) {
@@ -437,6 +488,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         Log.d(TAG, "onActivityResumed " + clazzName);
 
         if (shouldLockSceen(activity)) {
+            setAppOnForeground(true);
             Log.d(TAG, "mActivityClass.getClass() " + mActivityClass);
             Intent intent = new Intent(activity.getApplicationContext(),
                     mActivityClass);
