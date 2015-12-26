@@ -88,8 +88,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         if (mFingerprintUiHelper != null) {
             mFingerprintUiHelper.stopListening();
         }
@@ -119,7 +119,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
         enableAppLockerIfDoesNotExist();
         mLockManager.getAppLock().setPinChallengeCancelled(false);
-
+        mFingerprintImageView = (ImageView) this.findViewById(R.id.pin_code_fingerprint_imageview);
+        mFingerprintTextView = (TextView) this.findViewById(R.id.pin_code_fingerprint_textview);
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
         mPinCodeRoundView.setPinLength(this.getPinLength());
@@ -146,8 +147,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * and {@link FingerprintManager#isHardwareDetected()}.
      */
     private void initLayoutForFingerprint() {
-        mFingerprintImageView = (ImageView) this.findViewById(R.id.pin_code_fingerprint_imageview);
-        mFingerprintTextView = (TextView) this.findViewById(R.id.pin_code_fingerprint_textview);
+
         if ((mType == AppLock.UNLOCK_PIN || mType == AppLock.UNLOCK_PIN_CANCELLABLE) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mFingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
             mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(mFingerprintManager).build(mFingerprintImageView, mFingerprintTextView, this);
@@ -253,10 +253,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 appLock.setLastActiveMillis(System.currentTimeMillis());
             }
         }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-            //Animate if greater than 2.3.3
-            overridePendingTransition(R.anim.nothing, R.anim.slide_down);
-        }
+        overridePendingTransition(R.anim.nothing, R.anim.slide_down);
+
     }
 
     /**
@@ -282,19 +280,19 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     /**
      * Called at the end of the animation of the {@link com.andexert.library.RippleView}
-     * Calls {@link #onPinCodeInputed} when {@link #mPinCode}
+     * Calls {@link #onPinCodeInputted} when {@link #mPinCode}
      */
     @Override
     public void onRippleAnimationEnd() {
         if (mPinCode.length() == this.getPinLength()) {
-            onPinCodeInputed();
+            onPinCodeInputted();
         }
     }
 
     /**
      * Switch over the {@link #mType} to determine if the password is ok, if we should pass to the next step etc...
      */
-    protected void onPinCodeInputed() {
+    protected void onPinCodeInputted() {
         switch (mType) {
             case AppLock.DISABLE_PINLOCK:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
