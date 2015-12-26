@@ -416,13 +416,13 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
+    public void onActivityStopped(Activity activity) {
         if (isIgnoredActivity(activity)) {
             return;
         }
 
         String clazzName = activity.getClass().getName();
-        Log.d(TAG, "onActivityPaused " + clazzName);
+        Log.d(TAG, "onActivityStopped " + clazzName);
 
         setLastActiveMillis(System.currentTimeMillis());
     }

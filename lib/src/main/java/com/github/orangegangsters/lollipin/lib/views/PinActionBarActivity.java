@@ -24,7 +24,7 @@ public class PinActionBarActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityPaused(PinActionBarActivity.this);
+            mLifeCycleListener.onActivityStopped(PinActionBarActivity.this);
         }
         super.onPause();
     }

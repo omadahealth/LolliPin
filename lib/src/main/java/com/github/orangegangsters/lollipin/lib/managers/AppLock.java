@@ -171,7 +171,7 @@ public abstract class AppLock {
 
     /**
      * Set the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}.
-     * Set in {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityPaused(android.app.Activity)}
+     * Set in {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityStopped(android.app.Activity)}
      * and {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityResumed(android.app.Activity)}
      */
     public abstract void setLastActiveMillis(long lastActiveMillis);

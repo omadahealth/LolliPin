@@ -48,11 +48,11 @@ public class PinActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onStop() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityPaused(PinActivity.this);
+            mLifeCycleListener.onActivityStopped(PinActivity.this);
         }
-        super.onPause();
+        super.onStop();
     }
 
     @Override

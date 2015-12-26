@@ -19,13 +19,13 @@
         </activity>
         <activity
             android:name="com.github.orangegangsters.lollipin.NotLockedActivity"
-            android:label="@string/app_name"></activity>
+            android:label="NotLockedActivity"/>
         <activity
             android:name="com.github.orangegangsters.lollipin.LockedActivity"
-            android:label="@string/app_name"></activity>
+            android:label="LockedActivity"/>
         <activity
             android:name="com.github.orangegangsters.lollipin.CustomPinActivity"
-            android:label="@string/app_name"></activity>
+            android:label="CustomPinActivity"/>
     </application>
 
 </manifest>
