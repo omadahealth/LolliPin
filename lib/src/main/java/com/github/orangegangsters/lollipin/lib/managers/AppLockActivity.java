@@ -111,12 +111,13 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         Bundle extras = intent.getExtras();
         if (extras != null) {
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-            if (mType==AppLock.UNLOCK_PIN){
-                mLockManager.getAppLock().setPasswordVerified(false);
-            }
+
         }
 
         mLockManager = LockManager.getInstance();
+        if (mType == AppLock.UNLOCK_PIN) {
+            mLockManager.getAppLock().setPasswordVerified(false);
+        }
         mPinCode = "";
         mOldPinCode = "";
 
@@ -431,9 +432,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
 
     protected void onPinCodeSuccess() {
+        mLockManager.getAppLock().setPasswordVerified(true);
         onPinSuccess(mAttempts);
         mAttempts = 0;
-        mLockManager.getAppLock().setPasswordVerified(true);
     }
 
     /**
