@@ -110,7 +110,7 @@ public abstract class AppLock {
 
     /**
      * reset password
-      */
+     */
     public abstract void resetPassword();
 
 
@@ -234,6 +234,14 @@ public abstract class AppLock {
     public abstract String getCreatePinMsg();
 
     public abstract void setCreatePinMsg(String msg);
+
+    public abstract boolean isPasswordVerified();
+
+    public abstract void setPasswordVerified(boolean passwordVerified);
+
+    public abstract boolean isAppOnForeground();
+
+    public abstract void setAppOnForeground(boolean appOnForeground);
 
     public abstract void setMsg(String sharedPreferencesKey, String msg);
 
