@@ -152,7 +152,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     /**
-     * Get the timeout used in {@link #shouldLockSceen(Activity)}
+     * Get the timeout used in {@link #shouldLockScreen(Activity)}
      */
     @Override
     public int getAttempts() {
@@ -161,7 +161,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     /**
-     * Set the timeout used in {@link #shouldLockSceen(Activity)}
+     * Set the timeout used in {@link #shouldLockScreen(Activity)}
      *
      * @param timeout
      */
@@ -171,7 +171,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     /**
-     * Set the timeout used in {@link #shouldLockSceen(Activity)}
+     * Set the timeout used in {@link #shouldLockScreen(Activity)}
      */
     @Override
     public void resetPassword() {
@@ -308,8 +308,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public boolean shouldLockSceen(Activity activity) {
-        Log.d(TAG, "Lollipin shouldLockSceen() called");
+    public boolean shouldLockScreen(Activity activity) {
+        Log.d(TAG, "Lollipin shouldLockScreen() called");
 
         if (isAppOnForeground() && isPasswordVerified()) {
             return false;
@@ -487,7 +487,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityResumed " + clazzName);
 
-        if (shouldLockSceen(activity)) {
+        if (shouldLockScreen(activity)) {
             setAppOnForeground(true);
             Log.d(TAG, "mActivityClass.getClass() " + mActivityClass);
             Intent intent = new Intent(activity.getApplicationContext(),
