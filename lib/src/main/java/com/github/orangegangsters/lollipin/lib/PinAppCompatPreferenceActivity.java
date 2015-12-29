@@ -16,13 +16,13 @@ import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
  * Created by stoyan and olivier on 1/12/15.
  * You must extend this Activity in order to support this library.
  * Then to enable PinCode blocking, you must call
- * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableDefaultAppLock(android.content.Context, Class)}
+ * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableDefaultAppLock(Context, Class)}
  */
-public class PinActivity extends AppCompatActivity {
+public class PinAppCompatPreferenceActivity extends AppCompatActivity {
     private static LifeCycleInterface mLifeCycleListener;
     private final BroadcastReceiver mPinCancelledReceiver;
 
-    public PinActivity() {
+    public PinAppCompatPreferenceActivity() {
         super();
         mPinCancelledReceiver = new BroadcastReceiver() {
             @Override
@@ -42,7 +42,7 @@ public class PinActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityResumed(PinActivity.this);
+            mLifeCycleListener.onActivityResumed(PinAppCompatPreferenceActivity.this);
         }
         super.onResume();
     }
@@ -50,7 +50,7 @@ public class PinActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityOnPaused(PinActivity.this);
+            mLifeCycleListener.onActivityOnPaused(PinAppCompatPreferenceActivity.this);
         }
         super.onPause();
     }
@@ -58,7 +58,7 @@ public class PinActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityStopped(PinActivity.this);
+            mLifeCycleListener.onActivityStopped(PinAppCompatPreferenceActivity.this);
         }
         super.onStop();
     }

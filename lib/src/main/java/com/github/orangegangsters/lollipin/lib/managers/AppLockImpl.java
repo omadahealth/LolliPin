@@ -503,4 +503,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
         setLastActiveMillis(System.currentTimeMillis());
     }
+
+    /**
+     * Called in {@link Activity#onPause()}
+     *
+     * @param activity
+     */
+    @Override
+    public void onActivityOnPaused(Activity activity) {
+
+    }
 }
