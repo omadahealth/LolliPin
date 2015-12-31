@@ -4,12 +4,12 @@
     android:shape="oval" >
 
     <solid
-        android:color="@color/light_blue_500" >
+        android:color="@color/warning_color" >
     </solid>
 
     <stroke
         android:width="1dp"
-        android:color="@color/light_blue_500" >
+        android:color="@color/warning_color" >
     </stroke>
 
 </shape>

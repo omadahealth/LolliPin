@@ -19,5 +19,10 @@ public interface LifeCycleInterface {
     /**
      * Called in {@link android.app.Activity#onPause()}
      */
-    public void onActivityPaused(Activity activity);
+    public void onActivityOnPaused(Activity activity);
+
+    /**
+     * Called in {@link android.app.Activity#onStop()}
+     */
+    public void onActivityStopped(Activity activity);
 }

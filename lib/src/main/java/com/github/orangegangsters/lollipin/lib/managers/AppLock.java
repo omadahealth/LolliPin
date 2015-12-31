@@ -5,6 +5,17 @@ import android.app.Activity;
 import java.util.HashSet;
 
 public abstract class AppLock {
+
+    /**
+     * intent key for passing hashed password when password is set.
+     */
+    public static final String KEY_HASHED_PASSWORD = "lollipop_key_hashed_password";
+
+    /**
+     * intent key for passing salt when password is set.
+     */
+    public static final String KEY_SALT = "lollipop_key_salt";
+
     /**
      * ENABLE_PINLOCK type, uses at firt to define the password
      */
@@ -25,6 +36,11 @@ public abstract class AppLock {
      * UNLOCK_PIN type, uses to ask the password to the user, in order to unlock the app
      */
     public static final int UNLOCK_PIN = 4;
+
+    /**
+     * UNLOCK_PIN_CANCELLABLE type, uses to ask the password to the user proactively, in order to verify the app before conducting sensitive action.
+     */
+    public static final int UNLOCK_PIN_CANCELLABLE = 5;
 
     /**
      * LOGO_ID_NONE used to denote when a user has not set a logoId using {@link #setLogoId(int)}
@@ -73,14 +89,30 @@ public abstract class AppLock {
     }
 
     /**
-     * Get the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     * Get the timeout used in {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract long getTimeout();
 
     /**
-     * Set the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     * Set the timeout used in {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract void setTimeout(long timeout);
+
+    /**
+     * Get the timeout used in {@link #shouldLockScreen(android.app.Activity)}
+     */
+    public abstract int getAttempts();
+
+    /**
+     * Set the timeout used in {@link #shouldLockScreen(android.app.Activity)}
+     */
+    public abstract void setAttempts(int attempts);
+
+    /**
+     * reset password
+     */
+    public abstract void resetPassword();
+
 
     /**
      * Get logo resource id used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
@@ -133,16 +165,16 @@ public abstract class AppLock {
     public abstract void disableAndRemoveConfiguration();
 
     /**
-     * Get the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}
+     * Get the last active time of the app used by {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract long getLastActiveMillis();
 
     /**
-     * Set the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}.
-     * Set in {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityPaused(android.app.Activity)}
+     * Set the last active time of the app used by {@link #shouldLockScreen(android.app.Activity)}.
+     * Set in {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityStopped(android.app.Activity)}
      * and {@link com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface#onActivityResumed(android.app.Activity)}
      */
-    public abstract void setLastActiveMillis();
+    public abstract void setLastActiveMillis(long lastActiveMillis);
 
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
@@ -176,5 +208,42 @@ public abstract class AppLock {
      * {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity} (it returns false)
      * Otherwise returns true
      */
-    public abstract boolean shouldLockSceen(Activity activity);
+    public abstract boolean shouldLockScreen(Activity activity);
+
+
+    public abstract String getForgotPinMsg();
+
+    public abstract void setForgotPinMsg(String msg);
+
+    public abstract String getDisablePinMsg();
+
+    public abstract void setDisablePinMsg(String msg);
+
+    public abstract String getChangePinMsg();
+
+    public abstract void setChangePinMsg(String msg);
+
+    public abstract String getUnlockPinMsg();
+
+    public abstract void setUnlockPinMsg(String msg);
+
+    public abstract String getConfirmPinMsg();
+
+    public abstract void setConfirmPinMsg(String msg);
+
+    public abstract String getCreatePinMsg();
+
+    public abstract void setCreatePinMsg(String msg);
+
+    public abstract boolean isPasswordVerified();
+
+    public abstract void setPasswordVerified(boolean passwordVerified);
+
+    public abstract boolean isAppOnForeground();
+
+    public abstract void setAppOnForeground(boolean appOnForeground);
+
+    public abstract void setMsg(String sharedPreferencesKey, String msg);
+
+
 }

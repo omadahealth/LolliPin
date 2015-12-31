@@ -1,12 +1,13 @@
 package com.github.orangegangsters.lollipin.lib;
 
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
@@ -15,13 +16,13 @@ import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
  * Created by stoyan and olivier on 1/12/15.
  * You must extend this Activity in order to support this library.
  * Then to enable PinCode blocking, you must call
- * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
+ * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableDefaultAppLock(Context, Class)}
  */
-public class PinFragmentActivity extends FragmentActivity {
+public class PinAppCompatPreferenceActivity extends AppCompatActivity {
     private static LifeCycleInterface mLifeCycleListener;
     private final BroadcastReceiver mPinCancelledReceiver;
 
-    public PinFragmentActivity() {
+    public PinAppCompatPreferenceActivity() {
         super();
         mPinCancelledReceiver = new BroadcastReceiver() {
             @Override
@@ -41,7 +42,7 @@ public class PinFragmentActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityResumed(PinFragmentActivity.this);
+            mLifeCycleListener.onActivityResumed(PinAppCompatPreferenceActivity.this);
         }
         super.onResume();
     }
@@ -49,9 +50,17 @@ public class PinFragmentActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityPaused(PinFragmentActivity.this);
+            mLifeCycleListener.onActivityOnPaused(PinAppCompatPreferenceActivity.this);
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityStopped(PinAppCompatPreferenceActivity.this);
+        }
+        super.onStop();
     }
 
     @Override

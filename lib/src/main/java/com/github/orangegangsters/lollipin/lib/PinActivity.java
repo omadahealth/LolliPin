@@ -1,13 +1,13 @@
 package com.github.orangegangsters.lollipin.lib;
 
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
@@ -16,9 +16,9 @@ import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
  * Created by stoyan and olivier on 1/12/15.
  * You must extend this Activity in order to support this library.
  * Then to enable PinCode blocking, you must call
- * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
+ * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableDefaultAppLock(android.content.Context, Class)}
  */
-public class PinActivity extends Activity {
+public class PinActivity extends AppCompatActivity {
     private static LifeCycleInterface mLifeCycleListener;
     private final BroadcastReceiver mPinCancelledReceiver;
 
@@ -50,9 +50,17 @@ public class PinActivity extends Activity {
     @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
-            mLifeCycleListener.onActivityPaused(PinActivity.this);
+            mLifeCycleListener.onActivityOnPaused(PinActivity.this);
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if (mLifeCycleListener != null) {
+            mLifeCycleListener.onActivityStopped(PinActivity.this);
+        }
+        super.onStop();
     }
 
     @Override

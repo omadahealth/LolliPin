@@ -30,5 +30,7 @@
     <string name="pin_code_fingerprint_text">Fingerprint</string>
     <string name="pin_code_fingerprint_success">Fingerprint recognized</string>
     <string name="pin_code_fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="button11_small_text" />
+    <string name="button1_small_text" />
 
 </resources>
