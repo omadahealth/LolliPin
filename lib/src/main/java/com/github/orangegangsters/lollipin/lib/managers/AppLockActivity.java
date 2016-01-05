@@ -49,7 +49,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected FingerprintManager mFingerprintManager;
     protected FingerprintUiHelper mFingerprintUiHelper;
 
-    protected int mType = AppLock.UNLOCK_PIN;
+    public int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
     protected String mPinCode;
 
@@ -131,8 +131,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             logoImage.setVisibility(View.VISIBLE);
             logoImage.setImageResource(logoId);
         }
-        mForgotTextView.setText(getForgotText());
-        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         setStepText();
     }
@@ -186,6 +184,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Init the {@link #mStepTextView} based on {@link #mType}
      */
     private void setStepText() {
+        if(!mLockManager.getAppLock().shouldShowForgot() || mType == AppLock.ENABLE_PINLOCK)
+            mForgotTextView.setVisibility(View.GONE);
+
         mStepTextView.setText(getStepText(mType));
     }
 
@@ -485,5 +486,13 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public Class<? extends AppLockActivity> getCustomAppLockActivityClass() {
         return this.getClass();
+    }
+
+    public int getmType() {
+        return mType;
+    }
+
+    public void setmType(int mType) {
+        this.mType = mType;
     }
 }
