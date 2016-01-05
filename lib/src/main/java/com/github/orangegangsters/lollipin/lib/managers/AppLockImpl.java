@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
+import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
@@ -20,6 +21,13 @@ import java.util.Arrays;
 public class AppLockImpl<T extends AppLockActivity> extends AppLock implements LifeCycleInterface {
 
     public static final String TAG = "AppLockImpl";
+
+    private static final String FORGOT_PIN_MSG_KEY = "FORGOT_PIN_MSG_KEY";
+    private static final String DISABLE_PIN_MSG_KEY = "DISABLE_PIN_MSG_KEY";
+    private static final String CHANGE_PIN_MSG_KEY = "CHANGE_PIN_MSG_KEY";
+    private static final String UNLOCK_PIN_MSG_KEY = "UNLOCK_PIN_MSG_KEY";
+    private static final String CONFIRM_PIN_MSG_KEY = "CONFIRM_PIN_MSG_KEY";
+    private static final String CREATE_PIN_MSG_KEY = "CREATE_PIN_MSG_KEY";
 
     /**
      * The {@link android.content.SharedPreferences} key used to store the password
@@ -311,6 +319,81 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         return true;
+    }
+
+    @Override
+    public String getForgotPinMsg() {
+        return mSharedPreferences.getString(FORGOT_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setForgotPinMsg(String msg) {
+        setMsg(FORGOT_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public String getDisablePinMsg() {
+        return mSharedPreferences.getString(DISABLE_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setDisablePinMsg(String msg) {
+        setMsg(DISABLE_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public String getChangePinMsg() {
+        return mSharedPreferences.getString(CHANGE_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setChangePinMsg(String msg) {
+        setMsg(CHANGE_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public String getUnlockPinMsg() {
+        return mSharedPreferences.getString(UNLOCK_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setUnlockPinMsg(String msg) {
+        setMsg(UNLOCK_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public String getConfirmPinMsg() {
+        return mSharedPreferences.getString(CONFIRM_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setConfirmPinMsg(String msg) {
+        setMsg(CONFIRM_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public String getCreatePinMsg() {
+        return mSharedPreferences.getString(CREATE_PIN_MSG_KEY, null);
+    }
+
+    @Override
+    public void setCreatePinMsg(String msg) {
+        setMsg(CREATE_PIN_MSG_KEY, msg);
+    }
+
+    @Override
+    public void setMsg(String sharedPreferenceKey, String msg) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        if (msg == null) {
+            editor.remove(sharedPreferenceKey);
+            editor.apply();
+            this.disable();
+        } else {
+            editor.putString(sharedPreferenceKey, msg);
+            editor.apply();
+            this.enable();
+        }
     }
 
     @Override

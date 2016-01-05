@@ -1,6 +1,7 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 
 import java.util.HashSet;
 
@@ -177,4 +178,32 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    public abstract String getForgotPinMsg();
+
+    public abstract void setForgotPinMsg(String msg);
+
+    public abstract String getDisablePinMsg();
+
+    public abstract void setDisablePinMsg(String msg);
+
+    public abstract String getChangePinMsg();
+
+    public abstract void setChangePinMsg(String msg);
+
+    public abstract String getUnlockPinMsg();
+
+    public abstract void setUnlockPinMsg(String msg);
+
+    public abstract String getConfirmPinMsg();
+
+    public abstract void setConfirmPinMsg(String msg);
+
+    public abstract String getCreatePinMsg();
+
+    public abstract void setCreatePinMsg(String msg);
+
+    public abstract void setMsg(String sharedPreferencesKey, String msg);
+
+
 }

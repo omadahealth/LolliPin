@@ -49,7 +49,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected FingerprintManager mFingerprintManager;
     protected FingerprintUiHelper mFingerprintUiHelper;
 
-    protected int mType = AppLock.UNLOCK_PIN;
+    public int mType = AppLock.UNLOCK_PIN;
     protected int mAttempts = 1;
     protected String mPinCode;
 
@@ -100,6 +100,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         }
 
+        if (this.getSupportActionBar() != null) {
+            this.getSupportActionBar().hide();
+        }
+
         Bundle extras = intent.getExtras();
         if (extras != null) {
             mType = extras.getInt(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
@@ -117,6 +121,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mPinCodeRoundView.setPinLength(this.getPinLength());
         mForgotTextView = (TypefaceTextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
+        mForgotTextView.setText(getForgotText());
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
@@ -126,8 +131,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             logoImage.setVisibility(View.VISIBLE);
             logoImage.setImageResource(logoId);
         }
-        mForgotTextView.setText(getForgotText());
-        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         setStepText();
     }
@@ -181,6 +184,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Init the {@link #mStepTextView} based on {@link #mType}
      */
     private void setStepText() {
+        if(!mLockManager.getAppLock().shouldShowForgot() || mType == AppLock.ENABLE_PINLOCK)
+            mForgotTextView.setVisibility(View.GONE);
+
         mStepTextView.setText(getStepText(mType));
     }
 
@@ -194,26 +200,41 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         String msg = null;
         switch (reason) {
             case AppLock.DISABLE_PINLOCK:
-                msg = getString(R.string.pin_code_step_disable, this.getPinLength());
+                msg = mLockManager.getAppLock().getDisablePinMsg();
+                if(msg == null)
+                    msg = getString(R.string.pin_code_step_disable, this.getPinLength());
                 break;
             case AppLock.ENABLE_PINLOCK:
-                msg = getString(R.string.pin_code_step_create, this.getPinLength());
+                msg = mLockManager.getAppLock().getCreatePinMsg();
+                if(msg == null)
+                    msg = getString(R.string.pin_code_step_create, this.getPinLength());
                 break;
             case AppLock.CHANGE_PIN:
-                msg = getString(R.string.pin_code_step_change, this.getPinLength());
+                msg = mLockManager.getAppLock().getChangePinMsg();
+                if(msg == null)
+                    msg = getString(R.string.pin_code_step_change, this.getPinLength());
                 break;
             case AppLock.UNLOCK_PIN:
-                msg = getString(R.string.pin_code_step_unlock, this.getPinLength());
+                msg = mLockManager.getAppLock().getUnlockPinMsg();
+                if(msg == null)
+                    msg = getString(R.string.pin_code_step_unlock, this.getPinLength());
                 break;
             case AppLock.CONFIRM_PIN:
-                msg = getString(R.string.pin_code_step_enable_confirm, this.getPinLength());
+                msg = mLockManager.getAppLock().getConfirmPinMsg();
+                if(msg == null)
+                    msg = getString(R.string.pin_code_step_enable_confirm, this.getPinLength());
                 break;
         }
         return msg;
     }
 
     public String getForgotText() {
-        return getString(R.string.pin_code_forgot_text);
+        String msg = mLockManager.getAppLock().getForgotPinMsg();
+
+        if(msg == null)
+            getString(R.string.pin_code_forgot_text);
+
+        return msg;
     }
 
     /**
@@ -330,6 +351,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     @Override
     public void onBackPressed() {
+
+        if(mType == AppLock.ENABLE_PINLOCK || mType == AppLock.CHANGE_PIN) {
+            super.onBackPressed();
+            return;
+        }
+
         if (getBackableTypes().contains(mType)) {
             if (AppLock.UNLOCK_PIN == getType()) {
                 mLockManager.getAppLock().setPinChallengeCancelled(true);
@@ -337,7 +364,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                         .getInstance(this)
                         .sendBroadcast(new Intent().setAction(ACTION_CANCEL));
             }
-            super.onBackPressed();
         }
     }
 
@@ -465,5 +491,13 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public Class<? extends AppLockActivity> getCustomAppLockActivityClass() {
         return this.getClass();
+    }
+
+    public int getmType() {
+        return mType;
+    }
+
+    public void setmType(int mType) {
+        this.mType = mType;
     }
 }
