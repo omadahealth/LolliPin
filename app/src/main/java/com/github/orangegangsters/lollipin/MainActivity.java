@@ -2,6 +2,7 @@ package com.github.orangegangsters.lollipin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.*;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         this.findViewById(R.id.button_enable_pin).setOnClickListener(this);
         this.findViewById(R.id.button_change_pin).setOnClickListener(this);
         this.findViewById(R.id.button_unlock_pin).setOnClickListener(this);
+        this.findViewById(R.id.button_compat_locked).setOnClickListener(this);
         this.findViewById(R.id.button_not_locked).setOnClickListener(this);
     }
 
@@ -42,9 +44,13 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                 startActivity(intent);
                 break;
-            case R.id.button_not_locked:
-                Intent intent2 = new Intent(MainActivity.this, NotLockedActivity.class);
+            case R.id.button_compat_locked:
+                Intent intent2 = new Intent(MainActivity.this, LockedCompatActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.button_not_locked:
+                Intent intent3 = new Intent(MainActivity.this, NotLockedActivity.class);
+                startActivity(intent3);
         }
     }
 
