@@ -25,6 +25,10 @@
             android:name="com.github.orangegangsters.lollipin.CustomPinActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity android:name="com.github.orangegangsters.lollipin.LockedCompatActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeNoActionbar">
+        </activity>
     </application>
 
 </manifest>

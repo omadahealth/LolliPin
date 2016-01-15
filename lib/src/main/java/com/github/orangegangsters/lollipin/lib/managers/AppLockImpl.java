@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
+import com.github.orangegangsters.lollipin.lib.PinCompatActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
@@ -183,18 +184,21 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     @Override
     public void enable() {
         PinActivity.setListener(this);
+        PinCompatActivity.setListener(this);
         PinFragmentActivity.setListener(this);
     }
 
     @Override
     public void disable() {
         PinActivity.clearListeners();
+        PinCompatActivity.clearListeners();
         PinFragmentActivity.clearListeners();
     }
 
     @Override
     public void disableAndRemoveConfiguration() {
         PinActivity.clearListeners();
+        PinCompatActivity.clearListeners();
         PinFragmentActivity.clearListeners();
         mSharedPreferences.edit().remove(PASSWORD_PREFERENCE_KEY)
                 .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
