@@ -17,6 +17,8 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.annotation.TargetApi;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
