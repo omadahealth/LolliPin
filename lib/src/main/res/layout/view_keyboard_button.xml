@@ -12,15 +12,32 @@
     app:rv_ripplePadding="@dimen/keyboard_button_ripple_padding"
     app:rv_color="@android:color/black" >
 
-    <com.github.omadahealth.typefaceview.TypefaceTextView
-        android:id="@+id/keyboard_button_textview"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/dark_grey_color"
-        android:textSize="@dimen/keyboard_button_text_size"
-        android:singleLine="true"
-        app:tv_typeface="roboto_light" />
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+
+        <com.github.omadahealth.typefaceview.TypefaceTextView
+            android:id="@+id/keyboard_button_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/warning_color"
+            android:textSize="@dimen/keyboard_button_text_size"
+            android:singleLine="true"
+            app:tv_typeface="roboto_light" />
+
+        <com.github.omadahealth.typefaceview.TypefaceTextView
+            android:id="@+id/keyboard_button_textview_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/warning_color"
+            android:textSize="@dimen/keyboard_button_text_size_small"
+            android:singleLine="true"
+            app:tv_typeface="roboto_light" />
+    </LinearLayout>
+
+
 
     <ImageView
         android:id="@+id/keyboard_button_imageview"
