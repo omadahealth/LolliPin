@@ -211,14 +211,16 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     }
 
     /**
-     * Tells if the {@link FingerprintManager#isHardwareDetected()} and {@link FingerprintManager#hasEnrolledFingerprints()}
-     *
+     * Tells if the {@link FingerprintManager#isHardwareDetected()}, {@link FingerprintManager#hasEnrolledFingerprints()},
+     * and {@link KeyguardManager#isDeviceSecure()}
+     * 
      * @return true if yes, false otherwise
      * @throws SecurityException If the hardware is not available, or the permission are not set
      */
     public boolean isFingerprintAuthAvailable() throws SecurityException {
         return mFingerprintManager.isHardwareDetected()
-                && mFingerprintManager.hasEnrolledFingerprints();
+                && mFingerprintManager.hasEnrolledFingerprints()
+                && ((KeyguardManager) mIcon.getContext().getSystemService(Context.KEYGUARD_SERVICE)).isDeviceSecure();
     }
 
     /**
