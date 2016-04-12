@@ -224,7 +224,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     public boolean checkPasscode(String passcode) {
         String salt = getSalt();
         passcode = salt + passcode + salt;
-        passcode = Encryptor.getSHA1(passcode);
+        passcode = Encryptor.getSHA(passcode);
         String storedPasscode = "";
 
         if (mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
@@ -249,7 +249,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             this.disable();
         } else {
             passcode = salt + passcode + salt;
-            passcode = Encryptor.getSHA1(passcode);
+            passcode = Encryptor.getSHA(passcode);
             editor.putString(PASSWORD_PREFERENCE_KEY, passcode);
             editor.apply();
             this.enable();

@@ -30,23 +30,28 @@ public class Encryptor {
 		return hs.toLowerCase(Locale.ENGLISH);
 	}
 
-    /**
-     * Allows to get the SHA1 of a {@link java.lang.String} using {@link java.security.MessageDigest}
-     */
-	public static String getSHA1(String text) {
-		String sha1 = null;
+	/**
+	 * Allows to get the SHA of a {@link java.lang.String} using {@link java.security.MessageDigest}
+	 * if device does not support sha-256, fall back to sha-1 instead
+	 */
+	public static String getSHA(String text) {
+		String sha = null;
 		if (TextUtils.isEmpty(text)) {
-			return sha1;
+			return sha;
 		}
-		MessageDigest sha1Digest = null;
+		MessageDigest shaDigest = null;
 		try {
-			sha1Digest = MessageDigest.getInstance("SHA-1");
+			shaDigest = MessageDigest.getInstance("SHA-256");
 		} catch (Exception e) {
-			return sha1;
+			try {
+				shaDigest = MessageDigest.getInstance("SHA-1");
+			} catch (Exception e) {
+				return sha;
+			}
 		}
 		byte[] textBytes = text.getBytes();
-		sha1Digest.update(textBytes, 0, text.length());
-		byte[] sha1hash = sha1Digest.digest();
-		return bytes2Hex(sha1hash);
+		shaDigest.update(textBytes, 0, text.length());
+		byte[] shahash = shaDigest.digest();
+		return bytes2Hex(shahash);
 	}
 }
