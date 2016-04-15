@@ -13,6 +13,7 @@ import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.PinCompatActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
+import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 import java.security.SecureRandom;
@@ -26,6 +27,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * The {@link android.content.SharedPreferences} key used to store the password
      */
     private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the {@link Algorithm}
+     */
+    private static final String PASSWORD_ALGORITHM_PREFERENCE_KEY = "ALGORITHM";
     /**
      * The {@link android.content.SharedPreferences} key used to store the last active time
      */
@@ -112,19 +117,19 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         editor.apply();
     }
 
-    private void setSalt(String salt) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
-        editor.apply();
-    }
-
-    private String getSalt() {
+    public String getSalt() {
         String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
         if (salt == null) {
             salt = generateSalt();
             setSalt(salt);
         }
         return salt;
+    }
+
+    private void setSalt(String salt) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PASSWORD_SALT_PREFERENCE_KEY, salt);
+        editor.apply();
     }
 
     private String generateSalt() {
@@ -202,6 +207,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         PinFragmentActivity.clearListeners();
         mSharedPreferences.edit().remove(PASSWORD_PREFERENCE_KEY)
                 .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
+                .remove(PASSWORD_ALGORITHM_PREFERENCE_KEY)
                 .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
                 .remove(LOGO_ID_PREFERENCE_KEY)
                 .remove(SHOW_FORGOT_PREFERENCE_KEY)
@@ -222,16 +228,18 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean checkPasscode(String passcode) {
+        Algorithm algorithm = Algorithm.getFromText(mSharedPreferences.getString(PASSWORD_ALGORITHM_PREFERENCE_KEY, ""));
+
         String salt = getSalt();
         passcode = salt + passcode + salt;
-        passcode = Encryptor.getSHA(passcode);
+        passcode = Encryptor.getSHA(passcode, algorithm);
         String storedPasscode = "";
 
         if (mSharedPreferences.contains(PASSWORD_PREFERENCE_KEY)) {
             storedPasscode = mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, "");
         }
 
-        if (passcode.equalsIgnoreCase(storedPasscode)) {
+        if (storedPasscode.equalsIgnoreCase(passcode)) {
             return true;
         } else {
             return false;
@@ -249,13 +257,23 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             this.disable();
         } else {
             passcode = salt + passcode + salt;
-            passcode = Encryptor.getSHA(passcode);
+            setAlgorithm(Algorithm.SHA256);
+            passcode = Encryptor.getSHA(passcode, Algorithm.SHA256);
             editor.putString(PASSWORD_PREFERENCE_KEY, passcode);
             editor.apply();
             this.enable();
         }
 
         return true;
+    }
+
+    /**
+     * Set the algorithm used in {@link #setPasscode(String)}
+     */
+    private void setAlgorithm(Algorithm algorithm) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PASSWORD_ALGORITHM_PREFERENCE_KEY, algorithm.getValue());
+        editor.apply();
     }
 
     @Override

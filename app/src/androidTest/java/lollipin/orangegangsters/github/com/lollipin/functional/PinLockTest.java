@@ -1,8 +1,10 @@
 package lollipin.orangegangsters.github.com.lollipin.functional;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +12,9 @@ import android.widget.TextView;
 import com.github.orangegangsters.lollipin.CustomPinActivity;
 import com.github.orangegangsters.lollipin.MainActivity;
 import com.github.orangegangsters.lollipin.NotLockedActivity;
+import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
+import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
+import com.github.orangegangsters.lollipin.lib.managers.AppLockImpl;
 import com.github.orangegangsters.lollipin.lib.managers.FingerprintUiHelper;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
@@ -21,6 +26,27 @@ import lollipin.orangegangsters.github.com.lollipin.R;
  * @version 1/13/15
  */
 public class PinLockTest extends AbstractTest {
+
+    public void testMigratingFromSha1toSha256() {
+        //Init
+        removeAllPrefs();
+        AppLockImpl appLockImpl = (AppLockImpl) LockManager.getInstance().getAppLock();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        //Should use sha256 if the SharedPreferences is set, by default
+        enablePin();
+        assertEquals(Algorithm.SHA256, Algorithm.getFromText(sharedPref.getString(PASSWORD_ALGORITHM_PREFERENCE_KEY, "")));
+        assertTrue(appLockImpl.checkPasscode("1234"));
+        removeAllPrefs();
+
+        //Should still use sha1 if password is stored but not the algorithm
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(PASSWORD_PREFERENCE_KEY, Encryptor.getSHA(appLockImpl.getSalt() + "test" + appLockImpl.getSalt(), Algorithm.SHA1));
+        editor.apply();
+        assertEquals(Algorithm.SHA1, Algorithm.getFromText(sharedPref.getString(PASSWORD_ALGORITHM_PREFERENCE_KEY, "")));
+        assertTrue(appLockImpl.checkPasscode("test"));
+        removeAllPrefs();
+    }
 
     public void testPinClearButton() {
         removePrefsAndGoToEnable();

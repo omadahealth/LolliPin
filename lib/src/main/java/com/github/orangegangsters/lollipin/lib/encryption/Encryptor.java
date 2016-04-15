@@ -2,6 +2,8 @@ package com.github.orangegangsters.lollipin.lib.encryption;
 
 import android.text.TextUtils;
 
+import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
+
 import java.security.MessageDigest;
 import java.util.Locale;
 
@@ -35,24 +37,50 @@ public class Encryptor {
      * Allows to get the SHA of a {@link java.lang.String} using {@link java.security.MessageDigest}
      * if device does not support sha-256, fall back to sha-1 instead
      */
-    public static String getSHA(String text) {
+    public static String getSHA(String text, Algorithm algorithm) {
         String sha = "";
         if (TextUtils.isEmpty(text)) {
             return sha;
         }
-        MessageDigest shaDigest = null;
-        try {
-            shaDigest = MessageDigest.getInstance("SHA-256");
-        } catch (Exception e) {
-            try {
-                shaDigest = MessageDigest.getInstance("SHA-1");
-            } catch (Exception e2) {
-                return sha;
-            }
+
+        MessageDigest shaDigest = getShaDigest(algorithm);
+
+        if (shaDigest != null) {
+            byte[] textBytes = text.getBytes();
+            shaDigest.update(textBytes, 0, text.length());
+            byte[] shahash = shaDigest.digest();
+            return bytes2Hex(shahash);
         }
-        byte[] textBytes = text.getBytes();
-        shaDigest.update(textBytes, 0, text.length());
-        byte[] shahash = shaDigest.digest();
-        return bytes2Hex(shahash);
+
+        return null;
+    }
+
+    /**
+     * Gets the default {@link MessageDigest} to use.
+     * Select {@link Algorithm#SHA256} in {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl#setPasscode(String)}
+     * but can be {@link Algorithm#SHA1} for older versions.
+     *
+     * @param algorithm The {@link Algorithm} to use
+     */
+    private static MessageDigest getShaDigest(Algorithm algorithm) {
+        switch (algorithm) {
+            case SHA256:
+                try {
+                    return MessageDigest.getInstance("SHA-256");
+                } catch (Exception e) {
+                    try {
+                        return MessageDigest.getInstance("SHA-1");
+                    } catch (Exception e2) {
+                        return null;
+                    }
+                }
+            case SHA1:
+            default:
+                try {
+                    return MessageDigest.getInstance("SHA-1");
+                } catch (Exception e2) {
+                    return null;
+                }
+        }
     }
 }
