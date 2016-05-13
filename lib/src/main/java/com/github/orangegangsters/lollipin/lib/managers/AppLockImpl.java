@@ -344,7 +344,9 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityPaused " + clazzName);
 
-        setLastActiveMillis();
+        if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+            setLastActiveMillis();
+        }
     }
 
     @Override
@@ -369,6 +371,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             return;
         }
 
-        setLastActiveMillis();
+        if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+            setLastActiveMillis();
+        }
     }
 }

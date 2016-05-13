@@ -54,6 +54,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected String mOldPinCode;
 
+    private boolean isCodeSuccessful = false;
+
     /**
      * First creation
      */
@@ -221,12 +223,17 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     @Override
     public void finish() {
         super.finish();
-        if (mLockManager != null) {
-            AppLock appLock = mLockManager.getAppLock();
-            if (appLock != null) {
-                appLock.setLastActiveMillis();
+
+        //If code successful, reset the timer
+        if (isCodeSuccessful) {
+            if (mLockManager != null) {
+                AppLock appLock = mLockManager.getAppLock();
+                if (appLock != null) {
+                    appLock.setLastActiveMillis();
+                }
             }
         }
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             //Animate if greater than 2.3.3
             overridePendingTransition(R.anim.nothing, R.anim.slide_down);
@@ -275,6 +282,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(null);
                     onPinCodeSuccess();
+                    isCodeSuccessful = true;
                     finish();
                 } else {
                     onPinCodeError();
@@ -291,6 +299,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(mPinCode);
                     onPinCodeSuccess();
+                    isCodeSuccessful = true;
                     finish();
                 } else {
                     mOldPinCode = "";
@@ -314,6 +323,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     onPinCodeSuccess();
+                    isCodeSuccessful = true;
                     finish();
                 } else {
                     onPinCodeError();
