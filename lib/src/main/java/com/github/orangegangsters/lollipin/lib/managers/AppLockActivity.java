@@ -282,7 +282,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(null);
                     onPinCodeSuccess();
-                    isCodeSuccessful = true;
                     finish();
                 } else {
                     onPinCodeError();
@@ -299,7 +298,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setResult(RESULT_OK);
                     mLockManager.getAppLock().setPasscode(mPinCode);
                     onPinCodeSuccess();
-                    isCodeSuccessful = true;
                     finish();
                 } else {
                     mOldPinCode = "";
@@ -323,7 +321,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
                     onPinCodeSuccess();
-                    isCodeSuccessful = true;
                     finish();
                 } else {
                     onPinCodeError();
@@ -397,6 +394,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     protected void onPinCodeSuccess() {
+        isCodeSuccessful = true;
         onPinSuccess(mAttempts);
         mAttempts = 1;
     }
