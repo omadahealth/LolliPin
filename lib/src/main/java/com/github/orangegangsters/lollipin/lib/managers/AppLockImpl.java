@@ -47,6 +47,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * The {@link android.content.SharedPreferences} key used to store the forgot option
      */
     private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
+
+    /**
+     * The {@link android.content.SharedPreferences} key used to store the only background timeout option
+     */
+    private static final String ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY = "ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY";
     /**
      * The {@link SharedPreferences} key used to store whether the user has backed out of the {@link AppLockActivity}
      */
@@ -184,6 +189,18 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     @Override
     public boolean shouldShowForgot() {
         return mSharedPreferences.getBoolean(SHOW_FORGOT_PREFERENCE_KEY, true);
+    }
+
+    @Override
+    public boolean onlyBackgroundTimeout() {
+        return mSharedPreferences.getBoolean(ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY, false);
+    }
+
+    @Override
+    public void setOnlyBackgroundTimeout(boolean onlyBackgroundTimeout) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY, onlyBackgroundTimeout);
+        editor.apply();
     }
 
     @Override
@@ -344,7 +361,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityPaused " + clazzName);
 
-        if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+        if ((onlyBackgroundTimeout() || !shouldLockSceen(activity)) && !(activity instanceof AppLockActivity)) {
             setLastActiveMillis();
         }
     }
