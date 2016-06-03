@@ -17,6 +17,7 @@ public class AbstractTest extends ActivityInstrumentationTestCase2<MainActivity>
     protected static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
     protected static final String PASSWORD_ALGORITHM_PREFERENCE_KEY = "ALGORITHM";
     private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
+    protected static final String ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY = "ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY";
 
     protected Solo solo;
 
