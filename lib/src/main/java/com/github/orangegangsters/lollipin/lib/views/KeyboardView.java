@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by stoyan and olivier on 1/13/15.
  */
-public class KeyboardView extends RelativeLayout implements View.OnClickListener {
+public class KeyboardView extends LinearLayout implements View.OnClickListener {
 
     private Context mContext;
     private KeyboardButtonClickedListener mKeyboardButtonClickedListener;
