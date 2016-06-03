@@ -220,13 +220,13 @@ public class PinLockTest extends AbstractTest {
         solo.waitForActivity(NotLockedActivity.class);
         solo.assertCurrentActivity("NotLockedActivity", NotLockedActivity.class);
 
-        //Set the last time to now - 4minutes
-        setMillis(System.currentTimeMillis() - (1000 * 60 * 4));
+        //Set the last time to now - 6minutes
+        setMillis(System.currentTimeMillis() - (1000 * 60 * 6));
         solo.getCurrentActivity().finish();
 
         //Check view
-        solo.waitForActivity(MainActivity.class);
-        solo.assertCurrentActivity("MainActivity", MainActivity.class);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
         solo.sleep(1000);
     }
 
