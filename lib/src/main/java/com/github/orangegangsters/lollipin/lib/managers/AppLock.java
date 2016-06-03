@@ -112,6 +112,18 @@ public abstract class AppLock {
      */
     public abstract void setPinChallengeCancelled(boolean cancelled);
 
+
+    /**
+     * Get the only background timeout option used to determine if the time
+     * spent in the activity must NOT be taken into account while calculating the timeout.
+     */
+    public abstract boolean onlyBackgroundTimeout();
+
+    /**
+     * Set whether the time spent on the activity must NOT be taken into account when calculating timeout.
+     */
+    public abstract void setOnlyBackgroundTimeout(boolean onlyBackgroundTimeout);
+
     /**
      * Enable the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} by setting
      * {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl} as the

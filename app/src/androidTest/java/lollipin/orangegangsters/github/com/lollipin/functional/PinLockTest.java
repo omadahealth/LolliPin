@@ -230,6 +230,31 @@ public class PinLockTest extends AbstractTest {
         solo.sleep(1000);
     }
 
+    public void testPinLockWithBackgroundTimeout() {
+        enablePin();
+
+        // Set the option to use timeout in background only
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY, true);
+        editor.apply();
+
+        //Go to NotLockedActivity
+        solo.sleep(1000);
+        clickOnView(R.id.button_not_locked);
+        solo.waitForActivity(NotLockedActivity.class);
+        solo.assertCurrentActivity("NotLockedActivity", NotLockedActivity.class);
+
+        //Set the last time to now - 15sec
+        setMillis(System.currentTimeMillis() - (1000 * 15));
+        solo.getCurrentActivity().finish();
+
+        //Check view
+        solo.waitForActivity(MainActivity.class);
+        solo.assertCurrentActivity("MainActivity", MainActivity.class);
+        solo.sleep(1000);
+    }
+
     public void testBackButton() {
         enablePin();
 
