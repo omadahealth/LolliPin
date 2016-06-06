@@ -14,6 +14,7 @@ import com.github.orangegangsters.lollipin.MainActivity;
 import com.github.orangegangsters.lollipin.NotLockedActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
+import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 import com.github.orangegangsters.lollipin.lib.managers.AppLockImpl;
 import com.github.orangegangsters.lollipin.lib.managers.FingerprintUiHelper;
 import com.github.orangegangsters.lollipin.lib.managers.LockManager;
@@ -254,6 +255,32 @@ public class PinLockTest extends AbstractTest {
         solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
 
         solo.goBack();
+        solo.assertCurrentActivity("MainActivity", MainActivity.class);
+    }
+
+    public void testDisablingFingerprintReader() {
+        enablePin();
+
+        // Disable fingerprint reader.
+        LockManager.getInstance().getAppLock().setFingerprintAuthEnabled(false);
+
+        // Go to unlock.
+        clickOnView(R.id.button_unlock_pin);
+        solo.waitForActivity(CustomPinActivity.class);
+        solo.assertCurrentActivity("CustomPinActivity", CustomPinActivity.class);
+
+        // Make sure the fingerprint views are gone.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_imageview).getVisibility());
+            assertEquals(View.GONE, solo.getView(R.id.pin_code_fingerprint_textview).getVisibility());
+        }
+
+        // Make sure pin unlocking still works.
+        clickOnView(R.id.pin_code_button_1);
+        clickOnView(R.id.pin_code_button_2);
+        clickOnView(R.id.pin_code_button_3);
+        clickOnView(R.id.pin_code_button_4);
+        solo.waitForActivity(MainActivity.class);
         solo.assertCurrentActivity("MainActivity", MainActivity.class);
     }
 
