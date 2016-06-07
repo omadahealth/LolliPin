@@ -8,7 +8,7 @@ To include in your project, add this to your build.gradle file:
 
 ```
    //Lollipin
-   compile ('com.github.orangegangsters:lollipin:1.9.1@aar') {
+   compile ('com.github.orangegangsters:lollipin:1.9.2@aar') {
       transitive = true
    }
 ```
