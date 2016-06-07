@@ -60,7 +60,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
      */
     private static final String PASSWORD_SALT_PREFERENCE_KEY = "PASSWORD_SALT_PREFERENCE_KEY";
-
+    /**
+     * The {@link SharedPreferences} key used to store whether the caller has enabled fingerprint authentication.
+     * This value defaults to true for backwards compatibility.
+     */
+    private static final String FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY = "FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY";
     /**
      * The default password salt
      */
@@ -228,12 +232,25 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
                 .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
                 .remove(LOGO_ID_PREFERENCE_KEY)
                 .remove(SHOW_FORGOT_PREFERENCE_KEY)
+                .remove(FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY)
                 .apply();
     }
 
     @Override
     public long getLastActiveMillis() {
         return mSharedPreferences.getLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, 0);
+    }
+
+    @Override
+    public boolean isFingerprintAuthEnabled() {
+        return mSharedPreferences.getBoolean(FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY, true);
+    }
+
+    @Override
+    public void setFingerprintAuthEnabled(boolean enabled) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY, enabled);
+        editor.apply();
     }
 
     @Override
