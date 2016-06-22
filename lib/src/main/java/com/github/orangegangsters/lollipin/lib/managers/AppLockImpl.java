@@ -233,6 +233,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
                 .remove(LOGO_ID_PREFERENCE_KEY)
                 .remove(SHOW_FORGOT_PREFERENCE_KEY)
                 .remove(FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY)
+                .remove(ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY)
                 .apply();
     }
 
