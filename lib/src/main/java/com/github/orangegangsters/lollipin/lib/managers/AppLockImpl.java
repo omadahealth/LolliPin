@@ -15,6 +15,7 @@ import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
+import com.securepreferences.SecurePreferences;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -115,7 +116,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     private AppLockImpl(Context context, Class<T> activityClass) {
         super();
-        this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        this.mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.mSharedPreferences = new SecurePreferences(context, "[SecurePreferenceKey_should_not_static]", context.getPackageName()+"_securepreference");
         this.mActivityClass = activityClass;
     }
 
