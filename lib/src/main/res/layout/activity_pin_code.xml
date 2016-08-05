@@ -37,6 +37,7 @@
             app:tv_typeface="roboto_light" />
 
         <com.github.orangegangsters.lollipin.lib.views.PassCodeView
+            android:layout_below="@+id/pin_code_step_textview"
             android:id="@+id/pin_code_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
             android:id="@+id/pin_code_forgot_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pass_code_view"
+            android:layout_below="@+id/pin_code_keyboard_view"
             android:layout_centerInParent="true"
             android:singleLine="true"
             android:textColor="@color/dark_grey_color"

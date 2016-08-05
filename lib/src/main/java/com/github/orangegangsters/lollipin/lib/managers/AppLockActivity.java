@@ -120,7 +120,15 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (PassCodeView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyTextColor(R.color.black_shade);
-
+        mKeyboardView.setOnTextChangeListener(new PassCodeView.TextChangeListener() {
+            @Override
+            public void onTextChanged(String value) {
+                setPinCode(value);
+                if (mPinCode.length() == getPinLength()) {
+                    onPinCodeInputed();
+                }
+            }
+        });
         int logoId = mLockManager.getAppLock().getLogoId();
         ImageView logoImage = ((ImageView) findViewById(R.id.pin_code_logo_imageview));
         if (logoId != AppLock.LOGO_ID_NONE) {
@@ -261,6 +269,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             }
         }
     }
+
 
     /**
      * Called at the end of the animation of the {@link com.andexert.library.RippleView}
