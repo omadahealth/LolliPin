@@ -36,19 +36,22 @@
             android:textSize="@dimen/pin_code_step_text_size"
             app:tv_typeface="roboto_light" />
 
-        <com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
-            android:id="@+id/pin_code_round_view"
-            android:layout_width="wrap_content"
+        <com.github.orangegangsters.lollipin.lib.views.PassCodeView
+            android:id="@+id/pin_code_keyboard_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pin_code_step_textview"
-            android:layout_marginBottom="@dimen/pin_code_elements_margin"
-            android:layout_marginTop="@dimen/pin_code_round_top_margin" />
+            app:digits="4"
+            app:digit_size="30.0dp"
+            app:key_text_size="30.0sp"
+            android:padding="25.0dp"
+            app:empty_drawable="@drawable/pin_code_round_empty"
+            app:filled_drawable="@drawable/pin_code_round_full"/>
 
         <com.github.omadahealth.typefaceview.TypefaceTextView
             android:id="@+id/pin_code_forgot_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pin_code_round_view"
+            android:layout_below="@+id/pass_code_view"
             android:layout_centerInParent="true"
             android:singleLine="true"
             android:textColor="@color/dark_grey_color"
@@ -67,13 +70,6 @@
             android:layout_marginTop="@dimen/light_gray_bar_margin_top"
             android:background="@color/light_gray_bar"
             android:orientation="horizontal" />
-
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardView
-            android:id="@+id/pin_code_keyboard_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/pin_code_fingerprint_imageview"
-            android:layout_below="@+id/pin_code_gray_bar" />
 
         <ImageView
             android:id="@+id/pin_code_fingerprint_imageview"

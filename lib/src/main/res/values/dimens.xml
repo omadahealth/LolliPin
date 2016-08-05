@@ -14,7 +14,8 @@
     <dimen name="activity_pin_code_padding">20dp</dimen>
     <dimen name="pin_code_logo_margin">30dp</dimen>
     <dimen name="pin_code_round_top_margin">10dp</dimen>
-
+    <dimen name="key_text_size">24.0sp</dimen>
+    <dimen name="drawableDimen">30.0dp</dimen>
 
 
 

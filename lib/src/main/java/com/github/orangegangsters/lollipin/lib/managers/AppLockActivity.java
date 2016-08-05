@@ -17,7 +17,7 @@ import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.R;
 import com.github.orangegangsters.lollipin.lib.enums.KeyboardButtonEnum;
 import com.github.orangegangsters.lollipin.lib.interfaces.KeyboardButtonClickedListener;
-import com.github.orangegangsters.lollipin.lib.views.KeyboardView;
+import com.github.orangegangsters.lollipin.lib.views.PassCodeView;
 import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
 
 import java.util.Arrays;
@@ -37,8 +37,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected TextView mStepTextView;
     protected TextView mForgotTextView;
-    protected PinCodeRoundView mPinCodeRoundView;
-    protected KeyboardView mKeyboardView;
+//    protected PinCodeRoundView mPinCodeRoundView;
+    protected PassCodeView mKeyboardView;
     protected ImageView mFingerprintImageView;
     protected TextView mFingerprintTextView;
 
@@ -114,12 +114,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mLockManager.getAppLock().setPinChallengeCancelled(false);
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
-        mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
-        mPinCodeRoundView.setPinLength(this.getPinLength());
+//        mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
+//        mPinCodeRoundView.setPinLength(this.getPinLength());
         mForgotTextView = (TextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
-        mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
-        mKeyboardView.setKeyboardButtonClickedListener(this);
+        mKeyboardView = (PassCodeView) this.findViewById(R.id.pin_code_keyboard_view);
+        mKeyboardView.setKeyTextColor(R.color.black_shade);
 
         int logoId = mLockManager.getAppLock().getLogoId();
         ImageView logoImage = ((ImageView) findViewById(R.id.pin_code_logo_imageview));
@@ -384,11 +384,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         onPinFailure(mAttempts++);
         Thread thread = new Thread() {
             public void run() {
-                mPinCode = "";
-                mPinCodeRoundView.refresh(mPinCode.length());
-                Animation animation = AnimationUtils.loadAnimation(
-                        AppLockActivity.this, R.anim.shake);
-                mKeyboardView.startAnimation(animation);
+                mKeyboardView.setError(true);
             }
         };
         runOnUiThread(thread);
@@ -405,7 +401,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public void setPinCode(String pinCode) {
         mPinCode = pinCode;
-        mPinCodeRoundView.refresh(mPinCode.length());
+//        mPinCodeRoundView.refresh(mPinCode.length());
     }
 
 
@@ -447,7 +443,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * - {@link TextView} with an id of pin_code_step_textview
      * - {@link TextView} with an id of pin_code_forgot_textview
      * - {@link PinCodeRoundView} with an id of pin_code_round_view
-     * - {@link KeyboardView} with an id of pin_code_keyboard_view
+     * - {@link PassCodeView} with an id of pin_code_keyboard_view
      *
      * @return the resource id to the {@link View}
      */
