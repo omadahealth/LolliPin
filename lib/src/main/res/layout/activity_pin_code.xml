@@ -62,13 +62,14 @@
             android:id="@+id/pin_code_fingerprint_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/pin_code_fingerprint_textview"
+            android:layout_below="@+id/pin_code_forgot_textview"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_fp_40px" />
 
         <com.github.omadahealth.typefaceview.TypefaceTextView
             android:id="@+id/pin_code_fingerprint_textview"
+            android:layout_below="@+id/pin_code_fingerprint_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
