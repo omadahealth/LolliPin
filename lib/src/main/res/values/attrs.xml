@@ -21,5 +21,7 @@
         <attr name="digit_size" format="dimension" />
         <attr name="key_text_size" format="dimension" />
         <attr name="divider_visible" format="boolean" />
+        <attr name="digit_spacing" format="dimension" />
+        <attr name="digit_vertical_padding" format="dimension" />
     </declare-styleable>
 </resources>
