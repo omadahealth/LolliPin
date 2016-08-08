@@ -292,7 +292,7 @@ public class PassCodeView extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.7;
+            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.8;
             measuredHeight = (int)height;// + paddingTop + paddingBottom;
         }
         setMeasuredDimension(measuredWidth, measuredHeight);

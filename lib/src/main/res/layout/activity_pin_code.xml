@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:digits="4"
-            app:digit_size="30.0dp"
             app:key_text_size="30.0sp"
             android:padding="25.0dp"
             app:empty_drawable="@drawable/pin_code_round_empty"
