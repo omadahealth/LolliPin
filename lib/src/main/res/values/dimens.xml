@@ -18,4 +18,5 @@
     <dimen name="drawableDimen">25.0dp</dimen>
     <dimen name="digit_vertical_padding">40.0dp</dimen>
     <dimen name="digit_horizontal_padding">15.0dp</dimen>
+    <dimen name="key_pad_min_height">300.0dp</dimen>
 </resources>

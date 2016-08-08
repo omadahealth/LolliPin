@@ -315,9 +315,11 @@ public class PassCodeView extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.7;
+            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.8;
             measuredHeight = (int)height;// + paddingTop + paddingBottom;
         }
+        measuredHeight = (int) Math.max(measuredHeight, getResources().getDimension(R.dimen.key_pad_min_height));
+        Log.i("Dimes ", "width " + measuredWidth + "height " + measuredHeight);
         setMeasuredDimension(measuredWidth, measuredHeight);
         computeDrawableStartXY();
     }
@@ -397,6 +399,9 @@ public class PassCodeView extends View {
         for (final KeyRect keyRect : keyRects) {
             if (keyRect.rect.contains(downEventX, downEventY)
                     && keyRect.rect.contains(upEventX, upEventY)) {
+                if (keyRect.value.isEmpty()) {
+                    return;
+                }
                 keyRect.playRippleAnim(new KeyRect.RippleAnimListener() {
                     @Override
                     public void onStart() {
