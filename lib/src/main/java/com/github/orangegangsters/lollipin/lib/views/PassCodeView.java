@@ -153,7 +153,7 @@ public class PassCodeView extends View {
         kpStartY = drawableHeight + DRAWABLE_PADDING;
         keyWidth = getMeasuredWidth() / KEY_PAD_COLS;
         keyHeight = (getMeasuredHeight()
-                - (drawableHeight + 2 * DRAWABLE_PADDING)) / KEY_PAD_ROWS;
+                - (drawableHeight + DRAWABLE_PADDING)) / KEY_PAD_ROWS;
         initialiseKeyRects();
     }
 
@@ -339,12 +339,7 @@ public class PassCodeView extends View {
         setFilledCount(passCodeText.length());
         Log.i("New text", passCodeText);
         if (textChangeListener != null) {
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    textChangeListener.onTextChanged(passCodeText);
-                }
-            }, 500);
+            textChangeListener.onTextChanged(passCodeText);
         }
     }
 
