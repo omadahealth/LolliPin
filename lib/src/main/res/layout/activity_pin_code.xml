@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:digits="4"
-            app:key_text_size="30.0sp"
             android:padding="25.0dp"
             app:empty_drawable="@drawable/pin_code_round_empty"
             app:filled_drawable="@drawable/pin_code_round_full"/>
@@ -58,18 +57,6 @@
             android:textSize="@dimen/pin_code_forgot_text_size"
             app:tv_typeface="roboto_regular"
             tools:text="@string/pin_code_forgot_text" />
-
-        <LinearLayout
-            android:id="@+id/pin_code_gray_bar"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/pin_code_forgot_textview"
-            android:layout_marginBottom="@dimen/light_gray_bar_margin_bottom"
-            android:layout_marginLeft="@dimen/light_gray_bar_margin_sides"
-            android:layout_marginRight="@dimen/light_gray_bar_margin_sides"
-            android:layout_marginTop="@dimen/light_gray_bar_margin_top"
-            android:background="@color/light_gray_bar"
-            android:orientation="horizontal" />
 
         <ImageView
             android:id="@+id/pin_code_fingerprint_imageview"

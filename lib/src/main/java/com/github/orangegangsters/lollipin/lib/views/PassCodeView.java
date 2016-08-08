@@ -39,12 +39,12 @@ public class PassCodeView extends View {
     private Paint paint;
     private int DEFAULT_DRAWABLE_DIM;
     private int DEFAULT_VIEW_HEIGHT = 200;
-    private int DRAWABLE_PADDING = 100;
+    private int digitVerticalPadding;
     private int drawableWidth;
     private int drawableHeight;
     private int drawableStartX;
     private int drawableStartY;
-    private static final int DIGIT_PADDING = 40;
+    private int digitHorizontalPadding;
     private int kpStartX;
     private int kpStartY;
     private ArrayList<KeyRect> keyRects = new ArrayList<>();
@@ -64,6 +64,11 @@ public class PassCodeView extends View {
     private Paint circlePaint;
 
     private boolean dividerVisible;
+    private float dividerStartX;
+    private float dividerStartY;
+    private float dividerEndX;
+    private float dividerEndY;
+    private Context context;
 
     public PassCodeView(Context context) {
         super(context);
@@ -87,6 +92,7 @@ public class PassCodeView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        this.context = context;
         TypedArray values = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.PassCodeView, defStyleAttr, defStyleRes);
         try {
@@ -95,12 +101,14 @@ public class PassCodeView extends View {
                     getResources().getDimension(R.dimen.drawableDimen));
             keyTextSize = values.getDimension(R.styleable.PassCodeView_key_text_size,
                     getResources().getDimension(R.dimen.key_text_size));
+            dividerVisible = values.getBoolean(R.styleable.PassCodeView_divider_visible, true);
+
             drawableWidth = (int) digitSize; //DEFAULT_DRAWABLE_DIM;
             drawableHeight = (int) digitSize; //DEFAULT_DRAWABLE_DIM;
-//            filledCount = values.getInteger(R.styleable.PassCodeView_filled_count, 0);
             filledDrawable = getBitmap(values.getResourceId(R.styleable.PassCodeView_filled_drawable, -1));
             emptyDrawable = getBitmap(values.getResourceId(R.styleable.PassCodeView_empty_drawable, -1));
-            dividerVisible = values.getBoolean(R.styleable.PassCodeView_divider_visible, true);
+            digitVerticalPadding = (int) getResources().getDimension(R.dimen.digit_vertical_padding);
+            digitHorizontalPadding = (int) getResources().getDimension(R.dimen.digit_horizontal_padding);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,6 +127,7 @@ public class PassCodeView extends View {
         textPaint.density = getResources().getDisplayMetrics().density;
         textPaint.setTextSize(keyTextSize);
         textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setTypeface(Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf"));
     }
 
     public void setTypeFace(Typeface typeFace) {
@@ -156,10 +165,10 @@ public class PassCodeView extends View {
      */
     private void computeDrawableStartXY() {
         int totalDrawableWidth = digits * drawableWidth;
-        int totalPaddingWidth = DIGIT_PADDING * (digits - 1);
+        int totalPaddingWidth = digitHorizontalPadding * (digits - 1);
         int totalReqWidth = totalDrawableWidth + totalPaddingWidth;
         drawableStartX = getMeasuredWidth() / 2 - totalReqWidth / 2;
-        drawableStartY = (drawableHeight + DRAWABLE_PADDING) / 2 - drawableHeight / 2;
+        drawableStartY = (drawableHeight + digitVerticalPadding) / 2 - drawableHeight / 2;
         computeKeyboardStartXY();
     }
 
@@ -168,11 +177,22 @@ public class PassCodeView extends View {
      */
     private void computeKeyboardStartXY() {
         kpStartX = 0;
-        kpStartY = drawableHeight + DRAWABLE_PADDING;
+        kpStartY = drawableHeight + digitVerticalPadding;
         keyWidth = getMeasuredWidth() / KEY_PAD_COLS;
         keyHeight = (getMeasuredHeight()
-                - (drawableHeight + DRAWABLE_PADDING)) / KEY_PAD_ROWS;
+                - (drawableHeight + digitVerticalPadding)) / KEY_PAD_ROWS;
         initialiseKeyRects();
+        if (dividerVisible) {
+            computeDividerPos();
+        }
+    }
+
+    private void computeDividerPos() {
+        float widthFactor = 10;
+        dividerStartX = keyWidth / 2 - widthFactor;
+        dividerStartY = drawableHeight + digitVerticalPadding;
+        dividerEndX = (getMeasuredWidth() - keyWidth / 2) + widthFactor;
+        dividerEndY = dividerStartY;
     }
 
     /**
@@ -218,15 +238,16 @@ public class PassCodeView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawCodeText(canvas);
+        drawDigitDrawable(canvas);
         if (dividerVisible) {
-            drawDivider();
+            drawDivider(canvas);
         }
         drawKeyPad(canvas);
     }
 
-    private void drawDivider() {
-
+    private void drawDivider(Canvas canvas) {
+        paint.setAlpha(40);
+        canvas.drawLine(dividerStartX, dividerStartY, dividerEndX, dividerEndY, paint);
     }
 
     /**
@@ -252,6 +273,7 @@ public class PassCodeView extends View {
                 canvas.drawLine(rect.rect.centerX(),
                         rect.rect.top,
                         rect.rect.centerX(), rect.rect.bottom, textPaint);
+                canvas.drawRect(rect.rect, textPaint);
             }
         }
     }
@@ -262,9 +284,10 @@ public class PassCodeView extends View {
      * passcode digits
      * @param canvas - {@link Canvas} on which the drawable should be drawn
      */
-    private void drawCodeText(Canvas canvas) {
+    private void drawDigitDrawable(Canvas canvas) {
+        paint.setAlpha(255);
         int x = drawableStartX, y = drawableStartY;
-        int totalContentWidth = drawableWidth + DIGIT_PADDING;
+        int totalContentWidth = drawableWidth + digitHorizontalPadding;
         for (int i = 1 ; i <= filledCount ; i ++) {
             canvas.drawBitmap(filledDrawable, x, y, paint);
             x += totalContentWidth;
@@ -292,7 +315,7 @@ public class PassCodeView extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.8;
+            double height = MeasureSpec.getSize(heightMeasureSpec) * 0.7;
             measuredHeight = (int)height;// + paddingTop + paddingBottom;
         }
         setMeasuredDimension(measuredWidth, measuredHeight);

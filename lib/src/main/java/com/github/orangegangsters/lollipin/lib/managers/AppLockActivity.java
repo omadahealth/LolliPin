@@ -119,7 +119,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView = (TextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (PassCodeView) this.findViewById(R.id.pin_code_keyboard_view);
-        mKeyboardView.setKeyTextColor(R.color.black_shade);
+        mKeyboardView.setKeyTextColor(R.color.dark_grey_color);
         mKeyboardView.setOnTextChangeListener(new PassCodeView.TextChangeListener() {
             @Override
             public void onTextChanged(String value) {

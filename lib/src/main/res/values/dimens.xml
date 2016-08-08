@@ -16,7 +16,6 @@
     <dimen name="pin_code_round_top_margin">10dp</dimen>
     <dimen name="key_text_size">30.0sp</dimen>
     <dimen name="drawableDimen">25.0dp</dimen>
-
-
-
+    <dimen name="digit_vertical_padding">40.0dp</dimen>
+    <dimen name="digit_horizontal_padding">15.0dp</dimen>
 </resources>
