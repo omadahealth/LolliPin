@@ -20,5 +20,6 @@
         <attr name="empty_drawable" format="reference" />
         <attr name="digit_size" format="dimension" />
         <attr name="key_text_size" format="dimension" />
+        <attr name="divider_visible" format="boolean" />
     </declare-styleable>
 </resources>
