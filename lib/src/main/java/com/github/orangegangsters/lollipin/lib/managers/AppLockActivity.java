@@ -262,7 +262,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (!mPinCode.isEmpty()) {
                     setPinCode(mPinCode.substring(0, mPinCode.length() - 1));
                 } else {
-                    setPinCode("");
+                    mKeyboardView.reset();
                 }
             } else {
                 setPinCode(mPinCode + value);
@@ -299,7 +299,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 break;
             case AppLock.ENABLE_PINLOCK:
                 mOldPinCode = mPinCode;
-                setPinCode("");
+                mKeyboardView.reset();
                 mType = AppLock.CONFIRM_PIN;
                 setStepText();
                 break;
@@ -311,7 +311,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     finish();
                 } else {
                     mOldPinCode = "";
-                    setPinCode("");
+                    mKeyboardView.reset();
                     mType = AppLock.ENABLE_PINLOCK;
                     setStepText();
                     onPinCodeError();
@@ -321,7 +321,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     mType = AppLock.ENABLE_PINLOCK;
                     setStepText();
-                    setPinCode("");
+                    mKeyboardView.reset();
                     onPinCodeSuccess();
                 } else {
                     onPinCodeError();
@@ -410,7 +410,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public void setPinCode(String pinCode) {
         mPinCode = pinCode;
-//        mPinCodeRoundView.refresh(mPinCode.length());
     }
 
 

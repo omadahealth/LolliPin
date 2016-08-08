@@ -327,8 +327,7 @@ public class PassCodeView extends View {
 
     public void reset() {
         this.passCodeText = "";
-        filledCount = 0;
-        invalidate();
+        invalidateAndNotifyListener();
     }
 
     public interface TextChangeListener {
