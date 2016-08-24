@@ -19,8 +19,7 @@
         android:layout_centerInParent="true"
         android:textColor="@color/dark_grey_color"
         android:textSize="@dimen/keyboard_button_text_size"
-        android:singleLine="true"
-        app:tv_typeface="roboto_light" />
+        android:maxLines="1"/>
 
     <ImageView
         android:id="@+id/keyboard_button_imageview"
