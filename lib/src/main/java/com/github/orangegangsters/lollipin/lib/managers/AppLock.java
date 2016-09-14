@@ -95,7 +95,7 @@ public abstract class AppLock {
     /**
      * Get the forgot option used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
      */
-    public abstract boolean shouldShowForgot();
+    public abstract boolean shouldShowForgot(int appLockType);
 
     /**
      * Set the forgot option used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockActivity}
