@@ -33,8 +33,9 @@ public class PinCodeView extends RelativeLayout {
 
     private void initializeView(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
-            final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.PinCodeView,
-                    defStyleAttr, 0);
+//            final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.PinCodeView,
+//                    defStyleAttr, 0);
+//            attributes.recycle();
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout view = (LinearLayout) inflater.inflate(R.layout.activity_pin_code, this);

@@ -41,8 +41,9 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
 
     private void initializeView(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null && !isInEditMode()) {
-            final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.PinCodeView,
-                    defStyleAttr, 0);
+//            final TypedArray attributes = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.PinCodeView,
+//                    defStyleAttr, 0);
+//            attributes.recycle();
 
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardView view = (KeyboardView) inflater.inflate(R.layout.view_keyboard, this);
