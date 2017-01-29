@@ -1,0 +1,12 @@
+<resources>
+    <string name="pin_code_forgot_text">Забыли пароль?</string>
+    <string name="pin_code_step_disable">Отключите %d-значный пин-код</string>
+    <string name="pin_code_step_create">Создайте %d-значный пин-код</string>
+    <string name="pin_code_step_change">Введите свой %d-значный пин-код</string>
+    <string name="pin_code_step_unlock">Введите свой %d-значный пин-код</string>
+    <string name="pin_code_step_enable_confirm">Подтвердите ваш %d-значный пин-код</string>
+
+    <string name="pin_code_fingerprint_text">Отпечаток пальца</string>
+    <string name="pin_code_fingerprint_success">Отпечаток принят</string>
+    <string name="pin_code_fingerprint_not_recognized">Отпечаток не принят. Попробуйте снова.</string>
+</resources>
