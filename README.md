@@ -1,7 +1,7 @@
 LolliPin [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-LolliPin-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1425)
 ================
 
-A Lollipop material design styled android pincode library (API 10+)
+A Lollipop material design styled android pincode library (API 14+)
 
 
 To include in your project, add this to your build.gradle file:
