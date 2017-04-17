@@ -12,6 +12,14 @@ To include in your project, add this to your build.gradle file:
       transitive = true
    }
 ```
+Starting from version 2.0.0 we will have a different package name:
+
+```
+   //Lollipin
+   compile ('com.github.omadahealth:lollipin:2.0.0@aar') {
+      transitive = true
+   }
+```
 
 ![Demo](app/src/main/res/raw/github_gif.gif) ![Demo](app/src/main/res/raw/github_gif2.gif)
 
