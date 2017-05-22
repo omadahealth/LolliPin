@@ -128,7 +128,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             logoImage.setImageResource(logoId);
         }
         mForgotTextView.setText(getForgotText());
-        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
+        setForgotTextVisibility();
 
         setStepText();
     }
@@ -218,6 +218,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         return getString(R.string.pin_code_forgot_text);
     }
 
+    private void setForgotTextVisibility(){
+        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
+    }
+
     /**
      * Overrides to allow a slide_down animation when finishing
      */
@@ -293,6 +297,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 setPinCode("");
                 mType = AppLock.CONFIRM_PIN;
                 setStepText();
+                setForgotTextVisibility();
                 break;
             case AppLock.CONFIRM_PIN:
                 if (mPinCode.equals(mOldPinCode)) {
@@ -305,6 +310,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setPinCode("");
                     mType = AppLock.ENABLE_PINLOCK;
                     setStepText();
+                    setForgotTextVisibility();
                     onPinCodeError();
                 }
                 break;
@@ -312,6 +318,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     mType = AppLock.ENABLE_PINLOCK;
                     setStepText();
+                    setForgotTextVisibility();
                     setPinCode("");
                     onPinCodeSuccess();
                 } else {

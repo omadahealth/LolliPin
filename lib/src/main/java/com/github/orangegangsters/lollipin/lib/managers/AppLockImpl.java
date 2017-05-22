@@ -191,8 +191,9 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public boolean shouldShowForgot() {
-        return mSharedPreferences.getBoolean(SHOW_FORGOT_PREFERENCE_KEY, true);
+    public boolean shouldShowForgot(int appLockType) {
+        return mSharedPreferences.getBoolean(SHOW_FORGOT_PREFERENCE_KEY, true)
+                && appLockType != AppLock.ENABLE_PINLOCK && appLockType != AppLock.CONFIRM_PIN;
     }
 
     @Override
