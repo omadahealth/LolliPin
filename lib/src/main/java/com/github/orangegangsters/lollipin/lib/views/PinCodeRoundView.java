@@ -56,6 +56,8 @@ public class PinCodeRoundView extends RelativeLayout {
                 mFullDotDrawableId = getResources().getDrawable(R.drawable.pin_code_round_full);
             }
 
+            attributes.recycle();
+
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             PinCodeRoundView view = (PinCodeRoundView) inflater.inflate(R.layout.view_round_pin_code, this);
             mRoundContainer = (ViewGroup) view.findViewById( R.id.round_container );
