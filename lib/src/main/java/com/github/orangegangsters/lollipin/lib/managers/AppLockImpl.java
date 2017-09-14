@@ -14,6 +14,7 @@ import com.github.orangegangsters.lollipin.lib.PinCompatActivity;
 import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
 import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
+import com.github.orangegangsters.lollipin.lib.interfaces.ILockCallback;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
 import java.security.SecureRandom;
@@ -96,6 +97,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * Static instance of {@link AppLockImpl}
      */
     private static AppLockImpl mInstance;
+
+    /**
+     * custom callback for checking and setting passcode.
+     */
+    private ILockCallback mLockCallback;
 
     /**
      * Static method that allows to get back the current static Instance of {@link AppLockImpl}
@@ -263,7 +269,15 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
+    public void setCallback(ILockCallback lockCallback) {
+        mLockCallback = lockCallback;
+    }
+
+    @Override
     public boolean checkPasscode(String passcode) {
+        if (mLockCallback != null) {
+            return mLockCallback.onCheckPasscode(passcode);
+        }
         Algorithm algorithm = Algorithm.getFromText(mSharedPreferences.getString(PASSWORD_ALGORITHM_PREFERENCE_KEY, ""));
 
         String salt = getSalt();
@@ -284,6 +298,9 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
 
     @Override
     public boolean setPasscode(String passcode) {
+        if (mLockCallback != null) {
+            return mLockCallback.onSetPasscode(passcode);
+        }
         String salt = getSalt();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
