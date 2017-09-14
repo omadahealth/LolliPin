@@ -116,6 +116,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
         mPinCodeRoundView.setPinLength(this.getPinLength());
+
+        mPinCodeRoundView.setFullDotDrawable(getFullDotDrawableId());
+        mPinCodeRoundView.setEmptyDotDrawable(getEmptyDotDrawableId());
+        mPinCodeRoundView.refresh(mPinCode.length());
+
         mForgotTextView = (TextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
@@ -131,6 +136,20 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot() ? View.VISIBLE : View.GONE);
 
         setStepText();
+    }
+
+    /**
+     * Get full dot drawable id used by {@link com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView}
+     */
+    public int getFullDotDrawableId() {
+        return R.drawable.pin_code_round_full;
+    }
+
+    /**
+     * Get empty dot drawable id used by {@link com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView}
+     */
+    public int getEmptyDotDrawableId() {
+        return R.drawable.pin_code_round_empty;
     }
 
     /**
