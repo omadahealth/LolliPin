@@ -5,8 +5,8 @@ import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 
-import com.github.orangegangsters.lollipin.MainActivity;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
+import com.github.omadahealth.lollipin.MainActivity;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.robotium.solo.Solo;
 
 /**

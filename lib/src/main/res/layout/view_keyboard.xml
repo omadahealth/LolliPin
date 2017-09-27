@@ -11,21 +11,21 @@
         android:orientation="horizontal"
         android:weightSum="3" >
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button1_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button2_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,21 +41,21 @@
         android:layout_below="@+id/pin_code_first_row"
         android:weightSum="3">
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button4_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button5_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,21 +71,21 @@
         android:layout_below="@+id/pin_code_second_row"
         android:weightSum="3">
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button7_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button8_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -101,21 +101,21 @@
         android:layout_below="@+id/pin_code_third_row"
         android:weightSum="3">
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_ripple_enabled="false" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:lp_keyboard_button_text="@string/button11_large_text" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardButtonView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
             android:id="@+id/pin_code_button_clear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

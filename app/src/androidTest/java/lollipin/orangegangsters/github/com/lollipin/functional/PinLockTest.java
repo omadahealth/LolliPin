@@ -9,16 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.orangegangsters.lollipin.CustomPinActivity;
-import com.github.orangegangsters.lollipin.MainActivity;
-import com.github.orangegangsters.lollipin.NotLockedActivity;
-import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
-import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
-import com.github.orangegangsters.lollipin.lib.managers.AppLock;
-import com.github.orangegangsters.lollipin.lib.managers.AppLockImpl;
-import com.github.orangegangsters.lollipin.lib.managers.FingerprintUiHelper;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
-import com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView;
+import com.github.omadahealth.lollipin.CustomPinActivity;
+import com.github.omadahealth.lollipin.MainActivity;
+import com.github.omadahealth.lollipin.NotLockedActivity;
+import com.github.omadahealth.lollipin.lib.encryption.Encryptor;
+import com.github.omadahealth.lollipin.lib.enums.Algorithm;
+import com.github.omadahealth.lollipin.lib.managers.AppLockImpl;
+import com.github.omadahealth.lollipin.lib.managers.FingerprintUiHelper;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
+import com.github.omadahealth.lollipin.lib.views.PinCodeRoundView;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
@@ -59,7 +58,7 @@ public class PinLockTest extends AbstractTest {
 
         //Check length 3
         solo.sleep(1000);
-        PinCodeRoundView pinCodeRoundView = (PinCodeRoundView) solo.getCurrentActivity().findViewById(com.github.orangegangsters.lollipin.lib.R.id.pin_code_round_view);
+        PinCodeRoundView pinCodeRoundView = (PinCodeRoundView) solo.getCurrentActivity().findViewById(com.github.omadahealth.lollipin.lib.R.id.pin_code_round_view);
         assertEquals(3, pinCodeRoundView.getCurrentLength());
 
         //Click clear button
@@ -106,8 +105,8 @@ public class PinLockTest extends AbstractTest {
 
         //Test fingerprint if available
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ImageView fingerprintImageView = (ImageView) solo.getView(com.github.orangegangsters.lollipin.lib.R.id.pin_code_fingerprint_imageview);
-            TextView fingerprintTextView = (TextView) solo.getView(com.github.orangegangsters.lollipin.lib.R.id.pin_code_fingerprint_textview);
+            ImageView fingerprintImageView = (ImageView) solo.getView(com.github.omadahealth.lollipin.lib.R.id.pin_code_fingerprint_imageview);
+            TextView fingerprintTextView = (TextView) solo.getView(com.github.omadahealth.lollipin.lib.R.id.pin_code_fingerprint_textview);
             FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
             FingerprintUiHelper fingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(fingerprintManager).build(fingerprintImageView, fingerprintTextView, (CustomPinActivity) solo.getCurrentActivity());
             if (fingerprintManager.isHardwareDetected() && fingerprintUiHelper.isFingerprintAuthAvailable()) {

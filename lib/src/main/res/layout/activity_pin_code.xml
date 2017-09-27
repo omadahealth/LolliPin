@@ -35,7 +35,7 @@
             android:textColor="@color/dark_grey_color"
             android:textSize="@dimen/pin_code_step_text_size" />
 
-        <com.github.orangegangsters.lollipin.lib.views.PinCodeRoundView
+        <com.github.omadahealth.lollipin.lib.views.PinCodeRoundView
             android:id="@+id/pin_code_round_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:background="@color/light_gray_bar"
             android:orientation="horizontal" />
 
-        <com.github.orangegangsters.lollipin.lib.views.KeyboardView
+        <com.github.omadahealth.lollipin.lib.views.KeyboardView
             android:id="@+id/pin_code_keyboard_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
