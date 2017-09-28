@@ -2,6 +2,8 @@ package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
 
+import com.github.orangegangsters.lollipin.lib.interfaces.ILockCallback;
+
 import java.util.HashSet;
 
 public abstract class AppLock {
@@ -103,6 +105,11 @@ public abstract class AppLock {
     public abstract void setShouldShowForgot(boolean showForgot);
 
     /**
+     * set callback to be called when passcode is checked or set.
+     */
+    public abstract void setCallback(ILockCallback lockCallback);
+
+    /**
      * Get whether the user backed out of the {@link AppLockActivity} previously
      */
     public abstract boolean pinChallengeCancelled();
@@ -170,6 +177,7 @@ public abstract class AppLock {
 
     /**
      * Enable or disable fingerprint authentication on the PIN screen.
+     *
      * @param enabled If true, enables the fingerprint reader if it is supported.  If false, will
      *                hide the fingerprint reader icon on the PIN screen.
      */
