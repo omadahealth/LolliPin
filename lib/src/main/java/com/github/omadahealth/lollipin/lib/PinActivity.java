@@ -40,6 +40,14 @@ public class PinActivity extends Activity {
     }
 
     @Override
+    public void onUserInteraction() {
+        if (mLifeCycleListener != null){
+            mLifeCycleListener.onActivityUserInteraction(PinActivity.this);
+        }
+        super.onUserInteraction();
+    }
+
+    @Override
     protected void onResume() {
         if (mLifeCycleListener != null) {
             mLifeCycleListener.onActivityResumed(PinActivity.this);

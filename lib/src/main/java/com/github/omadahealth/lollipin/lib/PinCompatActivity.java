@@ -47,6 +47,14 @@ public class PinCompatActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onUserInteraction() {
+        if (mLifeCycleListener != null){
+            mLifeCycleListener.onActivityUserInteraction(PinCompatActivity.this);
+        }
+        super.onUserInteraction();
+    }
+
+    @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
             mLifeCycleListener.onActivityPaused(PinCompatActivity.this);
