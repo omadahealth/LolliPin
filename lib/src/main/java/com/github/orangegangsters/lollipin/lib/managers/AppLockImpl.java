@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
@@ -401,10 +400,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.getApplication().startActivity(intent);
-        }
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            return;
         }
 
         if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {

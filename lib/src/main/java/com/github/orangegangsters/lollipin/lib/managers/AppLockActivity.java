@@ -96,10 +96,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Init completely the layout, depending of the extra {@link com.github.orangegangsters.lollipin.lib.managers.AppLock#EXTRA_TYPE}
      */
     private void initLayout(Intent intent) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-            //Animate if greater than 2.3.3
-            overridePendingTransition(R.anim.nothing, R.anim.nothing);
-        }
+        //Skip animation on init
+        overridePendingTransition(R.anim.nothing, R.anim.nothing);
 
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -239,10 +237,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             }
         }
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-            //Animate if greater than 2.3.3
-            overridePendingTransition(R.anim.nothing, R.anim.slide_down);
-        }
+        // Animate on exit
+        overridePendingTransition(R.anim.nothing, R.anim.slide_down);
     }
 
     /**
