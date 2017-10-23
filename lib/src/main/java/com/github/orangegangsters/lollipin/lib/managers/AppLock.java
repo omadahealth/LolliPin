@@ -1,6 +1,12 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.github.orangegangsters.lollipin.lib.interfaces.ConfigurationStorage;
+import com.github.orangegangsters.lollipin.lib.interfaces.CredentialStorage;
 
 import java.util.HashSet;
 
@@ -53,13 +59,13 @@ public abstract class AppLock {
     protected HashSet<String> mIgnoredActivities;
 
     public AppLock() {
-        mIgnoredActivities = new HashSet<String>();
+        mIgnoredActivities = new HashSet<>();
     }
 
     /**
      * Add an ignored activity to the {@link java.util.HashSet}
      */
-    public void addIgnoredActivity(Class<?> clazz) {
+    public void addIgnoredActivity(Class<? extends Activity> clazz) {
         String clazzName = clazz.getName();
         this.mIgnoredActivities.add(clazzName);
     }
@@ -67,7 +73,7 @@ public abstract class AppLock {
     /**
      * Remove an ignored activity to the {@link java.util.HashSet}
      */
-    public void removeIgnoredActivity(Class<?> clazz) {
+    public void removeIgnoredActivity(Class<? extends Activity> clazz) {
         String clazzName = clazz.getName();
         this.mIgnoredActivities.remove(clazzName);
     }
@@ -202,4 +208,52 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    public static class Builder {
+
+        private final Context mContext;
+        private final Class<? extends AppLockActivity> mActivityClass;
+
+        private ConfigurationStorage mConfigurationStorage;
+        private CredentialStorage mCredentialStorage;
+
+        public Builder(Context context, Class<? extends AppLockActivity> activityClass) {
+            mContext = context;
+            mActivityClass = activityClass;
+        }
+
+        @NonNull
+        Context getContext() {
+            return mContext;
+        }
+
+        @NonNull
+        Class<? extends AppLockActivity> getActivityClass() {
+            return mActivityClass;
+        }
+
+        @Nullable
+        ConfigurationStorage getConfigurationStorage() {
+            return mConfigurationStorage;
+        }
+
+        public Builder setConfigurationStorage(@Nullable ConfigurationStorage configurationStorage) {
+            mConfigurationStorage = configurationStorage;
+            return this;
+        }
+
+        @Nullable
+        CredentialStorage getCredentialStorage() {
+            return mCredentialStorage;
+        }
+
+        public Builder setCredentialStorage(@Nullable CredentialStorage credentialStorage) {
+            mCredentialStorage = credentialStorage;
+            return this;
+        }
+
+        public AppLock build() {
+            return new AppLockImpl(this);
+        }
+    }
 }
