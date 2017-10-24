@@ -1,6 +1,6 @@
 package com.github.orangegangsters.lollipin.lib.views;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 
@@ -10,7 +10,7 @@ import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
  * Then to enable PinCode blocking, you must call
  * {@link com.github.orangegangsters.lollipin.lib.managers.LockManager#enableAppLock(android.content.Context, Class)}
  */
-public class PinActionBarActivity extends ActionBarActivity {
+public class PinActionBarActivity extends AppCompatActivity {
     private static LifeCycleInterface mLifeCycleListener;
 
     @Override

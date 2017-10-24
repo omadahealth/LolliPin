@@ -1,6 +1,7 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
 import com.github.orangegangsters.lollipin.lib.PinCompatActivity;
@@ -20,7 +21,7 @@ public class LockManager<T extends AppLockActivity> {
     /**
      * The static singleton instance of {@link com.github.orangegangsters.lollipin.lib.managers.AppLock}
      */
-    private static AppLock mAppLocker;
+    private AppLock mAppLocker;
 
     /**
      * Used to retrieve the static instance
@@ -42,7 +43,7 @@ public class LockManager<T extends AppLockActivity> {
         if (mAppLocker != null) {
             mAppLocker.disable();
         }
-        mAppLocker = AppLockImpl.getInstance(context, activityClass);
+        mAppLocker = AppLock.forActivity(context, activityClass);
         mAppLocker.enable();
     }
 
@@ -50,8 +51,8 @@ public class LockManager<T extends AppLockActivity> {
      * Tells the app if the {@link com.github.orangegangsters.lollipin.lib.managers.AppLock} is enabled or not
      */
     public boolean isAppLockEnabled() {
-        return (mAppLocker != null && (PinActivity.hasListeners() ||
-                PinFragmentActivity.hasListeners() || PinCompatActivity.hasListeners()));
+        return mAppLocker != null && (PinActivity.hasListeners() ||
+                PinFragmentActivity.hasListeners() || PinCompatActivity.hasListeners());
     }
 
     /**
@@ -67,7 +68,7 @@ public class LockManager<T extends AppLockActivity> {
     /**
      * Disables the previous app lock and set a new one
      */
-    public void setAppLock(AppLock appLocker) {
+    public void setAppLock(@Nullable AppLock appLocker) {
         if (mAppLocker != null) {
             mAppLocker.disable();
         }
@@ -77,6 +78,7 @@ public class LockManager<T extends AppLockActivity> {
     /**
      * Get the {@link AppLock}. Used for defining custom timeouts etc...
      */
+    @Nullable
     public AppLock getAppLock() {
         return mAppLocker;
     }

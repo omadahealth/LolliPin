@@ -1,20 +1,26 @@
 package com.github.orangegangsters.lollipin.lib.interfaces;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 
 public interface CredentialStorage {
 
+    @Nullable
     String readSalt();
 
-    void writeSalt(String salt);
+    void writeSalt(@Nullable String salt);
 
+    @NonNull
     Algorithm readCurrentAlgorithm();
 
-    void writeCurrentAlgorithm(Algorithm algorithm);
+    void writeCurrentAlgorithm(@NonNull Algorithm algorithm);
 
+    @NonNull
     String readPasscode();
 
-    void writePasscode(String passcode);
+    void writePasscode(@NonNull String passcode);
 
     boolean hasPasscode();
 

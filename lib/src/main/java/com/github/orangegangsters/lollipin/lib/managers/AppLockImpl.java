@@ -3,8 +3,6 @@ package com.github.orangegangsters.lollipin.lib.managers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.util.Log;
 
 import com.github.orangegangsters.lollipin.lib.PinActivity;
@@ -22,60 +20,6 @@ import com.github.orangegangsters.lollipin.lib.storage.DefaultPreferencesCredent
 public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
     public static final String TAG = "AppLockImpl";
-
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the password
-     */
-    private static final String PASSWORD_PREFERENCE_KEY = "PASSCODE";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the {@link Algorithm}
-     */
-    private static final String PASSWORD_ALGORITHM_PREFERENCE_KEY = "ALGORITHM";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the last active time
-     */
-    private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the timeout
-     */
-    private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the logo resource id
-     */
-    private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the forgot option
-     */
-    private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
-
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the only background timeout option
-     */
-    private static final String ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY = "ONLY_BACKGROUND_TIMEOUT_PREFERENCE_KEY";
-    /**
-     * The {@link SharedPreferences} key used to store whether the user has backed out of the {@link AppLockActivity}
-     */
-    private static final String PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY = "PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY";
-    /**
-     * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
-     */
-    private static final String PASSWORD_SALT_PREFERENCE_KEY = "PASSWORD_SALT_PREFERENCE_KEY";
-    /**
-     * The {@link SharedPreferences} key used to store whether the caller has enabled fingerprint authentication.
-     * This value defaults to true for backwards compatibility.
-     */
-    private static final String FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY = "FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY";
-
-    /**
-     * The key algorithm used to generating the dynamic salt
-     */
-    private static final String KEY_ALGORITHM = "PBEWithMD5AndDES";
-
-    /**
-     * The number of iterations used to generate a dynamic salt
-     */
-    private static final int KEY_ITERATIONS = 20;
-
 
     private final CredentialStorage mCredentialStorage;
     private final ConfigurationStorage mConfigurationStorage;
@@ -97,6 +41,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
      * @param activityClass The activity extending {@link AppLockActivity}
      * @return The instance.
      */
+    @Deprecated
     public static AppLockImpl getInstance(Context context, Class<? extends AppLockActivity> activityClass) {
         synchronized (LockManager.class) {
             if (mInstance == null) {
@@ -106,7 +51,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
         return mInstance;
     }
 
-    private AppLockImpl(Context context, Class<? extends AppLockActivity> activityClass) {
+    AppLockImpl(Context context, Class<? extends AppLockActivity> activityClass) {
         mActivityClass = activityClass;
         mCredentialStorage = new DefaultPreferencesCredentialStorage(context);
         mConfigurationStorage = new DefaultPreferencesConfigurationStorage(context);

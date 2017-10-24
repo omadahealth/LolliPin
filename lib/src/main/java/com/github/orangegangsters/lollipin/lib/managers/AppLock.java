@@ -50,6 +50,19 @@ public abstract class AppLock {
      */
     public static final long DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
+    public static final boolean DEFAULT_SHOW_FORGOT = true;
+
+    public static final boolean DEFAULT_PIN_CHALLENGE_CANCELED = false;
+
+    public static final boolean DEFAULT_ONLY_BACKGROUND_TIMEOUT = false;
+
+    public static final boolean DEFAULT_FINGERPRING_AUTH_ENABLED = true;
+
+    public static AppLock forActivity(@NonNull Context context,
+                                      @NonNull Class<? extends AppLockActivity> activityClass) {
+        return new AppLockImpl(context, activityClass);
+    }
+
     /**
      * A {@link java.util.HashSet} of {@link java.lang.String} which are the classes we don't want to
      * take into account for the {@link com.github.orangegangsters.lollipin.lib.PinActivity}. These activities
@@ -176,6 +189,7 @@ public abstract class AppLock {
 
     /**
      * Enable or disable fingerprint authentication on the PIN screen.
+     *
      * @param enabled If true, enables the fingerprint reader if it is supported.  If false, will
      *                hide the fingerprint reader icon on the PIN screen.
      */
