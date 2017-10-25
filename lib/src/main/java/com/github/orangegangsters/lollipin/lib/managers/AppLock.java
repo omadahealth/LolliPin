@@ -175,6 +175,12 @@ public abstract class AppLock {
      */
     public abstract void setLastActiveMillis();
 
+    public abstract int getAttemptsCount();
+
+    public abstract int incrementAttemptsCountAndGet();
+
+    public abstract void resetAttemptsCount();
+
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
      * {@link com.github.orangegangsters.lollipin.lib.encryption.Encryptor} class.

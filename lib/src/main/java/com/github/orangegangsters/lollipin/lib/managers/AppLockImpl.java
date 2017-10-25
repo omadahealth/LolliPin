@@ -190,6 +190,23 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
     }
 
     @Override
+    public int getAttemptsCount() {
+        return mCredentialStorage.readAttemptsCount();
+    }
+
+    @Override
+    public int incrementAttemptsCountAndGet() {
+        int attempts = mCredentialStorage.readAttemptsCount() + 1;
+        mCredentialStorage.writeAttemptsCount(attempts);
+        return attempts;
+    }
+
+    @Override
+    public void resetAttemptsCount() {
+        mCredentialStorage.writeAttemptsCount(0);
+    }
+
+    @Override
     public boolean checkPasscode(String passcode) {
         Algorithm algorithm = mCredentialStorage.readCurrentAlgorithm();
 

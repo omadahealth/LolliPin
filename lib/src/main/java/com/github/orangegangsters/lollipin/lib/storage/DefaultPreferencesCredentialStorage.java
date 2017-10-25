@@ -11,6 +11,7 @@ import com.github.orangegangsters.lollipin.lib.interfaces.CredentialStorage;
 
 public class DefaultPreferencesCredentialStorage implements CredentialStorage {
 
+    private static final String ATTEMPTS_COUNT_PREFERENCE_KEY = "ATTEMPTS_COUNT_PREFERENCE_KEY";
     /**
      * The {@link android.content.SharedPreferences} key used to store the dynamically generated password salt
      */
@@ -28,6 +29,18 @@ public class DefaultPreferencesCredentialStorage implements CredentialStorage {
 
     public DefaultPreferencesCredentialStorage(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Override
+    public int readAttemptsCount() {
+        return mPreferences.getInt(ATTEMPTS_COUNT_PREFERENCE_KEY, 0);
+    }
+
+    @Override
+    public void writeAttemptsCount(int attempts) {
+        mPreferences.edit()
+                .putInt(ATTEMPTS_COUNT_PREFERENCE_KEY, attempts)
+                .apply();
     }
 
     @Override

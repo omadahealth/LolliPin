@@ -7,6 +7,10 @@ import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 
 public interface CredentialStorage {
 
+    int readAttemptsCount();
+
+    void writeAttemptsCount(int attempts);
+
     @Nullable
     String readSalt();
 

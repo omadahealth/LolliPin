@@ -44,12 +44,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected LockManager mLockManager;
 
-
     protected FingerprintManager mFingerprintManager;
     protected FingerprintUiHelper mFingerprintUiHelper;
 
     protected int mType = AppLock.UNLOCK_PIN;
-    protected int mAttempts = 1;
+    protected int mAttempts = 0;
     protected String mPinCode;
 
     protected String mOldPinCode;
@@ -96,10 +95,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Init completely the layout, depending of the extra {@link com.github.orangegangsters.lollipin.lib.managers.AppLock#EXTRA_TYPE}
      */
     private void initLayout(Intent intent) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-            //Animate if greater than 2.3.3
-            overridePendingTransition(R.anim.nothing, R.anim.nothing);
-        }
+        overridePendingTransition(R.anim.nothing, R.anim.nothing);
 
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -112,6 +108,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
         enableAppLockerIfDoesNotExist();
         mLockManager.getAppLock().setPinChallengeCancelled(false);
+        mAttempts = mLockManager.getAppLock().getAttemptsCount();
 
         mStepTextView = (TextView) this.findViewById(R.id.pin_code_step_textview);
         mPinCodeRoundView = (PinCodeRoundView) this.findViewById(R.id.pin_code_round_view);
@@ -144,8 +141,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mFingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
             mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(mFingerprintManager).build(mFingerprintImageView, mFingerprintTextView, this);
             try {
-            if (mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
-                    && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
+                if (mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
+                        && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
                     mFingerprintImageView.setVisibility(View.VISIBLE);
                     mFingerprintTextView.setVisibility(View.VISIBLE);
                     mFingerprintUiHelper.startListening();
@@ -218,7 +215,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         return getString(R.string.pin_code_forgot_text);
     }
 
-    private void setForgotTextVisibility(){
+    private void setForgotTextVisibility() {
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
     }
 
@@ -239,10 +236,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             }
         }
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
-            //Animate if greater than 2.3.3
-            overridePendingTransition(R.anim.nothing, R.anim.slide_down);
-        }
+        overridePendingTransition(R.anim.nothing, R.anim.slide_down);
     }
 
     /**
@@ -388,8 +382,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError() {
-        onPinFailure(mAttempts++);
-        Thread thread = new Thread() {
+        mAttempts = mLockManager.getAppLock().incrementAttemptsCountAndGet();
+        onPinFailure(mAttempts);
+        Runnable thread = new Runnable() {
+            @Override
             public void run() {
                 mPinCode = "";
                 mPinCodeRoundView.refresh(mPinCode.length());
@@ -403,8 +399,9 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected void onPinCodeSuccess() {
         isCodeSuccessful = true;
-        onPinSuccess(mAttempts);
-        mAttempts = 1;
+        onPinSuccess(mAttempts + 1);
+        mAttempts = 0;
+        mLockManager.getAppLock().resetAttemptsCount();
     }
 
     /**
