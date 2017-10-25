@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.orangegangsters.lollipin.lib.interfaces.ConfigurationStorage;
-import com.github.orangegangsters.lollipin.lib.interfaces.CredentialStorage;
+import com.github.orangegangsters.lollipin.lib.interfaces.PasscodeDataStorage;
 
 import java.util.HashSet;
 
@@ -235,7 +235,7 @@ public abstract class AppLock {
         private final Class<? extends AppLockActivity> mActivityClass;
 
         private ConfigurationStorage mConfigurationStorage;
-        private CredentialStorage mCredentialStorage;
+        private PasscodeDataStorage mPasscodeDataStorage;
 
         public Builder(Context context, Class<? extends AppLockActivity> activityClass) {
             mContext = context;
@@ -263,12 +263,12 @@ public abstract class AppLock {
         }
 
         @Nullable
-        CredentialStorage getCredentialStorage() {
-            return mCredentialStorage;
+        PasscodeDataStorage getPasscodeDataStorage() {
+            return mPasscodeDataStorage;
         }
 
-        public Builder setCredentialStorage(@Nullable CredentialStorage credentialStorage) {
-            mCredentialStorage = credentialStorage;
+        public Builder setPasscodeDataStorage(@Nullable PasscodeDataStorage passcodeDataStorage) {
+            mPasscodeDataStorage = passcodeDataStorage;
             return this;
         }
 

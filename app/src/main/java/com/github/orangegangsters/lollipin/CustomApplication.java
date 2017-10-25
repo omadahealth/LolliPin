@@ -11,12 +11,11 @@ import lollipin.orangegangsters.github.com.lollipin.R;
  */
 public class CustomApplication extends Application {
 
-    @SuppressWarnings("unchecked")
     @Override
     public void onCreate() {
         super.onCreate();
 
-        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        LockManager lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
         lockManager.getAppLock().setLogoId(R.drawable.security_lock);
     }

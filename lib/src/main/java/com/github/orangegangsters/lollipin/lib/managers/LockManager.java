@@ -12,12 +12,12 @@ import com.github.orangegangsters.lollipin.lib.PinFragmentActivity;
  * the actual app calling the library.
  * You must get this static instance by calling {@link #getInstance()}
  */
-public class LockManager<T extends AppLockActivity> {
+public class LockManager {
 
     /**
      * The static singleton instance
      */
-    private static LockManager mInstance;
+    private static final LockManager INSTANCE = new LockManager();
     /**
      * The static singleton instance of {@link com.github.orangegangsters.lollipin.lib.managers.AppLock}
      */
@@ -27,19 +27,14 @@ public class LockManager<T extends AppLockActivity> {
      * Used to retrieve the static instance
      */
     public static LockManager getInstance() {
-        synchronized (LockManager.class) {
-            if (mInstance == null) {
-                mInstance = new LockManager<>();
-            }
-        }
-        return mInstance;
+        return INSTANCE;
     }
 
     /**
      * You must call that into your custom {@link android.app.Application} to enable the
      * {@link com.github.orangegangsters.lollipin.lib.PinActivity}
      */
-    public void enableAppLock(Context context, Class<T> activityClass) {
+    public void enableAppLock(Context context, Class<? extends AppLockActivity> activityClass) {
         if (mAppLocker != null) {
             mAppLocker.disable();
         }

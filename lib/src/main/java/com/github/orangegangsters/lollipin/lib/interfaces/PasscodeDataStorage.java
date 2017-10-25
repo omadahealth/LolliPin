@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 
-public interface CredentialStorage {
+public interface PasscodeDataStorage {
 
     int readAttemptsCount();
 

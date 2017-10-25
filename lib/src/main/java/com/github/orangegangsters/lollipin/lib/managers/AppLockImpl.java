@@ -12,16 +12,16 @@ import com.github.orangegangsters.lollipin.lib.encryption.Encryptor;
 import com.github.orangegangsters.lollipin.lib.encryption.SaltGenerator;
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
 import com.github.orangegangsters.lollipin.lib.interfaces.ConfigurationStorage;
-import com.github.orangegangsters.lollipin.lib.interfaces.CredentialStorage;
+import com.github.orangegangsters.lollipin.lib.interfaces.PasscodeDataStorage;
 import com.github.orangegangsters.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.orangegangsters.lollipin.lib.storage.DefaultPreferencesConfigurationStorage;
-import com.github.orangegangsters.lollipin.lib.storage.DefaultPreferencesCredentialStorage;
+import com.github.orangegangsters.lollipin.lib.storage.DefaultPreferencesPasscodeDataStorage;
 
 public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
     public static final String TAG = "AppLockImpl";
 
-    private final CredentialStorage mCredentialStorage;
+    private final PasscodeDataStorage mPasscodeDataStorage;
     private final ConfigurationStorage mConfigurationStorage;
 
     /**
@@ -53,14 +53,14 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
     AppLockImpl(Context context, Class<? extends AppLockActivity> activityClass) {
         mActivityClass = activityClass;
-        mCredentialStorage = new DefaultPreferencesCredentialStorage(context);
+        mPasscodeDataStorage = new DefaultPreferencesPasscodeDataStorage(context);
         mConfigurationStorage = new DefaultPreferencesConfigurationStorage(context);
     }
 
     AppLockImpl(Builder builder) {
         mActivityClass = builder.getActivityClass();
         mConfigurationStorage = getConfigurationStorageOrDefault(builder);
-        mCredentialStorage = getCredentialStorageOrDefault(builder);
+        mPasscodeDataStorage = getPasscodeDataStorageOrDefault(builder);
     }
 
     private static ConfigurationStorage getConfigurationStorageOrDefault(Builder builder) {
@@ -72,10 +72,10 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
         }
     }
 
-    private static CredentialStorage getCredentialStorageOrDefault(Builder builder) {
-        CredentialStorage storage = builder.getCredentialStorage();
+    private static PasscodeDataStorage getPasscodeDataStorageOrDefault(Builder builder) {
+        PasscodeDataStorage storage = builder.getPasscodeDataStorage();
         if (storage == null) {
-            return new DefaultPreferencesCredentialStorage(builder.getContext());
+            return new DefaultPreferencesPasscodeDataStorage(builder.getContext());
         } else {
             return storage;
         }
@@ -92,7 +92,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
     }
 
     public String getSalt() {
-        String salt = mCredentialStorage.readSalt();
+        String salt = mPasscodeDataStorage.readSalt();
         if (salt == null) {
             salt = SaltGenerator.generate();
             setSalt(salt);
@@ -101,7 +101,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
     }
 
     private void setSalt(String salt) {
-        mCredentialStorage.writeSalt(salt);
+        mPasscodeDataStorage.writeSalt(salt);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
         PinCompatActivity.clearListeners();
         PinFragmentActivity.clearListeners();
         mConfigurationStorage.clear();
-        mCredentialStorage.clear();
+        mPasscodeDataStorage.clear();
     }
 
     @Override
@@ -191,24 +191,24 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
 
     @Override
     public int getAttemptsCount() {
-        return mCredentialStorage.readAttemptsCount();
+        return mPasscodeDataStorage.readAttemptsCount();
     }
 
     @Override
     public int incrementAttemptsCountAndGet() {
-        int attempts = mCredentialStorage.readAttemptsCount() + 1;
-        mCredentialStorage.writeAttemptsCount(attempts);
+        int attempts = mPasscodeDataStorage.readAttemptsCount() + 1;
+        mPasscodeDataStorage.writeAttemptsCount(attempts);
         return attempts;
     }
 
     @Override
     public void resetAttemptsCount() {
-        mCredentialStorage.writeAttemptsCount(0);
+        mPasscodeDataStorage.writeAttemptsCount(0);
     }
 
     @Override
     public boolean checkPasscode(String passcode) {
-        Algorithm algorithm = mCredentialStorage.readCurrentAlgorithm();
+        Algorithm algorithm = mPasscodeDataStorage.readCurrentAlgorithm();
 
         String salt = getSalt();
         passcode = salt + passcode + salt;
@@ -216,7 +216,7 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
         String storedPasscode = "";
 
         if (isPasscodeSet()) {
-            storedPasscode = mCredentialStorage.readPasscode();
+            storedPasscode = mPasscodeDataStorage.readPasscode();
         }
 
         return storedPasscode.equalsIgnoreCase(passcode);
@@ -226,12 +226,12 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
     public boolean setPasscode(String passcode) {
         String salt = getSalt();
         if (passcode == null) {
-            mCredentialStorage.clearPasscode();
+            mPasscodeDataStorage.clearPasscode();
             this.disable();
         } else {
             setAlgorithm(Algorithm.SHA256);
             passcode = Encryptor.getSHA(salt + passcode + salt, Algorithm.SHA256);
-            mCredentialStorage.writePasscode(passcode);
+            mPasscodeDataStorage.writePasscode(passcode);
             this.enable();
         }
         return true;
@@ -241,12 +241,12 @@ public class AppLockImpl extends AppLock implements LifeCycleInterface {
      * Set the algorithm used in {@link #setPasscode(String)}
      */
     private void setAlgorithm(Algorithm algorithm) {
-        mCredentialStorage.writeCurrentAlgorithm(algorithm);
+        mPasscodeDataStorage.writeCurrentAlgorithm(algorithm);
     }
 
     @Override
     public boolean isPasscodeSet() {
-        return mCredentialStorage.hasPasscode();
+        return mPasscodeDataStorage.hasPasscode();
     }
 
     @Override

@@ -7,9 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.orangegangsters.lollipin.lib.enums.Algorithm;
-import com.github.orangegangsters.lollipin.lib.interfaces.CredentialStorage;
+import com.github.orangegangsters.lollipin.lib.interfaces.PasscodeDataStorage;
 
-public class DefaultPreferencesCredentialStorage implements CredentialStorage {
+public class DefaultPreferencesPasscodeDataStorage implements PasscodeDataStorage {
 
     private static final String ATTEMPTS_COUNT_PREFERENCE_KEY = "ATTEMPTS_COUNT_PREFERENCE_KEY";
     /**
@@ -27,7 +27,7 @@ public class DefaultPreferencesCredentialStorage implements CredentialStorage {
 
     private final SharedPreferences mPreferences;
 
-    public DefaultPreferencesCredentialStorage(Context context) {
+    public DefaultPreferencesPasscodeDataStorage(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
