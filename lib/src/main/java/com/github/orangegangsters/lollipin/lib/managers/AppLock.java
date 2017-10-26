@@ -1,6 +1,12 @@
 package com.github.orangegangsters.lollipin.lib.managers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.github.orangegangsters.lollipin.lib.interfaces.ConfigurationStorage;
+import com.github.orangegangsters.lollipin.lib.interfaces.PasscodeDataStorage;
 
 import java.util.HashSet;
 
@@ -44,6 +50,19 @@ public abstract class AppLock {
      */
     public static final long DEFAULT_TIMEOUT = 1000 * 10; // 10sec
 
+    public static final boolean DEFAULT_SHOW_FORGOT = true;
+
+    public static final boolean DEFAULT_PIN_CHALLENGE_CANCELED = false;
+
+    public static final boolean DEFAULT_ONLY_BACKGROUND_TIMEOUT = false;
+
+    public static final boolean DEFAULT_FINGERPRING_AUTH_ENABLED = true;
+
+    public static AppLock forActivity(@NonNull Context context,
+                                      @NonNull Class<? extends AppLockActivity> activityClass) {
+        return new AppLockImpl(context, activityClass);
+    }
+
     /**
      * A {@link java.util.HashSet} of {@link java.lang.String} which are the classes we don't want to
      * take into account for the {@link com.github.orangegangsters.lollipin.lib.PinActivity}. These activities
@@ -53,13 +72,13 @@ public abstract class AppLock {
     protected HashSet<String> mIgnoredActivities;
 
     public AppLock() {
-        mIgnoredActivities = new HashSet<String>();
+        mIgnoredActivities = new HashSet<>();
     }
 
     /**
      * Add an ignored activity to the {@link java.util.HashSet}
      */
-    public void addIgnoredActivity(Class<?> clazz) {
+    public void addIgnoredActivity(Class<? extends Activity> clazz) {
         String clazzName = clazz.getName();
         this.mIgnoredActivities.add(clazzName);
     }
@@ -67,7 +86,7 @@ public abstract class AppLock {
     /**
      * Remove an ignored activity to the {@link java.util.HashSet}
      */
-    public void removeIgnoredActivity(Class<?> clazz) {
+    public void removeIgnoredActivity(Class<? extends Activity> clazz) {
         String clazzName = clazz.getName();
         this.mIgnoredActivities.remove(clazzName);
     }
@@ -156,6 +175,12 @@ public abstract class AppLock {
      */
     public abstract void setLastActiveMillis();
 
+    public abstract int getAttemptsCount();
+
+    public abstract int incrementAttemptsCountAndGet();
+
+    public abstract void resetAttemptsCount();
+
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
      * {@link com.github.orangegangsters.lollipin.lib.encryption.Encryptor} class.
@@ -170,6 +195,7 @@ public abstract class AppLock {
 
     /**
      * Enable or disable fingerprint authentication on the PIN screen.
+     *
      * @param enabled If true, enables the fingerprint reader if it is supported.  If false, will
      *                hide the fingerprint reader icon on the PIN screen.
      */
@@ -202,4 +228,52 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    public static class Builder {
+
+        private final Context mContext;
+        private final Class<? extends AppLockActivity> mActivityClass;
+
+        private ConfigurationStorage mConfigurationStorage;
+        private PasscodeDataStorage mPasscodeDataStorage;
+
+        public Builder(Context context, Class<? extends AppLockActivity> activityClass) {
+            mContext = context;
+            mActivityClass = activityClass;
+        }
+
+        @NonNull
+        Context getContext() {
+            return mContext;
+        }
+
+        @NonNull
+        Class<? extends AppLockActivity> getActivityClass() {
+            return mActivityClass;
+        }
+
+        @Nullable
+        ConfigurationStorage getConfigurationStorage() {
+            return mConfigurationStorage;
+        }
+
+        public Builder setConfigurationStorage(@Nullable ConfigurationStorage configurationStorage) {
+            mConfigurationStorage = configurationStorage;
+            return this;
+        }
+
+        @Nullable
+        PasscodeDataStorage getPasscodeDataStorage() {
+            return mPasscodeDataStorage;
+        }
+
+        public Builder setPasscodeDataStorage(@Nullable PasscodeDataStorage passcodeDataStorage) {
+            mPasscodeDataStorage = passcodeDataStorage;
+            return this;
+        }
+
+        public AppLock build() {
+            return new AppLockImpl(this);
+        }
+    }
 }

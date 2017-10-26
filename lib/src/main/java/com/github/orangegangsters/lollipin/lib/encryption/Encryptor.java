@@ -11,7 +11,7 @@ import java.util.Locale;
  * Used by {@link com.github.orangegangsters.lollipin.lib.managers.AppLockImpl} to get the SHA1
  * of the 4-digit password.
  */
-public class Encryptor {
+public final class Encryptor {
 
     /**
      * Convert a chain of bytes into a {@link java.lang.String}
