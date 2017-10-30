@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="pin_code_forgot_text">잊어버렸나요?</string>
+	<string name="pin_code_step_disable">%d-자리 핀코드 해제</string>
+	<string name="pin_code_step_create">%d-자리 핀코드 생성</string>
+	<string name="pin_code_step_change">입력한 %d-자리 핀코드를 입력하세요</string>
+	<string name="pin_code_step_unlock">%d-자리 핀코드를 입력하세요</string>
+	<string name="pin_code_step_enable_confirm">%d-자리 핀코드를 한번 더 입력하세요</string>
+
+	<string name="pin_code_fingerprint_text">지문인식</string>
+	<string name="pin_code_fingerprint_success">지문을 인식했습니다</string>
+	<string name="pin_code_fingerprint_not_recognized">지문을 인식하지 못 했습니다. 다시 시도해 주세요</string>
+
+</resources>
