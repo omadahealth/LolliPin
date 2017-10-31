@@ -47,6 +47,14 @@ public class PinFragmentActivity extends FragmentActivity {
     }
 
     @Override
+    public void onUserInteraction() {
+        if (mLifeCycleListener != null){
+            mLifeCycleListener.onActivityUserInteraction(PinFragmentActivity.this);
+        }
+        super.onUserInteraction();
+    }
+
+    @Override
     protected void onPause() {
         if (mLifeCycleListener != null) {
             mLifeCycleListener.onActivityPaused(PinFragmentActivity.this);
