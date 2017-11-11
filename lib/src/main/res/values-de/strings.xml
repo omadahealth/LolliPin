@@ -1,0 +1,14 @@
+
+<resources>
+    <string name="pin_code_forgot_text">Vergessen?</string>
+    <string name="pin_code_step_disable">Entferne deinen %d-Zahlen Pin</string>
+    <string name="pin_code_step_create">Erstelle einen %d-Zahlen Pin</string>
+    <string name="pin_code_step_change">Gib deinen aktuellen %d-Zahlen Pin ein</string>
+    <string name="pin_code_step_unlock">Gib deinen %d-Zahlen Pin ein</string>
+    <string name="pin_code_step_enable_confirm">Bestätige deinen %d-Zahlen Pin</string>
+
+    <string name="pin_code_fingerprint_text">Fingerabdruck</string>
+    <string name="pin_code_fingerprint_success">Fingerabdruck erkannt</string>
+    <string name="pin_code_fingerprint_not_recognized">Fingerabdruck nicht erkannt. Versuche es erneut</string>
+
+</resources>
