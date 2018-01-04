@@ -21,5 +21,10 @@ public class CustomApplication extends Application {
         lockManager.getAppLock().setLogoId(R.drawable.security_lock);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);
         lockManager.getAppLock().setShouldShowForgot(false);
+        lockManager.getAppLock().setDisablePinlockMessage("A");
+        lockManager.getAppLock().setEnablePinlockMessage("B");
+        lockManager.getAppLock().setChangePinMessage("C");
+        lockManager.getAppLock().setUnlockPinMessage("D");
+        lockManager.getAppLock().setConfirmPinMessage("E");
     }
 }

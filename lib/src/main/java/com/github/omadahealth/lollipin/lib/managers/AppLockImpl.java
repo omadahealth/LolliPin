@@ -65,6 +65,17 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      * This value defaults to true for backwards compatibility.
      */
     private static final String FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY = "FINGERPRINT_AUTH_ENABLED_PREFERENCE_KEY";
+
+    private static final String DISABLE_PINLOCK_MESSAGE = "DISABLE_PINLOCK_MESSAGE";
+
+    private static final String ENABLE_PINLOCK_MESSAGE = "ENABLE_PINLOCK_MESSAGE";
+
+    private static final String CHANGE_PIN_MESSAGE = "CHANGE_PIN_MESSAGE";
+
+    private static final String UNLOCK_PIN_MESSAGE = "UNLOCK_PIN_MESSAGE";
+
+    private static final String CONFIRM_PIN_MESSAGE = "CONFIRM_PIN_MESSAGE";
+
     /**
      * The default password salt
      */
@@ -417,5 +428,70 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
             setLastActiveMillis();
         }
+    }
+
+    @Override
+    public String getDisablePinlockMessage() {
+        return mSharedPreferences.getString(DISABLE_PINLOCK_MESSAGE, null);
+
+    }
+
+    @Override
+    public void setDisablePinlockMessage(String disablePinlockMessage) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(DISABLE_PINLOCK_MESSAGE, disablePinlockMessage);
+        editor.apply();
+    }
+
+    @Override
+    public String getEnablePinlockMessage() {
+        return mSharedPreferences.getString(ENABLE_PINLOCK_MESSAGE, null);
+
+    }
+
+    @Override
+    public void setEnablePinlockMessage(String enablePinlockMessage) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ENABLE_PINLOCK_MESSAGE, enablePinlockMessage);
+        editor.apply();
+    }
+
+    @Override
+    public String getChangePinMessage() {
+        return mSharedPreferences.getString(CHANGE_PIN_MESSAGE, null);
+
+    }
+
+    @Override
+    public void setChangePinMessage(String changePinMessage) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(CHANGE_PIN_MESSAGE, changePinMessage);
+        editor.apply();
+    }
+
+    @Override
+    public String getUnlockPinMessage() {
+        return mSharedPreferences.getString(UNLOCK_PIN_MESSAGE, null);
+
+    }
+
+    @Override
+    public void setUnlockPinMessage(String unlockPinMessage) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(UNLOCK_PIN_MESSAGE, unlockPinMessage);
+        editor.apply();
+    }
+
+    @Override
+    public String getConfirmPinMessageMessage() {
+        return mSharedPreferences.getString(CONFIRM_PIN_MESSAGE, null);
+
+    }
+
+    @Override
+    public void setConfirmPinMessage(String confirmPinMessage) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(CONFIRM_PIN_MESSAGE, confirmPinMessage);
+        editor.apply();
     }
 }

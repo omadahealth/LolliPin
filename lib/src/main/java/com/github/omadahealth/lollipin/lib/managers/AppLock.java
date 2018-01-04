@@ -202,4 +202,59 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    /**
+     *
+     */
+    public abstract String getDisablePinlockMessage();
+
+    /**
+     *
+     * @param disablePinlockMessage
+     */
+    public abstract void setDisablePinlockMessage(String disablePinlockMessage);
+
+    /**
+     *
+     */
+    public abstract String getEnablePinlockMessage();
+
+    /**
+     *
+     * @param enablePinlockMessage
+     */
+    public abstract void setEnablePinlockMessage(String enablePinlockMessage);
+
+    /**
+     *
+     */
+    public abstract String getChangePinMessage();
+
+    /**
+     *
+     * @param changePinMessage
+     */
+    public abstract void setChangePinMessage(String changePinMessage);
+
+    /**
+     *
+     */
+    public abstract String getUnlockPinMessage();
+
+    /**
+     *
+     * @param unlockPinMessage
+     */
+    public abstract void setUnlockPinMessage(String unlockPinMessage);
+
+    /**
+     *
+     */
+    public abstract String getConfirmPinMessageMessage();
+
+    /**
+     *
+     * @param confirmPinMessage
+     */
+    public abstract void setConfirmPinMessage(String confirmPinMessage);
 }
