@@ -33,7 +33,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     public static final String TAG = AppLockActivity.class.getSimpleName();
     public static final String ACTION_CANCEL = TAG + ".actionCancelled";
-    private static final int DEFAULT_PIN_LENGTH = 5;
+    private static final int DEFAULT_PIN_LENGTH = 4;
 
     protected TextView mStepTextView;
     protected TextView mForgotTextView;
