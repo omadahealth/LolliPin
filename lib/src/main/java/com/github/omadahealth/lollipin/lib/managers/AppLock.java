@@ -250,7 +250,7 @@ public abstract class AppLock {
     /**
      *
      */
-    public abstract String getConfirmPinMessageMessage();
+    public abstract String getConfirmPinMessage();
 
     /**
      *
