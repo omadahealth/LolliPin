@@ -483,7 +483,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public String getConfirmPinMessageMessage() {
+    public String getConfirmPinMessage() {
         return mSharedPreferences.getString(CONFIRM_PIN_MESSAGE, null);
 
     }
