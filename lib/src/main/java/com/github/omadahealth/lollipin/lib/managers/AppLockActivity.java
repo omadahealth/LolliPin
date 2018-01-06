@@ -251,7 +251,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     private String getConfirmPinMessage() {
-        String msg = mLockManager.getAppLock().getConfirmPinMessageMessage();
+        String msg = mLockManager.getAppLock().getConfirmPinMessage();
         if (msg != null) {
             return msg;
 
