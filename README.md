@@ -201,6 +201,26 @@ By supplying alternate drawable resources for app:lp_empty_pin_dot and app:lp_fu
                 app:lp_full_pin_dot="@drawable/pin_full_dot"/>
 ```
 
+Step message:
+-------------------
+You can customize step message by setter method. Normally I suggest developer add this code in Custom application class.
+
+```
+public class CustomApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        lockManager.enableAppLock(this, CustomPinActivity.class);
+        lockManager.getAppLock().setDisablePinlockMessage("Disable pinlock step message");
+        lockManager.getAppLock().setEnablePinlockMessage("Enable pinlock step message");
+        lockManager.getAppLock().setChangePinMessage("Change pin step message");
+        lockManager.getAppLock().setUnlockPinMessage("Unlock pin step message");
+        lockManager.getAppLock().setConfirmPinMessage("Confirm pinlock step message");
+    }
+}
+```
+
 ========
 
 ### Credits
