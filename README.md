@@ -203,7 +203,7 @@ By supplying alternate drawable resources for app:lp_empty_pin_dot and app:lp_fu
 
 Step message:
 -------------------
-You can customize step message by setter method. Normally I suggest developer add this code in Custom application class.
+You can customize step message by setter method. Normally, I suggest developer add this code in Custom application class.
 
 ```
 public class CustomApplication extends Application {
