@@ -314,6 +314,12 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         return true;
     }
 
+    @Override
+    public String getPasscodeEncrypted() {
+        String passcodeEncrypted = mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, null);
+        return passcodeEncrypted;
+    }
+
     /**
      * Set the algorithm used in {@link #setPasscode(String)}
      */
