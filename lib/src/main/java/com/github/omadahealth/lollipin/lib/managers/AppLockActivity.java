@@ -204,6 +204,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 return getUnlockPinMessage();
             case AppLock.CONFIRM_PIN:
                 return getConfirmPinMessage();
+            case AppLock.NOTHING_PIN:
+                return getUnlockPinMessage();
             default:
                 return getString(R.string.pin_code_step_create, this.getPinLength());
         }
@@ -360,6 +362,21 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     onPinCodeError();
                 }
                 break;
+            case AppLock.NOTHING_PIN:
+                mLockManager.getAppLock().setPasscode(mPinCode);
+                setResult(RESULT_OK);
+                onPinCodeSuccess();
+                finish();
+                break;
+            case AppLock.UNLOCK_PIN:
+                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
+                    setResult(RESULT_OK);
+                    onPinCodeSuccess();
+                    finish();
+                } else {
+                    onPinCodeError();
+                }
+                break;
             case AppLock.CHANGE_PIN:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     mType = AppLock.ENABLE_PINLOCK;
@@ -367,15 +384,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     setForgotTextVisibility();
                     setPinCode("");
                     onPinCodeSuccess();
-                } else {
-                    onPinCodeError();
-                }
-                break;
-            case AppLock.UNLOCK_PIN:
-                if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
-                    setResult(RESULT_OK);
-                    onPinCodeSuccess();
-                    finish();
                 } else {
                     onPinCodeError();
                 }

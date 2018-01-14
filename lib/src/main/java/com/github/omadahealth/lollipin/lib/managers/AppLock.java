@@ -27,6 +27,11 @@ public abstract class AppLock {
     public static final int UNLOCK_PIN = 4;
 
     /**
+     * NOTHING_PIN type, uses to get pin, what user type.
+     */
+    public static final int NOTHING_PIN = 5;
+
+    /**
      * LOGO_ID_NONE used to denote when a user has not set a logoId using {@link #setLogoId(int)}
      */
     public static final int LOGO_ID_NONE = -1;
