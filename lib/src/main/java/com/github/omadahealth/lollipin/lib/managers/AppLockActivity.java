@@ -333,7 +333,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             case AppLock.DISABLE_PINLOCK:
                 if (mLockManager.getAppLock().checkPasscode(mPinCode)) {
                     setResult(RESULT_OK);
-                    mLockManager.getAppLock().setPasscode(null);
+                    mLockManager.getAppLock().setPasscodeEncrypted(null);
                     onPinCodeSuccess();
                     finish();
                 } else {
@@ -350,7 +350,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             case AppLock.CONFIRM_PIN:
                 if (mPinCode.equals(mOldPinCode)) {
                     setResult(RESULT_OK);
-                    mLockManager.getAppLock().setPasscode(mPinCode);
+                    mLockManager.getAppLock().setPasscodeEncrypted(mPinCode);
                     onPinCodeSuccess();
                     finish();
                 } else {
@@ -363,7 +363,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 }
                 break;
             case AppLock.NOTHING_PIN:
-                mLockManager.getAppLock().setPasscode(mPinCode);
+                mLockManager.getAppLock().setPasscodeEncrypted(mPinCode);
                 setResult(RESULT_OK);
                 onPinCodeSuccess();
                 finish();

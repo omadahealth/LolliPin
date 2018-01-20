@@ -108,6 +108,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static AppLockImpl mInstance;
 
+    private boolean isDisableSalt;
+
     /**
      * Static method that allows to get back the current static Instance of {@link AppLockImpl}
      *
@@ -138,12 +140,17 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     public String getSalt() {
-        String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
-        if (salt == null) {
-            salt = generateSalt();
-            setSalt(salt);
+        if (isDisableSalt) {
+            return "";
+
+        } else {
+            String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
+            if (salt == null) {
+                salt = generateSalt();
+                setSalt(salt);
+            }
+            return salt;
         }
-        return salt;
     }
 
     private void setSalt(String salt) {
@@ -156,7 +163,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         byte[] salt = new byte[KEY_LENGTH];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-//            sr.setSeed(System.currentTimeMillis());
+            sr.setSeed(System.currentTimeMillis());
             sr.nextBytes(salt);
             return Arrays.toString(salt);
         } catch (Exception e) {
@@ -294,7 +301,13 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public boolean setPasscode(String passcode) {
+    public void setDisableSalt(boolean isDisable) {
+        isDisableSalt = isDisable;
+
+    }
+
+    @Override
+    public boolean setPasscodeEncrypted(String passcode) {
         String salt = getSalt();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -315,13 +328,13 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public String getPasscode() {
+    public String getPasscodeEncrypted() {
         String passcodeEncrypted = mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, null);
         return passcodeEncrypted;
     }
 
     /**
-     * Set the algorithm used in {@link #setPasscode(String)}
+     * Set the algorithm used in {@link #setPasscodeEncrypted(String)}
      */
     private void setAlgorithm(Algorithm algorithm) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
