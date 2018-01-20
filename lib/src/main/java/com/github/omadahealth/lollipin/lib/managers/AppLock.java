@@ -171,7 +171,7 @@ public abstract class AppLock {
      * Get the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
      * {@link com.github.omadahealth.lollipin.lib.encryption.Encryptor} class.
      */
-    public abstract String getPasscodeEncrypted();
+    public abstract String getPasscode();
 
     /**
      * Check the {@link android.content.SharedPreferences} to see if fingerprint authentication is

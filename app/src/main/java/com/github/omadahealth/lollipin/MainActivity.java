@@ -32,7 +32,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
         switch (v.getId()) {
             case R.id.button_enable_pin:
-                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.NOTHING_PIN);
                 startActivityForResult(intent, REQUEST_CODE_ENABLE);
                 break;
             case R.id.button_change_pin:

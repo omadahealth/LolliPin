@@ -156,7 +156,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         byte[] salt = new byte[KEY_LENGTH];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed(System.currentTimeMillis());
+//            sr.setSeed(System.currentTimeMillis());
             sr.nextBytes(salt);
             return Arrays.toString(salt);
         } catch (Exception e) {
@@ -315,7 +315,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public String getPasscodeEncrypted() {
+    public String getPasscode() {
         String passcodeEncrypted = mSharedPreferences.getString(PASSWORD_PREFERENCE_KEY, null);
         return passcodeEncrypted;
     }
