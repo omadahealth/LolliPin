@@ -57,7 +57,7 @@ public class Encryptor {
 
     /**
      * Gets the default {@link MessageDigest} to use.
-     * Select {@link Algorithm#SHA256} in {@link com.github.omadahealth.lollipin.lib.managers.AppLockImpl#setPasscode(String)}
+     * Select {@link Algorithm#SHA256} in {@link com.github.omadahealth.lollipin.lib.managers.AppLockImpl#setPasscodeEncrypted(String)}
      * but can be {@link Algorithm#SHA1} for older versions.
      *
      * @param algorithm The {@link Algorithm} to use

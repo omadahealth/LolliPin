@@ -2,11 +2,13 @@ package com.github.omadahealth.lollipin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.omadahealth.lollipin.lib.PinActivity;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import lollipin.orangegangsters.github.com.lollipin.R;
 
@@ -32,7 +34,7 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
         Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
         switch (v.getId()) {
             case R.id.button_enable_pin:
-                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.NOTHING_PIN);
                 startActivityForResult(intent, REQUEST_CODE_ENABLE);
                 break;
             case R.id.button_change_pin:
@@ -57,6 +59,8 @@ public class MainActivity extends PinActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        String passcodeEncrypted = LockManager.getInstance().getAppLock().getPasscodeEncrypted();
+        Log.d("onActivityResult", "passcodeEncrypted: " + passcodeEncrypted);
         switch (requestCode){
             case REQUEST_CODE_ENABLE:
                 Toast.makeText(this, "PinCode enabled", Toast.LENGTH_SHORT).show();

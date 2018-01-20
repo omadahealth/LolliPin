@@ -108,6 +108,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static AppLockImpl mInstance;
 
+    private boolean isDisableSalt;
+
     /**
      * Static method that allows to get back the current static Instance of {@link AppLockImpl}
      *
@@ -138,12 +140,17 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     public String getSalt() {
-        String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
-        if (salt == null) {
-            salt = generateSalt();
-            setSalt(salt);
+        if (isDisableSalt) {
+            return "";
+
+        } else {
+            String salt = mSharedPreferences.getString(PASSWORD_SALT_PREFERENCE_KEY, null);
+            if (salt == null) {
+                salt = generateSalt();
+                setSalt(salt);
+            }
+            return salt;
         }
-        return salt;
     }
 
     private void setSalt(String salt) {
@@ -294,7 +301,13 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public boolean setPasscode(String passcode) {
+    public void setDisableSalt(boolean isDisable) {
+        isDisableSalt = isDisable;
+
+    }
+
+    @Override
+    public boolean setPasscodeEncrypted(String passcode) {
         String salt = getSalt();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -321,7 +334,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     /**
-     * Set the algorithm used in {@link #setPasscode(String)}
+     * Set the algorithm used in {@link #setPasscodeEncrypted(String)}
      */
     private void setAlgorithm(Algorithm algorithm) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();

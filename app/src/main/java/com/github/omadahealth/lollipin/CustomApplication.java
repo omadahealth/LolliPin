@@ -21,6 +21,7 @@ public class CustomApplication extends Application {
         lockManager.getAppLock().setLogoId(R.drawable.security_lock);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);
         lockManager.getAppLock().setShouldShowForgot(false);
+        lockManager.getAppLock().setDisableSalt(true);
         lockManager.getAppLock().setDisablePinlockMessage("Disable pinlock step message");
         lockManager.getAppLock().setEnablePinlockMessage("Enable pinlock step message");
         lockManager.getAppLock().setChangePinMessage("Change pin step message");
