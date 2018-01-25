@@ -27,6 +27,11 @@ public abstract class AppLock {
     public static final int UNLOCK_PIN = 4;
 
     /**
+     * NOTHING_PIN type, uses to get pin, what user type.
+     */
+    public static final int NOTHING_PIN = 5;
+
+    /**
      * LOGO_ID_NONE used to denote when a user has not set a logoId using {@link #setLogoId(int)}
      */
     public static final int LOGO_ID_NONE = -1;
@@ -156,11 +161,15 @@ public abstract class AppLock {
      */
     public abstract void setLastActiveMillis();
 
+    public abstract void setDisableSalt(boolean isDisable);
+
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
      * {@link com.github.omadahealth.lollipin.lib.encryption.Encryptor} class.
      */
-    public abstract boolean setPasscode(String passcode);
+    public abstract boolean setPasscodeEncrypted(String passcode);
+
+    public abstract String getPasscodeEncrypted();
 
     /**
      * Check the {@link android.content.SharedPreferences} to see if fingerprint authentication is
@@ -202,4 +211,59 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    /**
+     *
+     */
+    public abstract String getDisablePinlockMessage();
+
+    /**
+     *
+     * @param disablePinlockMessage
+     */
+    public abstract void setDisablePinlockMessage(String disablePinlockMessage);
+
+    /**
+     *
+     */
+    public abstract String getEnablePinlockMessage();
+
+    /**
+     *
+     * @param enablePinlockMessage
+     */
+    public abstract void setEnablePinlockMessage(String enablePinlockMessage);
+
+    /**
+     *
+     */
+    public abstract String getChangePinMessage();
+
+    /**
+     *
+     * @param changePinMessage
+     */
+    public abstract void setChangePinMessage(String changePinMessage);
+
+    /**
+     *
+     */
+    public abstract String getUnlockPinMessage();
+
+    /**
+     *
+     * @param unlockPinMessage
+     */
+    public abstract void setUnlockPinMessage(String unlockPinMessage);
+
+    /**
+     *
+     */
+    public abstract String getConfirmPinMessage();
+
+    /**
+     *
+     * @param confirmPinMessage
+     */
+    public abstract void setConfirmPinMessage(String confirmPinMessage);
 }
