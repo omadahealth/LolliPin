@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+    //update compile to implementation
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':lib')
