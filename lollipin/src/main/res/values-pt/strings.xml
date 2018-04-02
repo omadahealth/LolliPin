@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pin_code_fingerprint_not_recognized">Digital não reconhecida. Tente novamente</string>
+    <string name="pin_code_fingerprint_success">Digital reconhecida</string>
+    <string name="pin_code_fingerprint_text">Digital</string>
+    <string name="pin_code_forgot_text">Esqueceu?</string>
+    <string name="pin_code_step_change">Insira seu PIN atual de %d dígitos</string>
+    <string name="pin_code_step_create">Criar um PIN de %d dígitos</string>
+    <string name="pin_code_step_disable">Desabilitar PIN de %d dígitos</string>
+    <string name="pin_code_step_enable_confirm">Confirme seu PIN de %d dígitos</string>
+    <string name="pin_code_step_unlock">Insira seu PIN de %d dígitos</string>
+</resources>

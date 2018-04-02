@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_pin_code_padding"
+        android:paddingTop="@dimen/activity_pin_code_padding">
+
+        <ImageView
+            android:id="@+id/pin_code_logo_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/pin_code_logo_margin"
+            android:visibility="invisible"
+            tools:src="@android:drawable/sym_def_app_icon"
+            tools:visibility="visible" />
+
+        <com.github.omadahealth.typefaceview.TypefaceTextView
+            android:id="@+id/pin_code_step_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pin_code_logo_imageview"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/dark_grey_color"
+            android:textSize="@dimen/pin_code_step_text_size" />
+
+        <com.github.omadahealth.lollipin.lib.views.PinCodeRoundView
+            android:id="@+id/pin_code_round_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pin_code_step_textview"
+            android:layout_marginBottom="@dimen/pin_code_elements_margin"
+            android:layout_marginTop="@dimen/pin_code_round_top_margin" />
+
+        <com.github.omadahealth.typefaceview.TypefaceTextView
+            android:id="@+id/pin_code_forgot_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pin_code_round_view"
+            android:layout_centerInParent="true"
+            android:maxLines="1"
+            android:textColor="@color/dark_grey_color"
+            android:textSize="@dimen/pin_code_forgot_text_size"
+            tools:text="@string/pin_code_forgot_text" />
+
+        <LinearLayout
+            android:id="@+id/pin_code_gray_bar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/pin_code_forgot_textview"
+            android:layout_marginBottom="@dimen/light_gray_bar_margin_bottom"
+            android:layout_marginLeft="@dimen/light_gray_bar_margin_sides"
+            android:layout_marginRight="@dimen/light_gray_bar_margin_sides"
+            android:layout_marginTop="@dimen/light_gray_bar_margin_top"
+            android:background="@color/light_gray_bar"
+            android:orientation="horizontal" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardView
+            android:id="@+id/pin_code_keyboard_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/pin_code_fingerprint_imageview"
+            android:layout_below="@+id/pin_code_gray_bar" />
+
+        <ImageView
+            android:id="@+id/pin_code_fingerprint_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/pin_code_fingerprint_textview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_fp_40px" />
+
+        <com.github.omadahealth.typefaceview.TypefaceTextView
+            android:id="@+id/pin_code_fingerprint_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:maxLines="1"
+            android:textColor="@color/dark_grey_color"
+            android:textSize="@dimen/pin_code_forgot_text_size"
+            tools:text="@string/pin_code_fingerprint_text" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout android:id="@+id/pin_code_first_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button1_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button2_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button3_large_text" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/pin_code_second_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_first_row"
+        android:weightSum="3">
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button4_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button5_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button6_large_text" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/pin_code_third_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_second_row"
+        android:weightSum="3">
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button7_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button8_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button9_large_text" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/pin_code_fourth_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/pin_code_third_row"
+        android:weightSum="3">
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_ripple_enabled="false" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_text="@string/button11_large_text" />
+
+        <com.github.omadahealth.lollipin.lib.views.KeyboardButtonView
+            android:id="@+id/pin_code_button_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lp_keyboard_button_image="@drawable/ic_backspace_grey600_24dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

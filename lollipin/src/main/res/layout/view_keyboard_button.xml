@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pin_code_keyboard_button_ripple"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="@dimen/keyboard_button_padding"
+    android:paddingBottom="@dimen/keyboard_button_padding"
+    app:rv_centered="true"
+    app:rv_rippleDuration="@integer/ripple_effect_duration"
+    app:rv_ripplePadding="@dimen/keyboard_button_ripple_padding"
+    app:rv_color="@android:color/black" >
+
+    <com.github.omadahealth.typefaceview.TypefaceTextView
+        android:id="@+id/keyboard_button_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/dark_grey_color"
+        android:textSize="@dimen/keyboard_button_text_size"
+        android:maxLines="1"/>
+
+    <ImageView
+        android:id="@+id/keyboard_button_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</com.andexert.library.RippleView>

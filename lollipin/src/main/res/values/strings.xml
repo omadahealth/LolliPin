@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name" translatable="false">lib</string>
+
+    <string name="button1_large_text" translatable="false">1</string>
+    <string name="button2_large_text" translatable="false">2</string>
+    <string name="button2_small_text" translatable="false">ABC</string>
+    <string name="button3_large_text" translatable="false">3</string>
+    <string name="button3_small_text" translatable="false">DEF</string>
+    <string name="button4_large_text" translatable="false">4</string>
+    <string name="button4_small_text" translatable="false">GHI</string>
+    <string name="button5_large_text" translatable="false">5</string>
+    <string name="button5_small_text" translatable="false">JKL</string>
+    <string name="button6_large_text" translatable="false">6</string>
+    <string name="button6_small_text" translatable="false">MNO</string>
+    <string name="button7_large_text" translatable="false">7</string>
+    <string name="button7_small_text" translatable="false">PQRS</string>
+    <string name="button8_large_text" translatable="false">8</string>
+    <string name="button8_small_text" translatable="false">TUV</string>
+    <string name="button9_large_text" translatable="false">9</string>
+    <string name="button9_small_text" translatable="false">WXYZ</string>
+    <string name="button11_large_text" translatable="false">0</string>
+
+    <string name="pin_code_forgot_text">Forgot?</string>
+    <string name="pin_code_step_disable">Disable %d-digit Pincode</string>
+    <string name="pin_code_step_create">Create a %d-digit Pincode</string>
+    <string name="pin_code_step_change">Enter your current %d-digit Pincode</string>
+    <string name="pin_code_step_unlock">Enter your %d-digit Pincode</string>
+    <string name="pin_code_step_enable_confirm">Confirm your %d-digit Pincode</string>
+
+    <string name="pin_code_fingerprint_text">Fingerprint</string>
+    <string name="pin_code_fingerprint_success">Fingerprint recognized</string>
+    <string name="pin_code_fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+
+</resources>
