@@ -276,11 +276,11 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
             mKeyGenerator.generateKey();
 
         } catch (InvalidAlgorithmParameterException e){
-            //  added by Jay
+            //  added by Jay. Appears to be an issue specific to Sony Experia Z5
             //  Fatal Exception: java.lang.RuntimeException: Unable to resume activity {com.rammigsoftware.bluecoins/com.rammigsoftware.bluecoins
             // .pinsecurity.CustomPinActivity}: java.lang.RuntimeException: java.security.InvalidAlgorithmParameterException: java.lang
             // .IllegalStateException: At least one fingerprint must be enrolled to create keys requiring user authentication for every use
-            //       at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3493)
+            //  at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3493)
             e.printStackTrace();
 
         } catch (NoSuchProviderException | NoSuchAlgorithmException e) {
