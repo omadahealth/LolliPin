@@ -282,7 +282,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
             // .IllegalStateException: At least one fingerprint must be enrolled to create keys requiring user authentication for every use
             //       at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3493)
             e.printStackTrace();
-            
+
         } catch (NoSuchProviderException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
