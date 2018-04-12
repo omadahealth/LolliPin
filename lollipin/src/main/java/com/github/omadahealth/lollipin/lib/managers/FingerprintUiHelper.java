@@ -274,7 +274,16 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
                     .build());
             mKeyGenerator.generateKey();
-        } catch (NoSuchProviderException | NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
+
+        } catch (InvalidAlgorithmParameterException e){
+            //  added by Jay
+            //  Fatal Exception: java.lang.RuntimeException: Unable to resume activity {com.rammigsoftware.bluecoins/com.rammigsoftware.bluecoins
+            // .pinsecurity.CustomPinActivity}: java.lang.RuntimeException: java.security.InvalidAlgorithmParameterException: java.lang
+            // .IllegalStateException: At least one fingerprint must be enrolled to create keys requiring user authentication for every use
+            //       at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3493)
+            e.printStackTrace();
+            
+        } catch (NoSuchProviderException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
