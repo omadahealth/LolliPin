@@ -20,6 +20,7 @@ import com.github.omadahealth.lollipin.lib.interfaces.KeyboardButtonClickedListe
 import com.github.omadahealth.lollipin.lib.views.KeyboardView;
 import com.github.omadahealth.lollipin.lib.views.PinCodeRoundView;
 
+import java.security.ProviderException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -155,8 +156,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                     mFingerprintImageView.setVisibility(View.GONE);
                     mFingerprintTextView.setVisibility(View.GONE);
                 }
-            } catch (SecurityException e) {
-                Log.e(TAG, e.toString());
+                //} catch (SecurityException e) {
+            } catch (SecurityException | ProviderException e) {//added ProviderException to resolve field issues
                 mFingerprintImageView.setVisibility(View.GONE);
                 mFingerprintTextView.setVisibility(View.GONE);
             }
