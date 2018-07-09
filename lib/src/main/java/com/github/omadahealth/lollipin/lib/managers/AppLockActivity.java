@@ -49,7 +49,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected FingerprintUiHelper mFingerprintUiHelper;
 
     protected int mType = AppLock.UNLOCK_PIN;
-    protected int mAttempts = 1;
     protected String mPinCode;
 
     protected String mOldPinCode;
@@ -388,7 +387,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      * Run a shake animation when the password is not valid.
      */
     protected void onPinCodeError() {
-        onPinFailure(mAttempts++);
+        onPinFailure(mLockManager.getAppLock().incrementAndGetLoginAttempts());
         Thread thread = new Thread() {
             public void run() {
                 mPinCode = "";
@@ -403,8 +402,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
 
     protected void onPinCodeSuccess() {
         isCodeSuccessful = true;
-        onPinSuccess(mAttempts);
-        mAttempts = 1;
+        onPinSuccess(mLockManager.getAppLock().incrementAndGetLoginAttempts());
+        mLockManager.getAppLock().resetLoginAttempts();
     }
 
     /**
