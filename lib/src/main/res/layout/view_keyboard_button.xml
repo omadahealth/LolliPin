@@ -12,7 +12,7 @@
     app:rv_ripplePadding="@dimen/keyboard_button_ripple_padding"
     app:rv_color="@android:color/black" >
 
-    <com.github.omadahealth.typefaceview.TypefaceTextView
+    <TextView
         android:id="@+id/keyboard_button_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

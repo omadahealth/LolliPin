@@ -26,7 +26,7 @@
             tools:src="@android:drawable/sym_def_app_icon"
             tools:visibility="visible" />
 
-        <com.github.omadahealth.typefaceview.TypefaceTextView
+        <TextView
             android:id="@+id/pin_code_step_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="@dimen/pin_code_elements_margin"
             android:layout_marginTop="@dimen/pin_code_round_top_margin" />
 
-        <com.github.omadahealth.typefaceview.TypefaceTextView
+        <TextView
             android:id="@+id/pin_code_forgot_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_fp_40px" />
 
-        <com.github.omadahealth.typefaceview.TypefaceTextView
+        <TextView
             android:id="@+id/pin_code_fingerprint_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
