@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.omadahealth.lollipin.lib.PinActivity;
+import com.github.omadahealth.lollipin.lib.PinCompatActivity;
 import com.github.omadahealth.lollipin.lib.R;
 import com.github.omadahealth.lollipin.lib.enums.KeyboardButtonEnum;
 import com.github.omadahealth.lollipin.lib.interfaces.KeyboardButtonClickedListener;
@@ -29,7 +30,7 @@ import java.util.List;
  * Call this activity in normal or singleTop mode (not singleTask or singleInstance, it does not work
  * with {@link android.app.Activity#startActivityForResult(android.content.Intent, int)}).
  */
-public abstract class AppLockActivity extends PinActivity implements KeyboardButtonClickedListener, View.OnClickListener, FingerprintUiHelper.Callback {
+public abstract class AppLockActivity extends PinCompatActivity implements KeyboardButtonClickedListener, View.OnClickListener, FingerprintUiHelper.Callback {
 
     public static final String TAG = AppLockActivity.class.getSimpleName();
     public static final String ACTION_CANCEL = TAG + ".actionCancelled";
