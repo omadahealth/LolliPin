@@ -265,6 +265,10 @@ public abstract class AppLockActivity extends PinCompatActivity implements Keybo
                 setPinCode(mPinCode + value);
             }
         }
+
+        if (mPinCode.length() == this.getPinLength()) {
+            onPinCodeInputed();
+        }
     }
 
     /**
@@ -273,9 +277,7 @@ public abstract class AppLockActivity extends PinCompatActivity implements Keybo
      */
     @Override
     public void onRippleAnimationEnd() {
-        if (mPinCode.length() == this.getPinLength()) {
-            onPinCodeInputed();
-        }
+       //does nothing, wrong behaviour
     }
 
     /**
