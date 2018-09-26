@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/dark_grey_color"
+        android:textColor="@color/white_color"
         android:textSize="@dimen/keyboard_button_text_size"
         android:maxLines="1"/>
 
