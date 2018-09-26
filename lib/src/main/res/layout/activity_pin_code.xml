@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/background_color"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/pin_code_logo_imageview"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/dark_grey_color"
+            android:textColor="@color/white_color"
             android:textSize="@dimen/pin_code_step_text_size" />
 
         <com.github.omadahealth.lollipin.lib.views.PinCodeRoundView
@@ -50,7 +50,7 @@
             android:layout_below="@+id/pin_code_round_view"
             android:layout_centerInParent="true"
             android:maxLines="1"
-            android:textColor="@color/dark_grey_color"
+            android:textColor="@color/white_color"
             android:textSize="@dimen/pin_code_forgot_text_size"
             tools:text="@string/pin_code_forgot_text" />
 
@@ -89,7 +89,7 @@
             android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
             android:maxLines="1"
-            android:textColor="@color/dark_grey_color"
+            android:textColor="@color/white_color"
             android:textSize="@dimen/pin_code_forgot_text_size"
             tools:text="@string/pin_code_fingerprint_text" />
 

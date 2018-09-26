@@ -398,7 +398,7 @@ public abstract class AppLockActivity extends PinCompatActivity implements Keybo
                 mPinCodeRoundView.refresh(mPinCode.length());
                 Animation animation = AnimationUtils.loadAnimation(
                         AppLockActivity.this, R.anim.shake);
-                mKeyboardView.startAnimation(animation);
+                mPinCodeRoundView.startAnimation(animation);
             }
         };
         runOnUiThread(thread);
