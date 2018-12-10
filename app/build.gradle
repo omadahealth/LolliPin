@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.3'
 
     defaultConfig {
         applicationId "com.github.orangegangsters.lollipin"
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -23,10 +23,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':lib')
-    implementation 'com.android.support:appcompat-v7:26.0.2'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 
     //Lollipop dialogs https://github.com/lewisjdeane/L-Dialogs and buttons, animations etc...
-    compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
+    implementation 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
 
     //test
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.5.2'
