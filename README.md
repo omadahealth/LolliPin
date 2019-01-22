@@ -200,7 +200,7 @@ By supplying alternate drawable resources for app:lp_empty_pin_dot and app:lp_fu
                 app:lp_empty_pin_dot="@drawable/pin_empty_dot"
                 app:lp_full_pin_dot="@drawable/pin_full_dot"/>
 ```
-
+If you are on version 2.1.0 replace `com.github.orangegangsters` with `com.github.omadahealth`
 ========
 
 ### Credits
