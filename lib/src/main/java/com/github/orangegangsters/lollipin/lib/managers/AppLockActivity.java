@@ -141,7 +141,8 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             mFingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
             mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(mFingerprintManager).build(mFingerprintImageView, mFingerprintTextView, this);
             try {
-                if (mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
+                if (mFingerprintManager != null && mLockManager.getAppLock() != null
+                        && mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
                         && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
                     mFingerprintImageView.setVisibility(View.VISIBLE);
                     mFingerprintTextView.setVisibility(View.VISIBLE);
