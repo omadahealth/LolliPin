@@ -215,12 +215,13 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     /**
      * Tells if the {@link FingerprintManager#isHardwareDetected()}, {@link FingerprintManager#hasEnrolledFingerprints()},
      * and {@link KeyguardManager#isDeviceSecure()}
-     * 
+     *
      * @return true if yes, false otherwise
      * @throws SecurityException If the hardware is not available, or the permission are not set
      */
     public boolean isFingerprintAuthAvailable() throws SecurityException {
-        return mFingerprintManager.isHardwareDetected()
+        //mFingerprintManager != null added by Jay
+        return mFingerprintManager != null && mFingerprintManager.isHardwareDetected()
                 && mFingerprintManager.hasEnrolledFingerprints()
                 && ((KeyguardManager) mIcon.getContext().getSystemService(Context.KEYGUARD_SERVICE)).isDeviceSecure();
     }
@@ -267,13 +268,22 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
                     KeyProperties.PURPOSE_ENCRYPT |
                             KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                            // Require the user to authenticate with a fingerprint to authorize every use
-                            // of the key
+                    // Require the user to authenticate with a fingerprint to authorize every use
+                    // of the key
                     .setUserAuthenticationRequired(true)
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
                     .build());
             mKeyGenerator.generateKey();
-        } catch (NoSuchProviderException | NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
+
+        } catch (InvalidAlgorithmParameterException e){
+            //  added by Jay. Appears to be an issue specific to Sony Experia Z5
+            //  Fatal Exception: java.lang.RuntimeException: Unable to resume activity {com.rammigsoftware.bluecoins/com.rammigsoftware.bluecoins
+            // .pinsecurity.CustomPinActivity}: java.lang.RuntimeException: java.security.InvalidAlgorithmParameterException: java.lang
+            // .IllegalStateException: At least one fingerprint must be enrolled to create keys requiring user authentication for every use
+            //  at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3493)
+            e.printStackTrace();
+
+        } catch (NoSuchProviderException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
