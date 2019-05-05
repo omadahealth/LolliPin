@@ -293,7 +293,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     /**
      * Run by {@link #showError(CharSequence)} with delay to reset the original UI after an error.
      */
-    Runnable mResetErrorTextRunnable = new Runnable() {
+    private Runnable mResetErrorTextRunnable = new Runnable() {
         @Override
         public void run() {
             mErrorTextView.setTextColor(
@@ -309,7 +309,6 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
      */
     public interface Callback {
         void onAuthenticated();
-
         void onError();
     }
 }

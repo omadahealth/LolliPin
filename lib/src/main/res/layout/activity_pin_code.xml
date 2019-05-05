@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:paddingTop="48dp"
             android:layout_marginBottom="@dimen/pin_code_logo_margin"
             android:visibility="invisible"
             tools:src="@android:drawable/sym_def_app_icon"

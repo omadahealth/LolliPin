@@ -2,12 +2,13 @@ package com.github.omadahealth.lollipin.lib.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * An ImageView that shrinks its larger dimension to become square.
  */
-public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
+public class SquareImageView extends AppCompatImageView {
     public SquareImageView(Context context) {
         super(context);
     }

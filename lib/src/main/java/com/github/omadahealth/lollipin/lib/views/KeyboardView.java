@@ -1,7 +1,6 @@
 package com.github.omadahealth.lollipin.lib.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +35,10 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
 
         this.mContext = context;
-        initializeView(attrs, defStyleAttr);
+        initializeView();
     }
 
-    private void initializeView(AttributeSet attrs, int defStyleAttr) {
+    private void initializeView() {
         if (!isInEditMode()) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             KeyboardView view = (KeyboardView) inflater.inflate(R.layout.view_keyboard, this);

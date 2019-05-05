@@ -53,7 +53,7 @@ public abstract class AppLock {
     protected HashSet<String> mIgnoredActivities;
 
     public AppLock() {
-        mIgnoredActivities = new HashSet<String>();
+        mIgnoredActivities = new HashSet<>();
     }
 
     /**
@@ -73,12 +73,12 @@ public abstract class AppLock {
     }
 
     /**
-     * Get the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     * Get the timeout used in {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract long getTimeout();
 
     /**
-     * Set the timeout used in {@link #shouldLockSceen(android.app.Activity)}
+     * Set the timeout used in {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract void setTimeout(long timeout);
 
@@ -145,12 +145,12 @@ public abstract class AppLock {
     public abstract void disableAndRemoveConfiguration();
 
     /**
-     * Get the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}
+     * Get the last active time of the app used by {@link #shouldLockScreen(android.app.Activity)}
      */
     public abstract long getLastActiveMillis();
 
     /**
-     * Set the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}.
+     * Set the last active time of the app used by {@link #shouldLockScreen(android.app.Activity)}.
      * Set in {@link com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface#onActivityPaused(android.app.Activity)}
      * and {@link com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface#onActivityResumed(android.app.Activity)}
      */
@@ -201,5 +201,5 @@ public abstract class AppLock {
      * {@link com.github.omadahealth.lollipin.lib.managers.AppLockActivity} (it returns false)
      * Otherwise returns true
      */
-    public abstract boolean shouldLockSceen(Activity activity);
+    public abstract boolean shouldLockScreen(Activity activity);
 }

@@ -335,13 +335,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public boolean shouldLockSceen(Activity activity) {
-        Log.d(TAG, "Lollipin shouldLockSceen() called");
-
-        // previously backed out of pin screen
-        if (pinChallengeCancelled()) {
-            return true;
-        }
+    public boolean shouldLockScreen(Activity activity) {
+        Log.d(TAG, "Lollipin shouldLockScreen() called");
 
         // already unlock
         if (activity instanceof AppLockActivity) {
@@ -350,6 +345,11 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
                 Log.d(TAG, "already unlock activity");
                 return false;
             }
+        }
+
+        // previously backed out of pin screen
+        if (pinChallengeCancelled()) {
+            return true;
         }
 
         // no pass code set
@@ -380,14 +380,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityPaused " + clazzName);
 
-        if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+        if (!shouldLockScreen(activity) && !(activity instanceof AppLockActivity)) {
             setLastActiveMillis();
         }
     }
 
     @Override
     public void onActivityUserInteraction(Activity activity) {
-        if (onlyBackgroundTimeout() && !shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+        if (onlyBackgroundTimeout() && !shouldLockScreen(activity) && !(activity instanceof AppLockActivity)) {
             setLastActiveMillis();
         }
     }
@@ -401,7 +401,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         String clazzName = activity.getClass().getName();
         Log.d(TAG, "onActivityResumed " + clazzName);
 
-        if (shouldLockSceen(activity)) {
+        if (shouldLockScreen(activity)) {
             Log.d(TAG, "mActivityClass.getClass() " + mActivityClass);
             Intent intent = new Intent(activity.getApplicationContext(),
                     mActivityClass);
@@ -410,11 +410,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             activity.getApplication().startActivity(intent);
         }
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            return;
-        }
-
-        if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
+        if (!shouldLockScreen(activity) && !(activity instanceof AppLockActivity)) {
             setLastActiveMillis();
         }
     }

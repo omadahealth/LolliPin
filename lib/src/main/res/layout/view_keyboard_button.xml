@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.andexert.library.RippleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pin_code_keyboard_button_ripple"
     android:layout_width="match_parent"
