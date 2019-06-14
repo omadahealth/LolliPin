@@ -21,7 +21,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //RippleView
-    compile 'com.github.traex.rippleeffect:ripple:1.3.1-OG'
+    compile 'com.github.traex.rippleeffect:ripple:1.3.1-OG-2'
     //TypefaceView
     compile 'com.github.omadahealth.typefaceview:typefaceview:1.5.0@aar' //TypefaceTextView
 
