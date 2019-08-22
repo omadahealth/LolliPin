@@ -143,9 +143,10 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         if (mType == AppLock.UNLOCK_PIN && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mFingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
             mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(mFingerprintManager).build(mFingerprintImageView, mFingerprintTextView, this);
+            mFingerprintUiHelper.setSuccessDelayMillis(getSuccessDelayMillis());
             try {
-            if (mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
-                    && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
+                if (mFingerprintManager.isHardwareDetected() && mFingerprintUiHelper.isFingerprintAuthAvailable()
+                        && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
                     mFingerprintImageView.setVisibility(View.VISIBLE);
                     mFingerprintTextView.setVisibility(View.VISIBLE);
                     mFingerprintUiHelper.startListening();
@@ -157,11 +158,23 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 Log.e(TAG, e.toString());
                 mFingerprintImageView.setVisibility(View.GONE);
                 mFingerprintTextView.setVisibility(View.GONE);
+            } catch (NullPointerException e) {
+                Log.e(TAG, e.toString());
+                mFingerprintImageView.setVisibility(View.GONE);
+                mFingerprintTextView.setVisibility(View.GONE);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+                mFingerprintImageView.setVisibility(View.GONE);
+                mFingerprintTextView.setVisibility(View.GONE);
             }
         } else {
             mFingerprintImageView.setVisibility(View.GONE);
             mFingerprintTextView.setVisibility(View.GONE);
         }
+    }
+
+    public long getSuccessDelayMillis(){
+        return FingerprintUiHelper.DEFAULT_SUCCESS_DELAY_MILLIS;
     }
 
     /**
@@ -218,8 +231,12 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         return getString(R.string.pin_code_forgot_text);
     }
 
-    private void setForgotTextVisibility(){
-        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
+    private void setForgotTextVisibility() {
+        if(mType == AppLock.ENABLE_PINLOCK){
+            mForgotTextView.setVisibility(View.GONE);
+        }else{
+            mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**

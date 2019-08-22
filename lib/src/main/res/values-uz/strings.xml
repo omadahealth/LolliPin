@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pin_code_fingerprint_not_recognized">Barmoq izi aniqlanmadi. Qayta urinib ko\'ring</string>
+    <string name="pin_code_fingerprint_success">Barmoq izi aniqlandi</string>
+    <string name="pin_code_fingerprint_text">Barmoq izi</string>
+    <string name="pin_code_forgot_text">Parolni unutdingizmi?</string>
+    <string name="pin_code_step_change">%d xonali pinkodingizni kiriting</string>
+    <string name="pin_code_step_create">%d xonali pinkodingizni yarating</string>
+    <string name="pin_code_step_disable">%d xonali pinkodingizni o\'chirib qo\'ying</string>
+    <string name="pin_code_step_enable_confirm">%d xonali pinkodingizni tasdiqlang</string>
+    <string name="pin_code_step_unlock">%d xonali pinkodingizni kiriting</string>
+</resources>
