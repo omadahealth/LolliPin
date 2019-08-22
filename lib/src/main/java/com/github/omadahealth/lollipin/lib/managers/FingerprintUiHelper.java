@@ -59,7 +59,9 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     /**
      * The timeout for the success to be displayed. Calls {@link Callback#onAuthenticated()} after this.
      */
-    private static final long SUCCESS_DELAY_MILLIS = 1300;
+    public static final long DEFAULT_SUCCESS_DELAY_MILLIS = 1300;
+
+    private long successDelayMillis = DEFAULT_SUCCESS_DELAY_MILLIS;
     /**
      * Alias for our key in the Android Key Store
      **/
@@ -209,7 +211,15 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
             public void run() {
                 mCallback.onAuthenticated();
             }
-        }, SUCCESS_DELAY_MILLIS);
+        }, successDelayMillis);
+    }
+
+    public void setSuccessDelayMillis(long delay){
+        this.successDelayMillis = delay;
+    }
+
+    public long getSuccessDelayMillis(){
+        return successDelayMillis;
     }
 
     /**
