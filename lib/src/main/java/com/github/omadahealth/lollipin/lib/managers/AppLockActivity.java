@@ -162,6 +162,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
                 Log.e(TAG, e.toString());
                 mFingerprintImageView.setVisibility(View.GONE);
                 mFingerprintTextView.setVisibility(View.GONE);
+            } catch (NullPointerException e) {
+                Log.e(TAG, e.toString());
+                mFingerprintImageView.setVisibility(View.GONE);
+                mFingerprintTextView.setVisibility(View.GONE);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+                mFingerprintImageView.setVisibility(View.GONE);
+                mFingerprintTextView.setVisibility(View.GONE);
             }
         } else {
             mFingerprintImageView.setVisibility(View.GONE);
