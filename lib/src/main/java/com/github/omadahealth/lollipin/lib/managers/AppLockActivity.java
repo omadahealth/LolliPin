@@ -121,10 +121,6 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
-        if(mType == AppLock.ENABLE_PINLOCK){
-            mForgotTextView.setVisibility(View.GONE);
-        }
-
         int logoId = mLockManager.getAppLock().getLogoId();
         ImageView logoImage = ((ImageView) findViewById(R.id.pin_code_logo_imageview));
         if (logoId != AppLock.LOGO_ID_NONE) {
@@ -236,7 +232,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     }
 
     private void setForgotTextVisibility() {
-        mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
+        if(mType == AppLock.ENABLE_PINLOCK){
+            mForgotTextView.setVisibility(View.GONE);
+        }else{
+            mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**
