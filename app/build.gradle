@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile project(':lib')
-    compile 'com.android.support:appcompat-v7:28.0.0'
+    compile 'androidx.appcompat:appcompat:1.0.0'
 
     //Lollipop dialogs https://github.com/lewisjdeane/L-Dialogs and buttons, animations etc...
     compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'

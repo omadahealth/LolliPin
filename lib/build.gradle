@@ -26,9 +26,9 @@ dependencies {
     implementation 'com.github.omadahealth.typefaceview:typefaceview:1.5.0@aar' //TypefaceTextView
 
     //Compat
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation "com.android.support:support-v13:28.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
 }
 repositories {
     maven {
