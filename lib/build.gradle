@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.2'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 23
+        targetSdkVersion 29
         versionCode 2
         versionName VERSION_NAME
     }
@@ -15,22 +15,49 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        checkTypes {
+            javaCompileOptions.annotationProcessorOptions.
+                    classNames.add("org.checkerframework.checker.keystore.KeyStoreChecker")
+            // Uncomment to do the strongboxbacked checking.
+            // javaCompileOptions.annotationProcessorOptions.arguments.put("lint", "strongboxbacked")
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+configurations {
+    checkerFrameworkAnnotatedJDK {
+        description = 'a copy of JDK classes with Checker Framework type qualifiers inserted'
+    }
+    errorproneJavac {
+        description = 'required to run the Checker Framework.'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     //RippleView
-    compile 'com.github.traex.rippleeffect:ripple:1.3.1-OG'
+    implementation 'com.github.traex.rippleeffect:ripple:1.3.1-OG'
     //TypefaceView
-    compile 'com.github.omadahealth.typefaceview:typefaceview:1.5.0@aar' //TypefaceTextView
+    implementation 'com.github.omadahealth.typefaceview:typefaceview:1.5.0@aar' //TypefaceTextView
 
     //Compat
-    compile 'com.android.support:support-v4:26.0.2'
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile "com.android.support:support-v13:26.0.2"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+
+    ext.checkerFrameworkVersion = '3.0.1'
+    annotationProcessor "org.checkerframework:keystore-checker:0.1-SNAPSHOT"
+    implementation files("/Users/yuanhuicheng/Documents/Projects/keystore-checker/keystore-checker-qual-android/build/libs/keystore-checker-qual-android.jar")
+    checkerFrameworkAnnotatedJDK "org.checkerframework:jdk8:${checkerFrameworkVersion}"
+    compileOnly "org.checkerframework:checker-qual-android:${checkerFrameworkVersion}"
+    errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
 }
 repositories {
+    mavenLocal()
     maven {
         url 'https://maven.google.com'
         // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
@@ -39,6 +66,18 @@ repositories {
 
 //gradle clean build uploadArchives
 apply from: 'https://raw.github.com/omadahealth/omada-nexus/master/gradle-mvn-push/gradle-mvn-push.gradle'
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile).all { compile ->
+        if (compile.name.contains("CheckTypes")) {
+//            compile.options.compilerArgs += [
+//                    "-Xbootclasspath/p:${configurations.checkerFrameworkAnnotatedJDK.asPath}"
+//            ]
+            options.fork = true
+            options.forkOptions.jvmArgs += ["-Xbootclasspath/p:${configurations.errorproneJavac.asPath}"]
+        }
+    }
+}
 
 //task androidSourcesJar(type: Jar) {
 //    classifier = 'sources'
