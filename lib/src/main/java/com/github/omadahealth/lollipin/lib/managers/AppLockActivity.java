@@ -229,21 +229,21 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public @NonNull
     String getBiometricPromptTitle() {
-        return getString(R.string.biometric_prompt_title);
+        return getString(R.string.pin_code_biometric_prompt_title);
     }
 
     /**
      * Override to change the biometric/fingerprint prompt subtitle.
      */
     public String getBiometricPromptSubtitle() {
-        return getString(R.string.biometric_prompt_subtitle);
+        return getString(R.string.pin_code_biometric_prompt_subtitle);
     }
 
     /**
      * Override to change the biometric/fingerprint prompt cancellation text.
      */
     public String getBiometricPromptCancelText() {
-        return getString(R.string.biometric_cancel_use_pin);
+        return getString(R.string.pin_code_biometric_cancel_use_pin);
     }
 
     /**
