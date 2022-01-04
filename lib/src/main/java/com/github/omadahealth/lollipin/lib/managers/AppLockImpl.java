@@ -422,12 +422,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
             Intent intent = new Intent(activity.getApplicationContext(),
                     mActivityClass);
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             activity.getApplication().startActivity(intent);
-        }
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            return;
         }
 
         if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
