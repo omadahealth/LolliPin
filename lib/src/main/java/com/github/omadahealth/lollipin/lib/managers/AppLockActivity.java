@@ -273,7 +273,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             if (mLockManager != null) {
                 AppLock appLock = mLockManager.getAppLock();
                 if (appLock != null) {
-                    appLock.setLastActiveMillis();
+                    appLock.updateLastActiveUptimeNanos();
                 }
             }
         }

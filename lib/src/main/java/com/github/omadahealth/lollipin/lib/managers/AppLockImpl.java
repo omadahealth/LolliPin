@@ -32,10 +32,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static final String PASSWORD_ALGORITHM_PREFERENCE_KEY = "ALGORITHM";
     /**
-     * The {@link android.content.SharedPreferences} key used to store the last active time
-     */
-    private static final String LAST_ACTIVE_MILLIS_PREFERENCE_KEY = "LAST_ACTIVE_MILLIS";
-    /**
      * The {@link android.content.SharedPreferences} key used to store the timeout
      */
     private static final String TIMEOUT_MILLIS_PREFERENCE_KEY = "TIMEOUT_MILLIS_PREFERENCE_KEY";
@@ -102,6 +98,12 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     private static AppLockImpl mInstance;
 
     /**
+     * Store the last active time
+     */
+    private long lastActiveUptimeNanos = Long.MIN_VALUE;
+
+
+    /**
      * Static method that allows to get back the current static Instance of {@link AppLockImpl}
      *
      * @param context       The current context of the {@link Activity}
@@ -149,7 +151,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         byte[] salt = new byte[KEY_LENGTH];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed(System.currentTimeMillis());
             sr.nextBytes(salt);
             return Arrays.toString(salt);
         } catch (Exception e) {
@@ -232,7 +233,6 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         PinCompatActivity.clearListeners();
         PinFragmentActivity.clearListeners();
         mSharedPreferences.edit().remove(PASSWORD_PREFERENCE_KEY)
-                .remove(LAST_ACTIVE_MILLIS_PREFERENCE_KEY)
                 .remove(PASSWORD_ALGORITHM_PREFERENCE_KEY)
                 .remove(TIMEOUT_MILLIS_PREFERENCE_KEY)
                 .remove(LOGO_ID_PREFERENCE_KEY)
@@ -243,8 +243,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public long getLastActiveMillis() {
-        return mSharedPreferences.getLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, 0);
+    public long getLastActiveUptimeNanos() {
+        return lastActiveUptimeNanos;
     }
 
     @Override
@@ -260,10 +260,8 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
     }
 
     @Override
-    public void setLastActiveMillis() {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putLong(LAST_ACTIVE_MILLIS_PREFERENCE_KEY, System.currentTimeMillis());
-        editor.apply();
+    public void updateLastActiveUptimeNanos() {
+        lastActiveUptimeNanos = System.nanoTime();
     }
 
     @Override
@@ -375,10 +373,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         // no enough timeout
-        long lastActiveMillis = getLastActiveMillis();
-        long passedTime = System.currentTimeMillis() - lastActiveMillis;
+        long lastActiveNanos = getLastActiveUptimeNanos();
+        long passedTime = System.nanoTime() - lastActiveNanos;
         long timeout = getTimeout();
-        if (lastActiveMillis > 0 && passedTime <= timeout) {
+        if (passedTime > 0 && passedTime <= timeout * 1_000_000) {
             Log.d(TAG, "no enough timeout " + passedTime + " for "
                     + timeout);
             return false;
@@ -397,14 +395,14 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         Log.d(TAG, "onActivityPaused " + clazzName);
 
         if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
-            setLastActiveMillis();
+            updateLastActiveUptimeNanos();
         }
     }
 
     @Override
     public void onActivityUserInteraction(Activity activity) {
         if (onlyBackgroundTimeout() && !shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
-            setLastActiveMillis();
+            updateLastActiveUptimeNanos();
         }
     }
 
@@ -427,7 +425,7 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         }
 
         if (!shouldLockSceen(activity) && !(activity instanceof AppLockActivity)) {
-            setLastActiveMillis();
+            updateLastActiveUptimeNanos();
         }
     }
 }
