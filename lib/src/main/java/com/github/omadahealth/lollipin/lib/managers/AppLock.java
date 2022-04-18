@@ -147,14 +147,14 @@ public abstract class AppLock {
     /**
      * Get the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}
      */
-    public abstract long getLastActiveMillis();
+    public abstract long getLastActiveUptimeNanos();
 
     /**
      * Set the last active time of the app used by {@link #shouldLockSceen(android.app.Activity)}.
      * Set in {@link com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface#onActivityPaused(android.app.Activity)}
      * and {@link com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface#onActivityResumed(android.app.Activity)}
      */
-    public abstract void setLastActiveMillis();
+    public abstract void updateLastActiveUptimeNanos();
 
     /**
      * Set the passcode (store his SHA1 into {@link android.content.SharedPreferences}) using the
@@ -202,4 +202,15 @@ public abstract class AppLock {
      * Otherwise returns true
      */
     public abstract boolean shouldLockSceen(Activity activity);
+
+    /**
+     * On successful login, this resets the login attempt count to 0
+     */
+    public abstract void resetLoginAttempts();
+
+    /**
+     * Increments the number of login attempts made, and returns the new value
+     * @return value after incremented
+     */
+    public abstract int incrementAndGetLoginAttempts();
 }
